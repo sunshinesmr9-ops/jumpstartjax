@@ -320,6 +320,58 @@ const employers = [
     internshipUrl: "https://www.jaguars.com/careers",
     requirements: ["College student aged 18+", "Currently enrolled or graduated within the last year", "Available for game days and special events"],
     programs: ["Guest Experience Intern", "Marketing Intern", "Community Relations Intern", "Operations Intern"]
+  },
+  {
+    id: 24, name: "HabiJax (Habitat for Humanity Jacksonville)", icon: "fa-solid fa-house-chimney", logo: "https://www.google.com/s2/favicons?domain=habijax.org&sz=256",
+    industry: "Nonprofit", type: "Volunteer",
+    grade: "Both", paid: false,
+    lat: 30.3417, lng: -81.6423,
+    location: "2404 Hubbard St, Jacksonville, FL 32206",
+    description: "HabiJax builds safe, affordable homes for Jacksonville families in need. Volunteers join active build sites or the ReStore — no construction experience required, training and supervision provided on-site.",
+    duration: "Ongoing — flexible single days or recurring shifts",
+    deadline: "Rolling — sign up for build days anytime",
+    internshipUrl: "https://www.habijax.org/volunteer/",
+    requirements: ["Ages 16+ (minors need a signed waiver)", "No experience necessary", "Closed-toe shoes required on build sites"],
+    programs: ["Home Build Volunteer", "ReStore Volunteer"]
+  },
+  {
+    id: 25, name: "Feeding Northeast Florida", icon: "fa-solid fa-box-open", logo: "https://www.google.com/s2/favicons?domain=feedingnefl.org&sz=256",
+    industry: "Nonprofit", type: "Volunteer",
+    grade: "Both", paid: false,
+    lat: 30.3345, lng: -81.6472,
+    location: "1502 Jessie St, Jacksonville, FL 32206",
+    description: "Northeast Florida's largest food bank distributes millions of pounds of food a year. Volunteers sort and pack donations, assemble food boxes, and support mobile pantry distributions across the region.",
+    duration: "Shifts as short as 2 hours, year-round",
+    deadline: "Rolling — sign up for warehouse shifts online",
+    internshipUrl: "https://feedingnefl.org/get-involved/volunteer/",
+    requirements: ["Ages 10+ with an adult, 14+ independently", "Closed-toe shoes required", "Group and individual slots available"],
+    programs: ["Warehouse Sorting Volunteer", "Mobile Pantry Volunteer"]
+  },
+  {
+    id: 26, name: "Jacksonville Humane Society", icon: "fa-solid fa-paw", logo: "https://www.google.com/s2/favicons?domain=jaxhumane.org&sz=256",
+    industry: "Nonprofit", type: "Volunteer",
+    grade: "Both", paid: false,
+    lat: 30.2949, lng: -81.5386,
+    location: "8464 Beach Blvd, Jacksonville, FL 32216",
+    description: "One of Florida's leading animal welfare organizations. Volunteers help with animal socialization, adoption events, shelter enrichment, and administrative support at the shelter.",
+    duration: "Ongoing — weekly shift commitment preferred",
+    deadline: "Rolling — orientation sessions held monthly",
+    internshipUrl: "https://www.jaxhumane.org/volunteer/",
+    requirements: ["Ages 14+ (14–15 with a parent volunteering alongside)", "Orientation session required", "Comfort working around animals"],
+    programs: ["Animal Care Volunteer", "Adoption Events Volunteer"]
+  },
+  {
+    id: 27, name: "Electrical Training Alliance of Jacksonville (ETAJ)", icon: "fa-solid fa-bolt-lightning", logo: "https://www.google.com/s2/favicons?domain=etajax.org&sz=256",
+    industry: "Engineering", type: "Apprenticeship",
+    grade: "College", paid: true,
+    lat: 30.2823, lng: -81.6470,
+    location: "Jacksonville, FL",
+    description: "A registered, union-affiliated electrical apprenticeship run with IBEW Local 177 and NECA. Apprentices are placed with a member contractor and \"earn while they learn\" — four years of paid on-the-job training paired with classroom instruction, leading to a journeyworker credential.",
+    duration: "4 years (on-the-job training + 2 nights/week classes)",
+    deadline: "Rolling — applications accepted year-round",
+    internshipUrl: "https://www.etajax.org/",
+    requirements: ["18 years or older", "High school diploma or GED with one algebra credit", "Valid driver's license"],
+    programs: ["Registered Electrical Apprenticeship"]
   }
 ];
 
@@ -544,6 +596,7 @@ const interns = [
   {
     id: 1, name: "Aaliyah Johnson", type: "College",
     company: "UF Health Jacksonville", email: "aaliyah.j@ufhealth.edu",
+    linkedin: "https://www.linkedin.com/in/aaliyah-johnson",
     school: "University of Florida", major: "Nursing",
     interests: ["Healthcare", "Community Health", "Volleyball", "Photography"],
     photo: null
@@ -551,6 +604,7 @@ const interns = [
   {
     id: 2, name: "Marcus Rivera", type: "College",
     company: "CSX Transportation", email: "mrivera@fsu.edu",
+    linkedin: "https://www.linkedin.com/in/marcus-rivera",
     school: "Florida State University", major: "Mechanical Engineering",
     interests: ["Transportation", "Sustainability", "Hiking", "Music"],
     photo: null
@@ -565,6 +619,7 @@ const interns = [
   {
     id: 4, name: "Jordan Kim", type: "College",
     company: "Black Knight", email: "jordan.kim@gatech.edu",
+    linkedin: "https://www.linkedin.com/in/jordan-kim",
     school: "Georgia Tech", major: "Computer Science",
     interests: ["Software Engineering", "AI/ML", "Gaming", "Rock Climbing"],
     photo: null
@@ -572,6 +627,7 @@ const interns = [
   {
     id: 5, name: "Simone Carter", type: "College",
     company: "Mayo Clinic Florida", email: "simone.carter@unf.edu",
+    linkedin: "https://www.linkedin.com/in/simone-carter",
     school: "University of North Florida", major: "Pre-Medicine / Biology",
     interests: ["Research", "Public Health", "Running", "Cooking"],
     photo: null
@@ -579,6 +635,7 @@ const interns = [
   {
     id: 6, name: "Elijah Thompson", type: "High School",
     company: "VyStar Credit Union", email: "e.thompson@student.duvalschools.org",
+    linkedin: "https://www.linkedin.com/in/elijah-thompson",
     school: "Bartram Trail High School", major: "12th Grade / Business Academy",
     interests: ["Finance", "Basketball", "Podcasting", "Real Estate"],
     photo: null
@@ -586,6 +643,7 @@ const interns = [
   {
     id: 7, name: "Priya Nair", type: "College",
     company: "Fidelity Investments", email: "pnair@fiu.edu",
+    linkedin: "https://www.linkedin.com/in/priya-nair",
     school: "Florida International University", major: "Finance",
     interests: ["Investing", "Data Analytics", "Yoga", "Travel"],
     photo: null
@@ -593,6 +651,7 @@ const interns = [
   {
     id: 8, name: "Tyler Broussard", type: "College",
     company: "JAXPORT", email: "t.broussard@jcu.edu",
+    linkedin: "https://www.linkedin.com/in/tyler-broussard",
     school: "Jacksonville University", major: "Logistics & Supply Chain",
     interests: ["International Trade", "Sailing", "History", "Photography"],
     photo: null
@@ -607,6 +666,7 @@ const interns = [
   {
     id: 10, name: "Carlos Mendez", type: "College",
     company: "JEA", email: "cmendez@unf.edu",
+    linkedin: "https://www.linkedin.com/in/carlos-mendez",
     school: "University of North Florida", major: "Electrical Engineering",
     interests: ["Renewable Energy", "Smart Grids", "Soccer", "3D Printing"],
     photo: null
@@ -614,6 +674,7 @@ const interns = [
   {
     id: 11, name: "Imani Brooks", type: "College",
     company: "City of Jacksonville", email: "ibrooks@famu.edu",
+    linkedin: "https://www.linkedin.com/in/imani-brooks",
     school: "Florida A&M University", major: "Political Science / Public Policy",
     interests: ["Civic Tech", "Urban Planning", "Community Organizing", "Poetry"],
     photo: null
@@ -621,6 +682,7 @@ const interns = [
   {
     id: 12, name: "Noah Fitzgerald", type: "College",
     company: "Miller Electric Company", email: "nfitz@fscj.edu",
+    linkedin: "https://www.linkedin.com/in/noah-fitzgerald",
     school: "Florida State College at Jacksonville", major: "Construction Management",
     interests: ["Construction", "Architecture", "Fishing", "Cars"],
     photo: null
@@ -628,6 +690,7 @@ const interns = [
   {
     id: 13, name: "Amara Diallo", type: "College",
     company: "Duval County Public Schools", email: "a.diallo@unf.edu",
+    linkedin: "https://www.linkedin.com/in/amara-diallo",
     school: "University of North Florida", major: "Education / Child Development",
     interests: ["Education Policy", "Youth Mentoring", "Dance", "French Language"],
     photo: null
@@ -635,6 +698,7 @@ const interns = [
   {
     id: 14, name: "Sean Murphy", type: "College",
     company: "Black Knight", email: "smurphy@gatech.edu",
+    linkedin: "https://www.linkedin.com/in/sean-murphy",
     school: "Georgia Tech", major: "Data Science",
     interests: ["Data Engineering", "Machine Learning", "Baseball", "Chess"],
     photo: null
@@ -649,6 +713,7 @@ const interns = [
   {
     id: 16, name: "Devon Santiago", type: "College",
     company: "CSX Transportation", email: "dsantiago@fsu.edu",
+    linkedin: "https://www.linkedin.com/in/devon-santiago",
     school: "Florida State University", major: "Industrial Engineering",
     interests: ["Logistics", "Operations Research", "Golf", "Podcasting"],
     photo: null
@@ -656,6 +721,7 @@ const interns = [
   {
     id: 17, name: "Fatima Hassan", type: "College",
     company: "Mayo Clinic Florida", email: "fhassan@uf.edu",
+    linkedin: "https://www.linkedin.com/in/fatima-hassan",
     school: "University of Florida", major: "Biochemistry",
     interests: ["Clinical Research", "Global Health", "Cooking", "Soccer"],
     photo: null
@@ -663,6 +729,7 @@ const interns = [
   {
     id: 18, name: "Liam Oconnor", type: "College",
     company: "Fidelity Investments", email: "loconnor@jcu.edu",
+    linkedin: "https://www.linkedin.com/in/liam-oconnor",
     school: "Jacksonville University", major: "Business Analytics",
     interests: ["Stock Market", "Economics", "Surfing", "Photography"],
     photo: null

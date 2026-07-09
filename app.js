@@ -8,11 +8,20 @@ function showPage(pageId) {
   const navEl = document.getElementById('nav-' + pageId);
   if (navEl) navEl.classList.add('active');
   window.scrollTo(0, 0);
+  closeMobileNav();
   if (pageId === 'opportunities') renderOpportunities();
   if (pageId === 'home') renderHomeFeatured();
 
   if (pageId === 'experience') renderEvents();
-  if (pageId === 'connect') renderConnectJax();
+  if (pageId === 'connect') { renderConnectJax(); updateMyLinkedInButton(); }
+}
+
+function toggleMobileNav() {
+  document.getElementById('nav-links').classList.toggle('open');
+}
+
+function closeMobileNav() {
+  document.getElementById('nav-links')?.classList.remove('open');
 }
 
 /* ════════════════════════════════════
@@ -176,56 +185,74 @@ function renderConnectJax() {
       <div class="intern-interests">
         ${intern.interests.map(t => `<span class="interest-pill">${t}</span>`).join('')}
       </div>
-      <button class="intern-msg-btn" onclick="openMsgModal(${intern.id})">
-        <i class="fa-solid fa-paper-plane"></i> Send Message
-      </button>
+      ${intern.linkedin ? `
+      <a class="intern-linkedin-btn" href="${intern.linkedin}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+        <i class="fa-brands fa-linkedin"></i> View LinkedIn
+      </a>` : `
+      <button class="intern-linkedin-btn disabled" disabled title="No public profile shared">
+        <i class="fa-brands fa-linkedin"></i> Private Profile
+      </button>`}
     </div>`;
   }).join('');
 }
 
-function openMsgModal(internId) {
-  const intern = interns.find(i => i.id === internId);
-  if (!intern) return;
-  const color = avatarColor(intern.name);
+function closeMsgModal() {
+  document.getElementById('msg-modal').classList.remove('open');
+}
+
+/* ════════════════════════════════════
+   MY LINKEDIN (self profile link)
+═══════════════════════════════════ */
+function getMyLinkedIn() {
+  return localStorage.getItem('workjax_my_linkedin') || '';
+}
+
+function updateMyLinkedInButton() {
+  const btn = document.getElementById('my-linkedin-btn');
+  if (!btn) return;
+  const url = getMyLinkedIn();
+  if (url) {
+    btn.classList.add('connected');
+    btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> LinkedIn Connected`;
+  } else {
+    btn.classList.remove('connected');
+    btn.innerHTML = `<i class="fa-brands fa-linkedin"></i> Connect Your LinkedIn`;
+  }
+}
+
+function openMyLinkedInModal() {
+  const existing = getMyLinkedIn();
   document.getElementById('msg-modal-inner').innerHTML = `
     <div class="modal-header">
-      <h3>Send a Message</h3>
+      <h3>${existing ? 'Update' : 'Connect'} Your LinkedIn</h3>
       <button class="modal-close" onclick="closeMsgModal()"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div class="modal-recipient">
-      <div class="intern-avatar" style="background:${color};width:44px;height:44px;font-size:0.95rem;flex-shrink:0;">
-        <div class="avatar-initials">${initials(intern.name)}</div>
-      </div>
-      <div>
-        <div class="modal-recipient-name">${intern.name}</div>
-        <div class="modal-recipient-co">${intern.company} · ${intern.school}</div>
-      </div>
-    </div>
-    <label class="modal-label">Your message (max 300 characters)</label>
-    <textarea class="modal-textarea" id="msg-text" maxlength="300" placeholder="Hey ${intern.name.split(' ')[0]}! I saw you're interning at ${intern.company} — would love to connect…" oninput="document.getElementById('msg-char').textContent = this.value.length + '/300 characters'"></textarea>
-    <div class="modal-char" id="msg-char">0/300 characters</div>
+    <p style="font-size:0.87rem;color:var(--gray);margin-bottom:16px;line-height:1.5;">
+      Add your LinkedIn profile so other interns in the WorkJax network can connect with you directly.
+    </p>
+    <label class="modal-label">Your LinkedIn URL</label>
+    <input type="url" class="form-input" id="my-linkedin-input" placeholder="https://www.linkedin.com/in/your-name" value="${existing}" style="width:100%;margin-bottom:4px;" />
     <div class="modal-actions">
-      <button class="modal-cancel" onclick="closeMsgModal()">Cancel</button>
-      <button class="modal-send" onclick="sendMessage(${intern.id})"><i class="fa-solid fa-paper-plane" style="margin-right:6px"></i>Send</button>
+      ${existing ? `<button class="modal-cancel" onclick="removeMyLinkedIn()" style="color:#DC2626;border-color:#DC2626;">Remove</button>` : `<button class="modal-cancel" onclick="closeMsgModal()">Cancel</button>`}
+      <button class="modal-send" onclick="saveMyLinkedIn()" style="background:#0A66C2;"><i class="fa-brands fa-linkedin" style="margin-right:6px"></i>Save</button>
     </div>`;
   document.getElementById('msg-modal').classList.add('open');
 }
 
-function sendMessage(internId) {
-  const intern = interns.find(i => i.id === internId);
-  const text = document.getElementById('msg-text')?.value?.trim();
-  if (!text) { document.getElementById('msg-text').style.borderColor = '#D32F2F'; return; }
-  document.getElementById('msg-modal-inner').innerHTML = `
-    <div class="modal-success">
-      <i class="fa-solid fa-circle-check"></i>
-      <h4>Message sent to ${intern.name.split(' ')[0]}!</h4>
-      <p>Your message has been delivered. They'll be in touch via email at<br><strong>${intern.email}</strong></p>
-      <button class="modal-send" style="margin-top:18px;display:block;width:100%;" onclick="closeMsgModal()">Done</button>
-    </div>`;
+function saveMyLinkedIn() {
+  const input = document.getElementById('my-linkedin-input');
+  const url = input.value.trim();
+  if (url && !url.startsWith('http')) { input.style.borderColor = '#DC2626'; return; }
+  if (url) localStorage.setItem('workjax_my_linkedin', url);
+  else localStorage.removeItem('workjax_my_linkedin');
+  updateMyLinkedInButton();
+  closeMsgModal();
 }
 
-function closeMsgModal() {
-  document.getElementById('msg-modal').classList.remove('open');
+function removeMyLinkedIn() {
+  localStorage.removeItem('workjax_my_linkedin');
+  updateMyLinkedInButton();
+  closeMsgModal();
 }
 
 /* ════════════════════════════════════
@@ -314,6 +341,8 @@ function renderOpportunities() {
     'Job Shadow': document.getElementById('f-shadow')?.checked,
     'Co-op': document.getElementById('f-coop')?.checked,
     'Fellowship': document.getElementById('f-fellow')?.checked,
+    'Volunteer': document.getElementById('f-volunteer')?.checked,
+    'Apprenticeship': document.getElementById('f-apprentice')?.checked,
   };
   const anyTypeChecked = Object.values(typeFilters).some(Boolean);
 

@@ -8,7 +8,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@700;800&amp;family=Lora:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@700;800&amp;family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" />
 
   <!-- External libraries -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
@@ -23,7 +23,10 @@
 <!-- ── Navigation ── -->
 <nav>
   <div class="nav-logo" onclick="showPage('home')">Work<span>Jax</span></div>
-  <div class="nav-links">
+  <button class="nav-toggle" id="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle menu">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div class="nav-links" id="nav-links">
     <button class="nav-link active" id="nav-home" onclick="showPage('home')"><i class="fa-solid fa-house" style="margin-right:5px"></i>Home</button>
     <button class="nav-link" id="nav-opportunities" onclick="showPage('opportunities')"><i class="fa-solid fa-magnifying-glass" style="margin-right:5px"></i>Find Opportunities</button>
     <button class="nav-link" id="nav-map" onclick="showPage('map'); initMap()"><i class="fa-solid fa-map" style="margin-right:5px"></i>Employer Map</button>
@@ -75,19 +78,19 @@
     <div class="section-title">Everything You Need, in One Place.</div>
     <div class="section-sub">WorkJax is your all-in-one hub for launching your career, building your network, and making the most of your time in Northeast Florida.</div>
     <div class="how-grid">
-      <div class="how-card">
+      <div class="how-card" onclick="showPage('opportunities')" style="cursor:pointer">
         <div class="how-num">1</div>
         <div class="how-icon"><i class="fa-solid fa-magnifying-glass" style="color:var(--teal)"></i></div>
         <h3>Find Internships</h3>
         <p>Browse hundreds of opportunities from top Jacksonville employers across every industry — filter by field, schedule, and student level to find the right fit.</p>
       </div>
-      <div class="how-card">
+      <div class="how-card" onclick="showPage('connect')" style="cursor:pointer">
         <div class="how-num">2</div>
         <div class="how-icon"><i class="fa-solid fa-users" style="color:var(--teal)"></i></div>
         <h3>Connect with Fellow Interns</h3>
         <p>Meet other students interning across Northeast Florida. Build your network, share experiences, and grow alongside the next generation of Jacksonville professionals.</p>
       </div>
-      <div class="how-card">
+      <div class="how-card" onclick="showPage('experience')" style="cursor:pointer">
         <div class="how-num">3</div>
         <div class="how-icon"><i class="fa-solid fa-map-pin" style="color:var(--teal)"></i></div>
         <h3>Discover Jacksonville</h3>
@@ -180,6 +183,8 @@
         <div class="filter-option"><input type="checkbox" id="f-shadow" checked onchange="renderOpportunities()"><label for="f-shadow">Job Shadow</label></div>
         <div class="filter-option"><input type="checkbox" id="f-coop" checked onchange="renderOpportunities()"><label for="f-coop">Co-op</label></div>
         <div class="filter-option"><input type="checkbox" id="f-fellow" checked onchange="renderOpportunities()"><label for="f-fellow">Fellowship</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-volunteer" checked onchange="renderOpportunities()"><label for="f-volunteer">Volunteer</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-apprentice" checked onchange="renderOpportunities()"><label for="f-apprentice">Apprenticeship</label></div>
       </div>
       <div class="filter-card">
         <div class="filter-title">Industry</div>
@@ -292,6 +297,7 @@
       <i class="fa-solid fa-magnifying-glass"></i>
       <input class="connect-search" id="connect-search" type="text" placeholder="Search by name, company, or interest…" oninput="renderConnectJax()" />
     </div>
+    <button class="my-linkedin-btn" id="my-linkedin-btn" onclick="openMyLinkedInModal()"></button>
     <select class="connect-filter-select" id="connect-company-filter" onchange="renderConnectJax()">
       <option value="">All Companies</option>
       <option>Mayo Clinic Florida</option>

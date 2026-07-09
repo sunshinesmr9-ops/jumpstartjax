@@ -16,7 +16,8 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: var(--font-body); font-weight: 400; color: var(--text); background: var(--light); }
     a { color: inherit; text-decoration: none; }
-    button { cursor: pointer; font-family: inherit; }
+    button { cursor: pointer; font-family: var(--font-body); }
+    input, select, textarea { font-family: var(--font-body); }
 
     /* ── Typography: Urbanist for all headings ── */
     h1, h2, h3, h4,
@@ -63,6 +64,11 @@
       transition: opacity 0.15s;
     }
     .nav-cta:hover { opacity: 0.9; }
+    .nav-toggle {
+      display: none; margin-left: auto;
+      background: transparent; border: none; color: var(--white);
+      font-size: 1.3rem; padding: 8px; cursor: pointer;
+    }
 
     /* ── Pages ── */
     .page { display: none; }
@@ -127,12 +133,12 @@
     .hero-search input {
       flex: 1; padding: 16px 20px;
       border: none; font-size: 1rem; outline: none;
-      color: var(--text);
+      color: var(--text); font-family: var(--font-body);
     }
     .hero-search button {
       background: var(--teal); color: var(--white);
       padding: 16px 28px; border: none;
-      font-weight: 700; font-size: 1rem;
+      font-weight: 700; font-size: 1rem; font-family: var(--font-body);
       transition: background 0.15s;
     }
     .hero-search button:hover { background: #2C8A79; }
@@ -184,6 +190,7 @@
     }
     .how-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: var(--navy); }
     .how-card p { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
+    .how-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(58,171,151,0.14); }
     .how-icon { font-size: 2rem; margin-bottom: 12px; }
 
     /* Featured categories */
@@ -237,13 +244,13 @@
     .board-search-row input {
       flex: 1; padding: 11px 0;
       border: none; background: transparent; color: var(--white);
-      font-size: 0.95rem; outline: none;
+      font-size: 0.95rem; outline: none; font-family: var(--font-body);
     }
     .board-search-row input::placeholder { color: rgba(255,255,255,0.55); }
     .board-search-row button {
       background: var(--teal); color: var(--white);
       border: none; padding: 11px 22px;
-      border-radius: 9px; font-weight: 700; font-size: 0.88rem;
+      border-radius: 9px; font-weight: 700; font-size: 0.88rem; font-family: var(--font-body);
       transition: background 0.15s;
     }
     .board-search-row button:hover { background: #2C8A79; }
@@ -805,6 +812,17 @@
       background: var(--white); border-bottom: 1px solid var(--border);
       padding: 16px 32px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     }
+    .my-linkedin-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border-radius: 8px; font-size: 0.87rem; font-weight: 700;
+      border: 1.5px solid #0A66C2; background: transparent; color: #0A66C2;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .my-linkedin-btn:hover { background: #0A66C2; color: white; }
+    .my-linkedin-btn.connected {
+      border-color: var(--teal); color: var(--teal); background: #E3F5F3;
+    }
+    .my-linkedin-btn.connected:hover { background: var(--teal); color: white; }
     .connect-search {
       flex: 1; min-width: 200px;
       padding: 9px 14px 9px 36px; border-radius: 8px;
@@ -870,15 +888,19 @@
       font-size: 0.75rem; padding: 3px 9px; border-radius: 10px;
       background: var(--light); color: var(--gray); font-weight: 500;
     }
-    .intern-msg-btn {
-      margin-top: 6px; width: 100%;
+    .intern-linkedin-btn {
+      width: 100%; margin-top: 6px;
       padding: 9px 0; border-radius: 7px;
-      border: 1.5px solid var(--navy); color: var(--navy);
+      border: 1.5px solid #0A66C2; color: #0A66C2;
       background: transparent; font-size: 0.85rem; font-weight: 600;
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
-      transition: all 0.15s;
+      transition: all 0.15s; text-decoration: none;
     }
-    .intern-msg-btn:hover { background: var(--navy); color: white; }
+    .intern-linkedin-btn:hover { background: #0A66C2; color: white; }
+    .intern-linkedin-btn.disabled {
+      border-color: var(--border); color: var(--gray); cursor: not-allowed; opacity: 0.7;
+    }
+    .intern-linkedin-btn.disabled:hover { background: transparent; color: var(--gray); }
 
     /* ── Message Modal ── */
     .modal-overlay {
@@ -921,3 +943,84 @@
     .modal-success h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
     .modal-success p { font-size: 0.9rem; color: var(--gray); }
     .connect-empty { text-align: center; padding: 60px 32px; color: var(--gray); grid-column: 1/-1; }
+
+    /* ═══════════════════════════════
+       RESPONSIVE / MOBILE
+    ═══════════════════════════════ */
+    @media (max-width: 900px) {
+      nav { padding: 0 18px; }
+      .nav-toggle { display: block; }
+      .nav-logo { margin-right: 0; }
+      .nav-links {
+        display: none; position: absolute; top: 64px; left: 0; right: 0;
+        background: var(--navy); flex-direction: column; gap: 0;
+        padding: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        max-height: calc(100vh - 64px); overflow-y: auto;
+      }
+      .nav-links.open { display: flex; }
+      .nav-link { width: 100%; text-align: left; padding: 12px 14px; }
+
+      .hero { padding: 48px 20px 44px; }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      .hero-search-box { flex-direction: column; }
+      .hero-search-box input { padding: 14px 16px; }
+      .hero-search-box button { padding: 13px; }
+
+      .stats-bar { flex-wrap: wrap; }
+      .stat { flex: 1 1 50%; padding: 16px 12px; border-right: none; border-bottom: 1px solid var(--border); }
+
+      .section { padding: 44px 20px; }
+      .section-title { font-size: 1.6rem; }
+      .how-grid { grid-template-columns: 1fr; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .listings-grid { grid-template-columns: 1fr; }
+
+      .board-header, .map-header, .exp-hero, .connect-hero { padding: 40px 20px 34px; }
+      .board-header h1, .map-header h1, .exp-hero h1, .connect-hero h1 { font-size: 1.6rem; }
+      .board-search-row { max-width: 100%; }
+
+      .board-layout { flex-direction: column; padding: 20px 16px; gap: 16px; }
+      .filter-panel { width: 100%; position: static; }
+      .filter-card { padding: 14px 0; }
+
+      .opp-card { flex-direction: column; }
+      .opp-top { width: 100%; }
+      .opp-save { align-self: flex-start; }
+
+      .detail-layout { flex-direction: column; padding: 16px 16px 40px; }
+      .detail-sidebar { width: 100%; }
+      .detail-back { padding: 16px 16px 0; }
+
+      .map-layout { flex-direction: column; height: auto; }
+      #map { height: 380px; }
+      .map-sidebar { width: 100%; border-left: none; border-top: 1px solid var(--border); max-height: 420px; }
+
+      .exp-filter-row { padding: 0 16px; }
+      .exp-grid, .intern-grid { grid-template-columns: 1fr; padding: 24px 16px 40px; }
+      .exp-section-label { padding: 0 16px 8px; }
+
+      .connect-toolbar { padding: 14px 16px; }
+      .connect-search-wrap { flex: 1 1 100%; }
+      .connect-filter-select { flex: 1 1 auto; }
+      .my-linkedin-btn { flex: 1 1 100%; justify-content: center; }
+
+      .app-layout { flex-direction: column; }
+
+      .modal-box { padding: 22px; margin: 16px; }
+    }
+
+    @media (max-width: 520px) {
+      .hero-badge { font-size: 0.72rem; padding: 5px 12px; }
+      .hero h1 { font-size: 1.6rem; }
+      .hero-tags { gap: 6px; }
+      .hero-tag { font-size: 0.76rem; padding: 4px 10px; }
+      .stat { flex: 1 1 100%; }
+      .cat-grid { grid-template-columns: 1fr; }
+      .section-title { font-size: 1.4rem; }
+      .opp-logo { width: 44px; height: 44px; }
+      .opp-title { font-size: 0.95rem; }
+      .intern-avatar { width: 56px; height: 56px; }
+      .board-search-row { padding: 4px 4px 4px 14px; }
+      .board-search-row button { padding: 10px 16px; font-size: 0.82rem; }
+    }
