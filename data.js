@@ -396,8 +396,8 @@ const employers = [
     duration: "Ongoing, weekly shift commitment preferred",
     deadline: "Rolling, orientation sessions held regularly",
     internshipUrl: "https://www.jacksonvillezoo.org/support/volunteer/",
-    requirements: ["Ages vary by role (teens and adults)", "Orientation and training required", "Comfort speaking with the public"],
-    programs: ["Interpretive Host Volunteer", "Special Events Volunteer"]
+    requirements: ["Ages vary by role (teens and adults)", "ZooTeens! applications open Nov 1 and close Nov 25 each year", "Orientation and training required", "Comfort speaking with the public"],
+    programs: ["ZooTeens! (year-round teen volunteer program)", "Interpretive Host Volunteer", "Special Events Volunteer"]
   },
   {
     id: 30, name: "MOSH (Museum of Science &amp; History)", icon: "fa-solid fa-flask", logo: "https://www.google.com/s2/favicons?domain=themosh.org&sz=256",
@@ -437,6 +437,71 @@ const employers = [
     internshipUrl: "https://www.nefba.com/",
     requirements: ["18 years or older", "High school diploma or GED", "Interest in residential construction trades"],
     programs: ["Residential Construction Apprenticeship"]
+  },
+  {
+    id: 33, name: "UNF Florida Data Science for Social Good (FL-DSSG)", icon: "fa-solid fa-chart-simple", logo: "https://www.google.com/s2/favicons?domain=unf.edu&sz=256",
+    industry: "Technology", type: "Internship",
+    grade: "College", paid: true,
+    lat: 30.2697, lng: -81.5060,
+    location: "University of North Florida, 1 UNF Drive, Jacksonville, FL 32224",
+    description: "An intensive eleven-week summer internship where undergraduate and graduate students work in multi-disciplinary teams with mentors on real data science projects for community clients. Modeled on the DSSG programs in Chicago and Washington.",
+    duration: "11 weeks (May 18 \u2013 Aug 7)",
+    deadline: "Applications due Mar 20, 5 PM",
+    internshipUrl: "https://dssg.unf.edu/dssgfellow.html",
+    requirements: ["Undergraduate or graduate student", "Interest in data science for social good", "In-person at UNF campus"],
+    programs: ["FL-DSSG Summer Internship"]
+  },
+  {
+    id: 34, name: "The Haskell Company", icon: "fa-solid fa-compass-drafting", logo: "https://www.google.com/s2/favicons?domain=haskell.com&sz=256",
+    industry: "Engineering", industryLabel: "Engineering/Construction", type: "Internship",
+    grade: "College", paid: true,
+    lat: 30.3220, lng: -81.6690,
+    location: "111 Riverside Ave, Jacksonville, FL 32202",
+    description: "One of the nation's leading design-build firms, headquartered on the Jacksonville riverfront. Interns in construction management, engineering, and architecture work on active project teams, analyzing bids, managing schedules, and visiting job sites.",
+    duration: "Summer (10\u201312 weeks)",
+    deadline: "Rolling, check haskell.com/careers for current openings",
+    internshipUrl: "https://www.haskell.com/careers/",
+    requirements: ["Enrolled in construction management, engineering, architecture, or related program", "Interest in design-build project delivery"],
+    programs: ["Construction & Engineering Internship"]
+  },
+  {
+    id: 35, name: "RF-SMART", icon: "fa-solid fa-barcode", logo: "https://www.google.com/s2/favicons?domain=rfsmart.com&sz=256",
+    industry: "Technology", type: "Internship",
+    grade: "College", paid: true,
+    lat: 30.2410, lng: -81.5540,
+    location: "Jacksonville, FL (US East Office)",
+    description: "A Jacksonville-headquartered supply chain software company offering summer and fall internships in product strategy, software development, and business operations at its US East office.",
+    duration: "Summer or Fall semester",
+    deadline: "Rolling, check rfsmart.com/careers for current openings",
+    internshipUrl: "https://www.rfsmart.com/careers",
+    requirements: ["Currently enrolled college student", "Interest in supply chain technology or product strategy"],
+    programs: ["Product Strategy Internship", "Summer Internship Program"]
+  },
+  {
+    id: 36, name: "St. Johns Riverkeeper", icon: "fa-solid fa-water", logo: "https://www.google.com/s2/favicons?domain=stjohnsriverkeeper.org&sz=256",
+    industry: "Nonprofit", type: "Volunteer",
+    grade: "Both", paid: false,
+    lat: 30.3540, lng: -81.6030,
+    location: "2800 University Blvd N, Jacksonville, FL 32211",
+    description: "The independent voice for the St. Johns River. Volunteers join river cleanups, educational outreach, water quality monitoring, and advocacy campaigns protecting Jacksonville's defining waterway.",
+    duration: "Ongoing, event-based and recurring roles",
+    deadline: "Rolling, sign up for cleanups anytime",
+    internshipUrl: "https://www.stjohnsriverkeeper.org/",
+    requirements: ["All ages welcome (minors with an adult)", "Interest in conservation and the St. Johns River"],
+    programs: ["River Cleanup Volunteer", "Education & Outreach Volunteer"]
+  },
+  {
+    id: 37, name: "Big Brothers Big Sisters of Northeast Florida", icon: "fa-solid fa-children", logo: "https://www.google.com/s2/favicons?domain=bbbsnefl.org&sz=256",
+    industry: "Nonprofit", type: "Volunteer",
+    grade: "College", paid: false,
+    lat: 30.3290, lng: -81.6570,
+    location: "Downtown Jacksonville, FL",
+    description: "Mentor a local youth one-to-one through community-based or school-based programs. A few hours a month positively affects one child, and by extension the whole community.",
+    duration: "Ongoing, 1-year minimum commitment preferred",
+    deadline: "Rolling, enrollment year-round",
+    internshipUrl: "https://www.bbbsnefl.org/",
+    requirements: ["18 years or older", "Background check required", "Consistent monthly time commitment"],
+    programs: ["Community-Based Mentoring", "School-Based Mentoring"]
   }
 ];
 

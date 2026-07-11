@@ -68,9 +68,9 @@
   </section>
 
   <div class="stats-bar">
-    <div class="stat"><div class="stat-num">80+</div><div class="stat-label">Employer Partners</div></div>
-    <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Open Opportunities</div></div>
-    <div class="stat"><div class="stat-num">12</div><div class="stat-label">Industries</div></div>
+    <div class="stat"><div class="stat-num" id="stat-employers">30+</div><div class="stat-label">Employer Partners</div></div>
+    <div class="stat"><div class="stat-num" id="stat-opps">40+</div><div class="stat-label">Open Opportunities</div></div>
+    <div class="stat"><div class="stat-num" id="stat-industries">8</div><div class="stat-label">Industries</div></div>
     <div class="stat"><div class="stat-num">NEF</div><div class="stat-label">Region-wide</div></div>
   </div>
 
@@ -107,35 +107,35 @@
       <div class="cat-grid">
         <div class="cat-card" onclick="filterAndGo('Healthcare')">
           <div class="cat-icon"><i class="fa-solid fa-hospital" style="color: #00696F"></i></div>
-          <h4>Healthcare</h4><span>34 opportunities</span>
+          <h4>Healthcare</h4><span data-cat-count="Healthcare"></span>
         </div>
         <div class="cat-card" onclick="filterAndGo('Technology')">
           <div class="cat-icon"><i class="fa-solid fa-microchip" style="color: #00696F"></i></div>
-          <h4>Technology</h4><span>28 opportunities</span>
+          <h4>Technology</h4><span data-cat-count="Technology"></span>
         </div>
         <div class="cat-card" onclick="filterAndGo('Finance')">
           <div class="cat-icon"><i class="fa-solid fa-chart-line" style="color: #00696F"></i></div>
-          <h4>Finance & Banking</h4><span>22 opportunities</span>
+          <h4>Finance &amp; Banking</h4><span data-cat-count="Finance"></span>
         </div>
         <div class="cat-card" onclick="filterAndGo('Government')">
           <div class="cat-icon"><i class="fa-solid fa-landmark" style="color: #00696F"></i></div>
-          <h4>Civic & Government</h4><span>18 opportunities</span>
+          <h4>Civic &amp; Government</h4><span data-cat-count="Government"></span>
         </div>
         <div class="cat-card" onclick="filterAndGo('Engineering')">
           <div class="cat-icon"><i class="fa-solid fa-gear" style="color: #00696F"></i></div>
-          <h4>Engineering</h4><span>25 opportunities</span>
+          <h4>Engineering</h4><span data-cat-count="Engineering"></span>
         </div>
         <div class="cat-card" onclick="filterAndGo('Nonprofit')">
           <div class="cat-icon"><i class="fa-solid fa-hand-holding-heart" style="color: #00696F"></i></div>
-          <h4>Nonprofit & Social</h4><span>19 opportunities</span>
+          <h4>Nonprofit &amp; Social</h4><span data-cat-count="Nonprofit"></span>
         </div>
         <div class="cat-card" onclick="filterAndGo('Logistics')">
           <div class="cat-icon"><i class="fa-solid fa-ship" style="color: #00696F"></i></div>
-          <h4>Logistics & Trade</h4><span>15 opportunities</span>
+          <h4>Logistics &amp; Trade</h4><span data-cat-count="Logistics"></span>
         </div>
         <div class="cat-card" onclick="filterAndGo('Media')">
           <div class="cat-icon"><i class="fa-solid fa-satellite-dish" style="color: #00696F"></i></div>
-          <h4>Media & Arts</h4><span>12 opportunities</span>
+          <h4>Media &amp; Arts</h4><span data-cat-count="Media"></span>
         </div>
       </div>
     </div>
@@ -174,9 +174,9 @@
     <div class="filter-panel">
       <div class="filter-card">
         <div class="filter-title">Student Level</div>
-        <div class="filter-option"><input type="checkbox" id="f-hs" checked onchange="renderOpportunities()"><label for="f-hs">High School (11–12)</label><span class="filter-count">42</span></div>
-        <div class="filter-option"><input type="checkbox" id="f-col" checked onchange="renderOpportunities()"><label for="f-col">College / University</label><span class="filter-count">89</span></div>
-        <div class="filter-option"><input type="checkbox" id="f-both" checked onchange="renderOpportunities()"><label for="f-both">All Students</label><span class="filter-count">71</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-hs" checked onchange="renderOpportunities()"><label for="f-hs">High School (11–12)</label><span class="filter-count" id="count-hs"></span></div>
+        <div class="filter-option"><input type="checkbox" id="f-col" checked onchange="renderOpportunities()"><label for="f-col">College / University</label><span class="filter-count" id="count-col"></span></div>
+        <div class="filter-option"><input type="checkbox" id="f-both" checked onchange="renderOpportunities()"><label for="f-both">All Students</label><span class="filter-count" id="count-both"></span></div>
       </div>
       <div class="filter-card">
         <div class="filter-title">Opportunity Type</div>
@@ -195,6 +195,8 @@
         <div class="filter-option"><input type="checkbox" id="fi-gov" onchange="renderOpportunities()"><label for="fi-gov">Government</label></div>
         <div class="filter-option"><input type="checkbox" id="fi-eng" onchange="renderOpportunities()"><label for="fi-eng">Engineering</label></div>
         <div class="filter-option"><input type="checkbox" id="fi-non" onchange="renderOpportunities()"><label for="fi-non">Nonprofit</label></div>
+        <div class="filter-option"><input type="checkbox" id="fi-log" onchange="renderOpportunities()"><label for="fi-log">Logistics</label></div>
+        <div class="filter-option"><input type="checkbox" id="fi-media" onchange="renderOpportunities()"><label for="fi-media">Media &amp; Sports</label></div>
       </div>
       <div class="filter-card">
         <div class="filter-title">Compensation</div>
@@ -207,10 +209,10 @@
     <div class="opp-results">
       <div class="results-bar">
         <div class="results-count" id="results-count">Showing all opportunities</div>
-        <select class="results-sort" onchange="renderOpportunities()">
-          <option>Most Recent</option>
-          <option>Deadline: Soonest</option>
-          <option>Alphabetical</option>
+        <select class="results-sort" id="results-sort" onchange="renderOpportunities()">
+          <option value="featured">Featured</option>
+          <option value="deadline">Deadline: Soonest</option>
+          <option value="alpha">Alphabetical (A–Z)</option>
         </select>
       </div>
       <div class="opp-grid" id="opp-grid"></div>
@@ -371,7 +373,7 @@
       <i class="fa-solid fa-magnifying-glass"></i>
       <input class="connect-search" id="connect-search" type="text" placeholder="Search by name, company, or interest…" oninput="renderConnectJax()" />
     </div>
-    <button class="my-linkedin-btn" id="my-linkedin-btn" onclick="openMyLinkedInModal()"></button>
+    <button class="my-linkedin-btn" id="my-profile-btn" onclick="openProfileModal()"></button>
     <select class="connect-filter-select" id="connect-company-filter" onchange="renderConnectJax()">
       <option value="">All Companies</option>
       <option>Mayo Clinic Florida</option>

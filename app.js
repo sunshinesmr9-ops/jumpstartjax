@@ -13,7 +13,7 @@ function showPage(pageId) {
   if (pageId === 'home') renderHomeFeatured();
 
   if (pageId === 'experience') renderEvents();
-  if (pageId === 'connect') { renderConnectJax(); updateMyLinkedInButton(); }
+  if (pageId === 'connect') { renderConnectJax(); updateProfileButton(); }
 }
 
 function toggleMobileNav() {
@@ -68,8 +68,8 @@ function renderEvents() {
 
   grid.innerHTML = filtered.map(e => {
     const rsvps = rsvpData[e.id] ? [...rsvpData[e.id]] : [];
-    const iGoing = rsvps.includes(MY_NAME);
-    const othersGoing = rsvps.filter(n => n !== MY_NAME);
+    const iGoing = rsvps.includes(myName());
+    const othersGoing = rsvps.filter(n => n !== myName());
     const displayNames = othersGoing.slice(0, 4);
     const extra = othersGoing.length > 4 ? othersGoing.length - 4 : 0;
 
@@ -127,10 +127,10 @@ function renderEvents() {
 function toggleRSVP(eventId) {
   if (!rsvpData[eventId]) rsvpData[eventId] = new Set();
   const set = rsvpData[eventId];
-  if (set.has(MY_NAME)) {
-    set.delete(MY_NAME);
+  if (set.has(myName())) {
+    set.delete(myName());
   } else {
-    set.add(MY_NAME);
+    set.add(myName());
     // seed a couple of demo interns as already going on first RSVP
     if (set.size === 1 && eventId % 3 === 0) { set.add("Jordan Kim"); set.add("Aaliyah Johnson"); }
     if (set.size === 1 && eventId % 3 === 1) { set.add("Simone Carter"); }
@@ -150,7 +150,14 @@ function renderConnectJax() {
   const co = document.getElementById('connect-company-filter')?.value || '';
   const type = document.getElementById('connect-type-filter')?.value || '';
 
-  let filtered = interns.filter(i => {
+  const me = getProfile();
+  const allPeople = me
+    ? [{ id: 'me', name: me.name, type: me.type || 'College', company: me.company || '', email: '',
+         linkedin: me.linkedin || '', school: me.school || '', major: me.major || '',
+         interests: me.interests || [], photo: null, isMe: true }, ...interns]
+    : interns;
+
+  let filtered = allPeople.filter(i => {
     const matchQ = !q || i.name.toLowerCase().includes(q)
       || i.company.toLowerCase().includes(q)
       || i.interests.some(t => t.toLowerCase().includes(q))
@@ -165,14 +172,14 @@ function renderConnectJax() {
   if (!filtered.length) {
     grid.innerHTML = `<div class="connect-empty">
       <i class="fa-solid fa-users-slash" style="font-size:2rem;color:var(--border);display:block;margin-bottom:12px"></i>
-      <p>No interns match your search.</p>
+      <p>No students match your search.</p>
     </div>`;
     return;
   }
 
   const companyColor = (company) => {
     const emp = employers.find(e => e.name === company);
-    return emp ? (industryColor[emp.industry] || '#0D2F6B') : '#0D2F6B';
+    return emp ? (industryColor[emp.industry] || '#01696F') : '#01696F';
   };
 
   grid.innerHTML = filtered.map(intern => {
@@ -183,20 +190,24 @@ function renderConnectJax() {
       : `<div class="avatar-initials">${initials(intern.name)}</div>`;
 
     return `
-    <div class="intern-card">
+    <div class="intern-card" ${intern.isMe ? 'style="border:2px solid var(--teal);position:relative;"' : ''}>
+      ${intern.isMe ? '<span style="position:absolute;top:10px;right:10px;background:var(--teal);color:#fff;font-size:0.68rem;font-weight:700;padding:3px 9px;border-radius:20px;">YOU</span>' : ''}
       <div class="intern-avatar" style="background:${color};">
         ${avatarEl}
       </div>
       <div class="intern-name">${intern.name}</div>
-      <span class="intern-company" style="background:${co_color}18;color:${co_color};">
+      ${intern.company ? `<span class="intern-company" style="background:${co_color}18;color:${co_color};">
         <i class="fa-solid fa-building" style="font-size:0.7rem"></i> ${intern.company}
-      </span>
-      <div style="font-size:0.8rem;color:var(--gray);">${intern.school} · ${intern.major}</div>
-      <div class="intern-email"><i class="fa-solid fa-envelope"></i>${intern.email}</div>
+      </span>` : ''}
+      ${(intern.school || intern.major) ? `<div style="font-size:0.8rem;color:var(--gray);">${[intern.school, intern.major].filter(Boolean).join(' · ')}</div>` : ''}
+      ${intern.email ? `<div class="intern-email"><i class="fa-solid fa-envelope"></i>${intern.email}</div>` : ''}
       <div class="intern-interests">
         ${intern.interests.map(t => `<span class="interest-pill">${t}</span>`).join('')}
       </div>
-      ${intern.linkedin ? `
+      ${intern.isMe ? `
+      <button class="intern-linkedin-btn" onclick="openProfileModal()" style="background:var(--light);color:var(--navy);border:1px solid var(--border);">
+        <i class="fa-solid fa-pen"></i> Edit Profile
+      </button>` : intern.linkedin ? `
       <a class="intern-linkedin-btn" href="${intern.linkedin}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
         <i class="fa-brands fa-linkedin"></i> View LinkedIn
       </a>` : `
@@ -212,57 +223,99 @@ function closeMsgModal() {
 }
 
 /* ════════════════════════════════════
-   MY LINKEDIN (self profile link)
+   MY PROFILE (stored locally, no account needed)
 ═══════════════════════════════════ */
-function getMyLinkedIn() {
-  return localStorage.getItem('workjax_my_linkedin') || '';
+function getProfile() {
+  try { return JSON.parse(localStorage.getItem('workjax_profile')) || null; }
+  catch { return null; }
 }
 
-function updateMyLinkedInButton() {
-  const btn = document.getElementById('my-linkedin-btn');
+function myName() {
+  const p = getProfile();
+  return (p && p.name) ? p.name : MY_NAME;
+}
+
+function updateProfileButton() {
+  const btn = document.getElementById('my-profile-btn');
   if (!btn) return;
-  const url = getMyLinkedIn();
-  if (url) {
+  const p = getProfile();
+  if (p) {
     btn.classList.add('connected');
-    btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> LinkedIn Connected`;
+    btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${p.name.split(' ')[0]}'s Profile`;
   } else {
     btn.classList.remove('connected');
-    btn.innerHTML = `<i class="fa-brands fa-linkedin"></i> Connect Your LinkedIn`;
+    btn.innerHTML = `<i class="fa-solid fa-user-plus"></i> Create Your Profile`;
   }
 }
 
-function openMyLinkedInModal() {
-  const existing = getMyLinkedIn();
+function openProfileModal() {
+  const p = getProfile() || {};
+  const oldLinkedin = p.linkedin || localStorage.getItem('workjax_my_linkedin') || '';
   document.getElementById('msg-modal-inner').innerHTML = `
     <div class="modal-header">
-      <h3>${existing ? 'Update' : 'Connect'} Your LinkedIn</h3>
+      <h3>${p.name ? 'Edit' : 'Create'} Your Profile</h3>
       <button class="modal-close" onclick="closeMsgModal()"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <p style="font-size:0.87rem;color:var(--gray);margin-bottom:16px;line-height:1.5;">
-      Add your LinkedIn profile so other students in the WorkJax network can connect with you directly.
+      No password needed, your profile is saved on this device. It appears in the ConnectJax directory, links your LinkedIn, and keeps your saved opportunities and RSVPs.
     </p>
-    <label class="modal-label">Your LinkedIn URL</label>
-    <input type="url" class="form-input" id="my-linkedin-input" placeholder="https://www.linkedin.com/in/your-name" value="${existing}" style="width:100%;margin-bottom:4px;" />
+    <label class="modal-label">Name *</label>
+    <input type="text" class="form-input" id="pf-name" placeholder="Your full name" value="${p.name || ''}" style="width:100%;margin-bottom:10px;" />
+    <div style="display:flex;gap:10px;margin-bottom:10px;">
+      <div style="flex:1;">
+        <label class="modal-label">Student Level</label>
+        <select class="form-input" id="pf-type" style="width:100%;">
+          <option value="College" ${p.type !== 'High School' ? 'selected' : ''}>College</option>
+          <option value="High School" ${p.type === 'High School' ? 'selected' : ''}>High School</option>
+        </select>
+      </div>
+      <div style="flex:2;">
+        <label class="modal-label">School</label>
+        <input type="text" class="form-input" id="pf-school" placeholder="e.g. University of North Florida" value="${p.school || ''}" style="width:100%;" />
+      </div>
+    </div>
+    <label class="modal-label">Major / Grade</label>
+    <input type="text" class="form-input" id="pf-major" placeholder="e.g. Marketing, or 11th Grade" value="${p.major || ''}" style="width:100%;margin-bottom:10px;" />
+    <label class="modal-label">Where You're Working (optional)</label>
+    <input type="text" class="form-input" id="pf-company" placeholder="e.g. Mayo Clinic Florida" value="${p.company || ''}" style="width:100%;margin-bottom:10px;" />
+    <label class="modal-label">Interests (comma-separated)</label>
+    <input type="text" class="form-input" id="pf-interests" placeholder="e.g. Healthcare, Photography, Soccer" value="${(p.interests || []).join(', ')}" style="width:100%;margin-bottom:10px;" />
+    <label class="modal-label">LinkedIn URL (optional)</label>
+    <input type="url" class="form-input" id="pf-linkedin" placeholder="https://www.linkedin.com/in/your-name" value="${oldLinkedin}" style="width:100%;margin-bottom:4px;" />
     <div class="modal-actions">
-      ${existing ? `<button class="modal-cancel" onclick="removeMyLinkedIn()" style="color:#DC2626;border-color:#DC2626;">Remove</button>` : `<button class="modal-cancel" onclick="closeMsgModal()">Cancel</button>`}
-      <button class="modal-send" onclick="saveMyLinkedIn()" style="background:#0A66C2;"><i class="fa-brands fa-linkedin" style="margin-right:6px"></i>Save</button>
+      ${p.name ? `<button class="modal-cancel" onclick="removeProfile()" style="color:#DC2626;border-color:#DC2626;">Delete Profile</button>` : `<button class="modal-cancel" onclick="closeMsgModal()">Cancel</button>`}
+      <button class="modal-send" onclick="saveProfile()"><i class="fa-solid fa-user-check" style="margin-right:6px"></i>Save Profile</button>
     </div>`;
   document.getElementById('msg-modal').classList.add('open');
 }
 
-function saveMyLinkedIn() {
-  const input = document.getElementById('my-linkedin-input');
-  const url = input.value.trim();
-  if (url && !url.startsWith('http')) { input.style.borderColor = '#DC2626'; return; }
-  if (url) localStorage.setItem('workjax_my_linkedin', url);
-  else localStorage.removeItem('workjax_my_linkedin');
-  updateMyLinkedInButton();
+function saveProfile() {
+  const nameInput = document.getElementById('pf-name');
+  const name = nameInput.value.trim();
+  if (!name) { nameInput.style.borderColor = '#DC2626'; return; }
+  const linkedinInput = document.getElementById('pf-linkedin');
+  const linkedin = linkedinInput.value.trim();
+  if (linkedin && !linkedin.startsWith('http')) { linkedinInput.style.borderColor = '#DC2626'; return; }
+  const profile = {
+    name,
+    type: document.getElementById('pf-type').value,
+    school: document.getElementById('pf-school').value.trim(),
+    major: document.getElementById('pf-major').value.trim(),
+    company: document.getElementById('pf-company').value.trim(),
+    interests: document.getElementById('pf-interests').value.split(',').map(s => s.trim()).filter(Boolean),
+    linkedin
+  };
+  localStorage.setItem('workjax_profile', JSON.stringify(profile));
+  updateProfileButton();
+  renderConnectJax();
+  renderEvents();
   closeMsgModal();
 }
 
-function removeMyLinkedIn() {
-  localStorage.removeItem('workjax_my_linkedin');
-  updateMyLinkedInButton();
+function removeProfile() {
+  localStorage.removeItem('workjax_profile');
+  updateProfileButton();
+  renderConnectJax();
   closeMsgModal();
 }
 
@@ -278,10 +331,11 @@ function searchAndGo() {
 
 function filterAndGo(industry) {
   // un-check all industry filters, check the selected one
-  ['fi-health','fi-tech','fi-fin','fi-gov','fi-eng','fi-non'].forEach(id => {
-    document.getElementById(id).checked = false;
+  ['fi-health','fi-tech','fi-fin','fi-gov','fi-eng','fi-non','fi-log','fi-media'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.checked = false;
   });
-  const map = {Healthcare:'fi-health',Technology:'fi-tech',Finance:'fi-fin',Government:'fi-gov',Engineering:'fi-eng',Nonprofit:'fi-non'};
+  const map = {Healthcare:'fi-health',Technology:'fi-tech',Finance:'fi-fin',Government:'fi-gov',Engineering:'fi-eng',Nonprofit:'fi-non',Logistics:'fi-log',Media:'fi-media'};
   if (map[industry]) document.getElementById(map[industry]).checked = true;
   showPage('opportunities');
 }
@@ -329,6 +383,7 @@ function oppCardHTML(e, compact = false) {
 function toggleSaveOpportunity(id) {
   if (savedOpportunities.has(id)) savedOpportunities.delete(id);
   else savedOpportunities.add(id);
+  localStorage.setItem('workjax_saved', JSON.stringify([...savedOpportunities]));
   renderOpportunities();
   renderHomeFeatured();
 }
@@ -365,6 +420,8 @@ function renderOpportunities() {
     Government: document.getElementById('fi-gov')?.checked,
     Engineering: document.getElementById('fi-eng')?.checked,
     Nonprofit: document.getElementById('fi-non')?.checked,
+    Logistics: document.getElementById('fi-log')?.checked,
+    Media: document.getElementById('fi-media')?.checked,
   };
   const anyIndustryChecked = Object.values(industryFilters).some(Boolean);
 
@@ -393,10 +450,54 @@ function renderOpportunities() {
     return true;
   });
 
+  // Sorting
+  const sortMode = document.getElementById('results-sort')?.value || 'featured';
+  if (sortMode === 'alpha') {
+    results = [...results].sort((a, b) => a.programs[0].localeCompare(b.programs[0]));
+  } else if (sortMode === 'deadline') {
+    results = [...results].sort((a, b) => deadlineSortKey(a.deadline) - deadlineSortKey(b.deadline));
+  }
+
   document.getElementById('results-count').innerHTML =
     `Showing <strong>${results.length}</strong> of ${employers.length} opportunities`;
 
+  if (!results.length) {
+    grid.innerHTML = `<div class="exp-no-results" style="padding:48px 20px;text-align:center;">
+      <i class="fa-solid fa-magnifying-glass" style="font-size:2rem;color:var(--border);margin-bottom:12px;display:block"></i>
+      <p style="color:var(--gray);margin-bottom:16px;">No opportunities match your search and filters.</p>
+      <button class="btn-primary" onclick="clearAllFilters()">Clear All Filters</button>
+    </div>`;
+    return;
+  }
+
   grid.innerHTML = results.map(e => oppCardHTML(e)).join('');
+}
+
+function clearAllFilters() {
+  const searchInput = document.getElementById('board-search-input');
+  if (searchInput) searchInput.value = '';
+  ['f-hs','f-col','f-both','f-intern','f-shadow','f-coop','f-fellow','f-volunteer','f-apprentice'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.checked = true;
+  });
+  ['fi-health','fi-tech','fi-fin','fi-gov','fi-eng','fi-non','fi-log','fi-media','f-paid','f-unpaid'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.checked = false;
+  });
+  renderOpportunities();
+}
+
+// Parses "close Jan 31", "Applications open Dec 1, close Feb 15", etc.
+// Dated deadlines sort by days until they next occur; rolling/undated sort last.
+function deadlineSortKey(str) {
+  const months = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+  const matches = [...str.matchAll(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2})/gi)];
+  if (!matches.length) return 10000;
+  const m = matches[matches.length - 1]; // last date mentioned = closing date
+  const now = new Date();
+  let d = new Date(now.getFullYear(), months[m[1].slice(0,3).toLowerCase()], parseInt(m[2]));
+  if (d < now) d.setFullYear(d.getFullYear() + 1);
+  return Math.round((d - now) / 86400000);
 }
 
 
@@ -455,7 +556,7 @@ function showDetail(id) {
 
     <div class="card">
       <h3>Location</h3>
-      <p style="font-size:0.85rem;color:var(--gray);line-height:1.5">${e.icon} ${e.location}</p>
+      <p style="font-size:0.85rem;color:var(--gray);line-height:1.5"><i class="fa-solid fa-location-dot" style="color:var(--teal);margin-right:6px"></i>${e.location}</p>
       <a onclick="showPage('map');initMap();setTimeout(()=>focusEmployer(${id}),500)" style="color:var(--teal);font-size:0.82rem;font-weight:600;cursor:pointer;display:block;margin-top:8px">View on Map →</a>
     </div>
 
@@ -486,7 +587,7 @@ function initMap() {
   const markers = {};
 
   employers.forEach(e => {
-    const markerColor = industryColor[e.industry] || '#0D2F6B';
+    const markerColor = industryColor[e.industry] || '#01696F';
     const markerInner = e.logo
       ? `<img src="${e.logo}" style="width:28px;height:28px;object-fit:contain;border-radius:3px;"
            onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
@@ -544,14 +645,40 @@ function focusEmployer(id) {
   }
   document.querySelectorAll('.map-emp-card').forEach(c => c.classList.remove('active'));
   const card = document.getElementById('mec-' + id);
-  if (card) { card.classList.add('active'); card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  if (card) {
+    card.classList.add('active');
+    const list = document.getElementById('map-employer-list');
+    if (list) list.scrollTop = card.offsetTop - list.offsetTop - 12;
+  }
 }
 
 
 /* ════════════════════════════════════
    INIT
 ═══════════════════════════════════ */
-const savedOpportunities = new Set();
+const savedOpportunities = new Set((() => {
+  try { return JSON.parse(localStorage.getItem('workjax_saved')) || []; }
+  catch { return []; }
+})());
+
+// Fill home-page stats and category counts from real data
+function fillHomeCounts() {
+  const programCount = employers.reduce((n, e) => n + e.programs.length, 0);
+  const industries = new Set(employers.map(e => e.industry));
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('stat-employers', employers.length);
+  set('stat-opps', programCount + '+');
+  set('stat-industries', industries.size);
+  document.querySelectorAll('[data-cat-count]').forEach(span => {
+    const ind = span.getAttribute('data-cat-count');
+    const n = employers.filter(e => e.industry === ind).reduce((s, e) => s + e.programs.length, 0);
+    span.textContent = n + ' opportunit' + (n === 1 ? 'y' : 'ies');
+  });
+  set('count-hs', employers.filter(e => e.grade === 'High School').length);
+  set('count-col', employers.filter(e => e.grade === 'College').length);
+  set('count-both', employers.filter(e => e.grade === 'Both').length);
+}
+fillHomeCounts();
 renderHomeFeatured();
 
 /* ════════════════════════════════════
