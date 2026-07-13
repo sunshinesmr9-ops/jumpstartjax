@@ -1,6 +1,6 @@
 # Dun & Bradstreet Lever Postings Proof of Concept
 
-**Status:** `DEMO ONLY` — a working endpoint exists, but it is not wired into `index.html`, `app.js`, or `data.js`, and it does not appear anywhere in the user interface.
+**Status:** `LIVE`, scoped to a single employer's detail page. The endpoint is called from `app.js` only when the existing Dun & Bradstreet employer detail page (`data.js` `id: 41`) is opened — no other employer's page calls it, and no new employer card or record was added. See "UI integration" below.
 **Endpoint:** `api/dnb-lever-jobs.js`
 **Related decision:** `docs/decisions/ADR-003-dnb-lever-job-poc.md`
 **Related research:** `docs/integrations/api-evaluation.md` (Section 5.9, Section 11)
@@ -125,13 +125,24 @@ Every returned posting is normalized into:
 8. Confirm the response has no `error` field and the correct `Cache-Control` header on a normal run.
 9. Load the existing WorkJax homepage and Opportunities page and confirm no console errors or behavior change — this endpoint is not called from anywhere in the current UI.
 
+## UI integration
+
+The endpoint is now connected to exactly one place in the WorkJax interface: the existing Dun & Bradstreet employer detail page (`data.js` `id: 41`, unmodified). Opening that detail page (`showDetail(41)` in `app.js`) renders a new **"Current opportunities from Dun & Bradstreet"** section beneath the curated program details and calls `GET /api/dnb-lever-jobs` at that moment — not before, and not for any other employer.
+
+- **Separation by `postingKind`:** `open_opportunity` results render as current opportunities with an "Apply Officially" link; `talent_network` results render in a distinct, clearly labeled "Talent Network" group with explicit text that joining is not a currently open job, and a "Join Talent Network" link instead.
+- **Fields shown:** title, opportunity type, location, workplace type, commitment, salary (only when `salaryRange` is present), last verified date, and the official external `applicationUrl` — nothing is displayed for a field the response doesn't provide.
+- **Loading / empty / error states:** a loading message appears immediately; an empty result set says no current matching opportunities were found (the curated "Apply Directly at Dun & Bradstreet" careers link stays visible regardless); any upstream failure replaces only this section with a small "temporarily unavailable" message, leaving the rest of the curated detail page (hero, requirements, programs, sidebar) fully visible and unaffected.
+- **Caching:** a successful response is cached in memory for the rest of the browser page session, so reopening the detail page does not repeat the network call. A failed request is not cached and will retry on the next open.
+- **No duplicate employer card:** this only augments the existing detail page's content; no new record was added to the `employers` array and no additional Dun & Bradstreet card appears in the directory, search, home page, or map.
+- Full behavior, visual components, and rationale are documented in `docs/features/opportunities.md` under "Dun & Bradstreet Live Opportunities Section."
+
 ## What this proof of concept is not
 
 - It is **not** a citywide job aggregator. It reflects only Dun & Bradstreet's own Lever board, one employer among many in Jacksonville.
 - It does **not** modify Dun & Bradstreet's existing employer record (`data.js`, `id: 41`) or any other live listing. `data.js` remains the site's only live data source, and this endpoint's output is not merged into it.
-- It does **not** appear anywhere in the user interface. There is no link, button, or fetch call in `index.html` or `app.js` that reaches this endpoint.
+- It does **not** appear anywhere else in the user interface — only the Dun & Bradstreet detail page calls it; every other employer's detail page, the directory, search, home page, and map are unchanged.
 - It does **not** process applications or store applicant information — every `applicationUrl` sends the user to Dun & Bradstreet's own official application page.
-- Its current qualifying Jacksonville result is a **recruitment-interest talent network, not a confirmed open internship** — see "Open opportunity vs. talent network" above.
+- A `talent_network` result is **not** presented as a confirmed open internship anywhere in the UI — see "Open opportunity vs. talent network" above and "UI integration" below.
 
 ## Change Log
 
@@ -139,3 +150,4 @@ Every returned posting is normalized into:
 |---|---|---|
 | 2026-07-13 | Documented the Dun & Bradstreet Lever Postings API endpoint-only proof of concept | Claude (implementation task) |
 | 2026-07-13 | Corrected the claim that Dun & Bradstreet's presence in WorkJax's employer dataset was undecided (it already exists as `data.js` `id: 41`); added the `postingKind` field distinguishing an open opportunity from a talent-network posting, the `commitment` prefix-match behavior for `"Intern: Full Time"`/`"Intern: Part Time"`, and explicit documentation that the current Jacksonville result is a talent network, not a confirmed open internship | Claude (implementation task) |
+| 2026-07-13 | Connected the endpoint to the existing Dun & Bradstreet detail page only (`app.js`), added the "Current opportunities from Dun & Bradstreet" section with open-opportunity/talent-network separation, loading/empty/error states, and page-session caching; updated status from `DEMO ONLY` to `LIVE` (scoped to this one employer's detail page) | Claude (implementation task) |

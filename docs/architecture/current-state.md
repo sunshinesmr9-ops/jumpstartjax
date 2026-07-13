@@ -5,7 +5,7 @@
 
 ## Summary
 
-WorkJax is currently a static, browser-based prototype. It does not use a frontend framework, application server, database, user authentication system, or shared content-management system. One `DEMO ONLY` exception exists: `api/dnb-lever-jobs.js`, a single endpoint-only Vercel Function proof of concept described below, which is not linked from the UI and does not change this overall picture.
+WorkJax is currently a static, browser-based prototype. It does not use a frontend framework, application server, database, user authentication system, or shared content-management system. One narrow exception exists: `api/dnb-lever-jobs.js`, a Vercel Function described below, is now called from the browser — but only from the existing Dun & Bradstreet employer detail page, for that one employer, and does not change this overall picture.
 
 ## Current Technology
 
@@ -18,7 +18,7 @@ WorkJax is currently a static, browser-based prototype. It does not use a fronte
 | Vercel | Static deployment and hosting |
 | Leaflet / map tiles | Interactive employer map |
 | Browser `localStorage` | Device-specific saved opportunities and prototype profile data |
-| `api/dnb-lever-jobs.js` | `DEMO ONLY` endpoint-only Vercel Function proof of concept. Fetches Dun & Bradstreet's public Lever postings board, filters to Jacksonville student/early-talent postings, and returns normalized JSON. Not called from `index.html` or `app.js`. See `docs/integrations/dnb-lever-poc.md`. |
+| `api/dnb-lever-jobs.js` | Vercel Function. Fetches Dun & Bradstreet's public Lever postings board, filters to Jacksonville student/early-talent postings, and returns normalized JSON. Called from `app.js` only when the existing Dun & Bradstreet employer detail page is opened. See `docs/integrations/dnb-lever-poc.md`. |
 
 ## Current Application Flow
 
@@ -58,7 +58,7 @@ flowchart LR
 | Shared accounts | None | `TBD` |
 | Database | None | `TBD` |
 | Administrative dashboard | None | `TBD` |
-| Dun & Bradstreet Lever job feed | `api/dnb-lever-jobs.js` returns normalized, Jacksonville-filtered student/early-talent postings from Dun & Bradstreet's public Lever board. Not linked from any page, not merged into `data.js`, and not a citywide job aggregator — see `docs/integrations/dnb-lever-poc.md` | `DEMO ONLY` |
+| Dun & Bradstreet Lever job feed | `api/dnb-lever-jobs.js` returns normalized, Jacksonville-filtered student/early-talent postings from Dun & Bradstreet's public Lever board. Called only from the existing Dun & Bradstreet detail page (`app.js`, `loadDnbLeverJobsSection()`), cached for the browser page session. Not merged into `data.js`, not a citywide job aggregator, and no other employer's page calls it — see `docs/integrations/dnb-lever-poc.md` | `LIVE` (scoped to one employer's detail page) |
 
 ## Important Current Limitations
 

@@ -421,6 +421,47 @@
     .info-label { color: var(--gray); }
     .info-val { font-weight: 600; color: var(--text); text-align: right; }
 
+    /* ── Dun & Bradstreet live Lever feed (endpoint-only proof of concept) ── */
+    .dnb-live-status { margin-top: 4px; }
+    .dnb-live-status-error i { color: var(--orange); }
+    .dnb-live-group, .dnb-live-network-group { display: flex; flex-direction: column; gap: 12px; }
+    .dnb-live-network-group { margin-top: 18px; }
+    .dnb-live-network-group h4 {
+      font-size: 0.88rem; font-weight: 700; color: var(--navy);
+      display: flex; align-items: center; gap: 6px; margin-bottom: 2px;
+    }
+    .dnb-live-network-group-note { font-size: 0.8rem; color: var(--gray); margin-bottom: 8px; line-height: 1.5; }
+    .dnb-live-card {
+      border: 1px solid var(--border); border-radius: 10px; padding: 16px;
+      background: var(--white);
+    }
+    .dnb-live-card-network { background: var(--light); border-style: dashed; }
+    .dnb-live-card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+    .dnb-live-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #E3F5F3; color: var(--navy); font-size: 0.7rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px; letter-spacing: 0.1px;
+    }
+    .dnb-live-network-tag {
+      display: inline-flex; align-items: center;
+      background: #FFF7ED; color: #C2410C; font-size: 0.7rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+    }
+    .dnb-live-title { font-size: 0.98rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .dnb-live-network-note { font-size: 0.8rem; color: var(--gray); margin-bottom: 8px; line-height: 1.5; }
+    .dnb-live-meta {
+      display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.8rem; color: var(--gray);
+      margin-top: 6px;
+    }
+    .dnb-live-meta span { display: flex; align-items: center; gap: 5px; }
+    .dnb-live-verified { font-size: 0.74rem; color: var(--gray); margin-top: 8px; }
+    .dnb-live-apply {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 12px; padding: 9px 16px; border-radius: 8px;
+      background: var(--teal); color: #fff; font-weight: 700; font-size: 0.85rem;
+      text-decoration: none;
+    }
+
     /* Supplemental questions */
     .supplemental-card {
       background: #FFFBF5; border: 1.5px solid #FDDCB5;

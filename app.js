@@ -568,6 +568,8 @@ function showDetail(id) {
         <h3>Available Programs at ${e.name}</h3>
         <ul>${e.programs.map(p => `<li>${p}</li>`).join('')}</ul>
       </div>` : ''}
+
+      ${e.name === DNB_EMPLOYER_NAME ? dnbLeverSectionHTML() : ''}
     </div>
 
   `;
@@ -599,7 +601,164 @@ function showDetail(id) {
     </div>
   `;
 
+  if (e.name === DNB_EMPLOYER_NAME) {
+    loadDnbLeverJobsSection();
+  }
+
   showPage('detail');
+}
+
+
+/* ════════════════════════════════════
+   DUN & BRADSTREET LIVE LEVER FEED
+   Endpoint-only proof of concept (docs/integrations/dnb-lever-poc.md).
+   GET /api/dnb-lever-jobs is called only when the existing Dun & Bradstreet
+   detail page is opened — never on load, never for any other employer.
+   A successful response is cached for the rest of this browser page
+   session so reopening the detail page does not re-fetch. This does not
+   add a new employer record or card; it only augments the existing
+   Dun & Bradstreet detail page.
+═══════════════════════════════════ */
+const DNB_EMPLOYER_NAME = 'Dun & Bradstreet';
+const DNB_LEVER_ENDPOINT = '/api/dnb-lever-jobs';
+
+let dnbLeverJobsCache = null;   // successful { source, employer, generatedAt, count, jobs } payload
+let dnbLeverJobsRequest = null; // in-flight fetch promise, dedupes concurrent opens
+
+function escapeHtml(value) {
+  if (value == null) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function fetchDnbLeverJobs() {
+  if (dnbLeverJobsCache) {
+    return Promise.resolve({ ok: true, payload: dnbLeverJobsCache });
+  }
+  if (!dnbLeverJobsRequest) {
+    dnbLeverJobsRequest = fetch(DNB_LEVER_ENDPOINT)
+      .then(res => {
+        if (!res.ok) throw new Error('dnb-lever-jobs request failed');
+        return res.json();
+      })
+      .then(payload => {
+        dnbLeverJobsCache = payload; // only a successful response is cached
+        return { ok: true, payload };
+      })
+      .catch(() => ({ ok: false, payload: null }))
+      .finally(() => { dnbLeverJobsRequest = null; });
+  }
+  return dnbLeverJobsRequest;
+}
+
+function formatSalaryRange(range) {
+  if (!range || typeof range !== 'object') return '';
+  const currency = typeof range.currency === 'string' ? range.currency : '';
+  const min = typeof range.min === 'number' ? range.min : null;
+  const max = typeof range.max === 'number' ? range.max : null;
+  if (min == null && max == null) return '';
+  if (min != null && max != null && min !== max) {
+    return `${currency} ${min.toLocaleString()}–${max.toLocaleString()}`.trim();
+  }
+  return `${currency} ${(min != null ? min : max).toLocaleString()}`.trim();
+}
+
+function dnbLeverLoadingHTML() {
+  return `<div class="prototype-note dnb-live-status">
+    <i class="fa-solid fa-spinner fa-spin"></i>
+    <span>Checking for current opportunities from Dun &amp; Bradstreet…</span>
+  </div>`;
+}
+
+function dnbLeverErrorHTML() {
+  return `<div class="prototype-note dnb-live-status dnb-live-status-error">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    <span>Live opportunities from Dun &amp; Bradstreet are temporarily unavailable. The program details above reflect WorkJax's curated information.</span>
+  </div>`;
+}
+
+function dnbLeverEmptyHTML() {
+  return `<div class="prototype-note dnb-live-status">
+    <i class="fa-solid fa-circle-info"></i>
+    <span>No current matching opportunities were found on Dun &amp; Bradstreet's official careers feed right now. Use the "Apply Directly at Dun &amp; Bradstreet" link for their full careers site.</span>
+  </div>`;
+}
+
+function dnbJobCardHTML(job) {
+  const isNetwork = job.postingKind === 'talent_network';
+  const lastVerified = job.lastVerifiedAt ? new Date(job.lastVerifiedAt).toLocaleDateString() : null;
+  const salaryText = formatSalaryRange(job.salaryRange);
+  const applyHref = typeof job.applicationUrl === 'string' && /^https?:\/\//i.test(job.applicationUrl)
+    ? job.applicationUrl
+    : null;
+
+  const metaItems = [
+    job.opportunityType ? `<span><i class="fa-solid fa-tag"></i>${escapeHtml(job.opportunityType)}</span>` : '',
+    job.location ? `<span><i class="fa-solid fa-location-dot"></i>${escapeHtml(job.location)}</span>` : '',
+    job.workplaceType ? `<span><i class="fa-solid fa-building"></i>${escapeHtml(job.workplaceType)}</span>` : '',
+    job.commitment ? `<span><i class="fa-regular fa-clock"></i>${escapeHtml(job.commitment)}</span>` : '',
+    salaryText ? `<span><i class="fa-solid fa-sack-dollar"></i>${escapeHtml(salaryText)}</span>` : '',
+  ].filter(Boolean).join('');
+
+  return `
+  <div class="dnb-live-card ${isNetwork ? 'dnb-live-card-network' : ''}">
+    <div class="dnb-live-card-top">
+      <span class="dnb-live-badge"><i class="fa-solid fa-satellite-dish"></i> Live from employer</span>
+      ${isNetwork ? '<span class="dnb-live-network-tag">Talent Network</span>' : ''}
+    </div>
+    <div class="dnb-live-title">${escapeHtml(job.title) || 'Untitled posting'}</div>
+    ${isNetwork ? `<p class="dnb-live-network-note">This is a recruitment-interest network, not a currently open job.</p>` : ''}
+    ${metaItems ? `<div class="dnb-live-meta">${metaItems}</div>` : ''}
+    ${lastVerified ? `<div class="dnb-live-verified">Last verified ${escapeHtml(lastVerified)}</div>` : ''}
+    ${applyHref ? `<a href="${applyHref}" target="_blank" rel="noopener" class="dnb-live-apply">
+      ${isNetwork ? 'Join Talent Network' : 'Apply Officially'} <i class="fa-solid fa-arrow-up-right-from-square"></i>
+    </a>` : ''}
+  </div>`;
+}
+
+function dnbLeverResultsHTML(payload) {
+  const jobs = Array.isArray(payload && payload.jobs) ? payload.jobs : [];
+  if (!jobs.length) return dnbLeverEmptyHTML();
+
+  const openJobs = jobs.filter(j => j.postingKind === 'open_opportunity');
+  const networkJobs = jobs.filter(j => j.postingKind === 'talent_network');
+
+  if (!openJobs.length && !networkJobs.length) return dnbLeverEmptyHTML();
+
+  let html = '';
+  if (openJobs.length) {
+    html += `<div class="dnb-live-group">${openJobs.map(dnbJobCardHTML).join('')}</div>`;
+  }
+  if (networkJobs.length) {
+    html += `
+    <div class="dnb-live-network-group">
+      <h4><i class="fa-solid fa-user-group"></i> Talent Network</h4>
+      <p class="dnb-live-network-group-note">These are recruitment-interest signups, not confirmed open positions.</p>
+      ${networkJobs.map(dnbJobCardHTML).join('')}
+    </div>`;
+  }
+  return html;
+}
+
+function dnbLeverSectionHTML() {
+  return `
+  <div class="detail-section dnb-live-section">
+    <h3>Current opportunities from Dun &amp; Bradstreet</h3>
+    <div id="dnb-live-jobs">${dnbLeverLoadingHTML()}</div>
+  </div>`;
+}
+
+async function loadDnbLeverJobsSection() {
+  const result = await fetchDnbLeverJobs();
+  // The user may have navigated to a different page while the fetch was in
+  // flight; only touch the DOM if this container still exists.
+  const container = document.getElementById('dnb-live-jobs');
+  if (!container) return;
+  container.innerHTML = result.ok ? dnbLeverResultsHTML(result.payload) : dnbLeverErrorHTML();
 }
 
 
