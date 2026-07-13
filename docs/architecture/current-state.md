@@ -53,6 +53,7 @@ flowchart LR
 | Student profiles | Sample records are hard-coded | `DEMO ONLY` |
 | User-created profile | Stored only on the device that created it | `DEMO ONLY` |
 | RSVP data | Held temporarily in browser memory | `DEMO ONLY` |
+| In-UI prototype disclosures | The Opportunities board, the Community Hub profile form, and each event's RSVP control now display a visible "Prototype note" explaining that saves are device-only, profiles are device-only and not shared, and RSVPs are demonstration-only | `LIVE` |
 | Shared accounts | None | `TBD` |
 | Database | None | `TBD` |
 | Administrative dashboard | None | `TBD` |

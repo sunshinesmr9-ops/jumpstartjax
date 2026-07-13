@@ -129,15 +129,21 @@ function renderEvents() {
         </a>
       </div>
       <div class="rsvp-bar">
-        <div style="display:flex;align-items:center;gap:0;">
-          ${avatarHtml}
-          ${extra ? `<div class="rsvp-avatar-sm" style="background:var(--gray)" title="${extra} more">+${extra}</div>` : ''}
-          <span class="rsvp-count-text">${rsvpCountText}</span>
+        <div class="prototype-note prototype-note-compact">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Prototype note: This RSVP is for demonstration only and does not register you with the event organizer. Use the official event link to register.</span>
         </div>
-        <button class="rsvp-btn ${iGoing ? 'going' : ''}" onclick="toggleRSVP(${e.id})">
-          <i class="fa-solid ${iGoing ? 'fa-circle-check' : 'fa-calendar-plus'}"></i>
-          ${iGoing ? "Going!" : "RSVP"}
-        </button>
+        <div class="rsvp-bar-row">
+          <div style="display:flex;align-items:center;gap:0;">
+            ${avatarHtml}
+            ${extra ? `<div class="rsvp-avatar-sm" style="background:var(--gray)" title="${extra} more">+${extra}</div>` : ''}
+            <span class="rsvp-count-text">${rsvpCountText}</span>
+          </div>
+          <button class="rsvp-btn ${iGoing ? 'going' : ''}" onclick="toggleRSVP(${e.id})">
+            <i class="fa-solid ${iGoing ? 'fa-circle-check' : 'fa-calendar-plus'}"></i>
+            ${iGoing ? "Going!" : "RSVP"}
+          </button>
+        </div>
       </div>
     </div>`;
   }).join('');
@@ -300,7 +306,11 @@ function openProfileModal() {
     <label class="modal-label">Interests (comma-separated)</label>
     <input type="text" class="form-input" id="pf-interests" placeholder="e.g. Healthcare, Photography, Soccer" value="${(p.interests || []).join(', ')}" style="width:100%;margin-bottom:10px;" />
     <label class="modal-label">LinkedIn URL (optional)</label>
-    <input type="url" class="form-input" id="pf-linkedin" placeholder="https://www.linkedin.com/in/your-name" value="${oldLinkedin}" style="width:100%;margin-bottom:4px;" />
+    <input type="url" class="form-input" id="pf-linkedin" placeholder="https://www.linkedin.com/in/your-name" value="${oldLinkedin}" style="width:100%;margin-bottom:14px;" />
+    <div class="prototype-note" style="margin-bottom:14px;">
+      <i class="fa-solid fa-circle-info"></i>
+      <span>Prototype note: Profiles created here are stored only in this browser and are not visible to other users.</span>
+    </div>
     <div class="modal-actions">
       ${p.name ? `<button class="modal-cancel" onclick="removeProfile()" style="color:#DC2626;border-color:#DC2626;">Delete Profile</button>` : `<button class="modal-cancel" onclick="closeMsgModal()">Cancel</button>`}
       <button class="modal-send" onclick="saveProfile()"><i class="fa-solid fa-user-check" style="margin-right:6px"></i>Save Profile</button>

@@ -808,11 +808,29 @@
       color: var(--gray); grid-column: 1 / -1;
     }
 
+    /* ── Prototype disclosure notices (reusable) ── */
+    .prototype-note {
+      display: flex; align-items: flex-start; gap: 8px;
+      background: var(--light); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 14px;
+      font-size: 0.8rem; color: var(--gray); line-height: 1.5;
+    }
+    .prototype-note i {
+      color: var(--teal); margin-top: 2px; flex-shrink: 0; font-size: 0.85rem;
+    }
+    .prototype-note-compact {
+      padding: 7px 10px; font-size: 0.74rem; border-radius: 6px;
+    }
+    .opp-results .prototype-note { margin-bottom: 16px; }
+
     /* ── RSVP on event cards ── */
     .rsvp-bar {
       padding: 12px 20px;
       border-top: 1px solid var(--border);
       background: var(--white);
+      display: flex; flex-direction: column; align-items: stretch; gap: 8px;
+    }
+    .rsvp-bar-row {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
     .rsvp-btn {

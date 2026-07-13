@@ -69,6 +69,8 @@ These types must remain distinct in the data model because their expiration and 
 
 WorkJax may allow a user to record that they plan to attend. The official ticket or organizer RSVP remains external unless a future WorkJax-hosted event is approved.
 
+**Disclosure (`LIVE`):** Every event card displays a "Prototype note" directly above the RSVP control, visible before the user selects RSVP, stating that the RSVP is for demonstration only, does not register the user with the event organizer, and that the official event link should be used to register.
+
 ```mermaid
 flowchart TD
     A[Open experience] --> B[Review details]

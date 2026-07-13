@@ -16,6 +16,7 @@ Connect Jax is not intended to provide direct in-platform messaging.
 - The created profile is not shared with other users.
 - RSVP associations are temporary.
 - There is no account verification, shared database, consent record, report flow, or moderation queue.
+- The profile creation/editing form displays a "Prototype note" disclosure (`LIVE`), visible before the user submits the form, stating that profiles created here are stored only in that browser and are not visible to other users.
 
 ## Proposed Public Profile Fields
 
