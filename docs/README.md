@@ -58,6 +58,7 @@ WorkJax is not intended to process opportunity applications or provide direct me
 
 - [Implementation Roadmap](roadmap/implementation-roadmap.md)
 - [ADR-001: Managed Backend and Automated Ingestion](decisions/ADR-001-managed-backend.md)
+- [ADR-002: Ticketmaster Discovery API Event Proof of Concept](decisions/ADR-002-ticketmaster-event-poc.md)
 
 ### Templates
 
