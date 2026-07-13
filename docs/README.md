@@ -44,6 +44,10 @@ WorkJax is not intended to process opportunity applications or provide direct me
 - [Migration Map](data/migration-map.md)
 - [Date Normalization Audit](data/date-normalization-audit.md)
 
+### Integrations
+
+- [API Evaluation](integrations/api-evaluation.md)
+
 ### Operations and Governance
 
 - [Content Ingestion](operations/content-ingestion.md)
