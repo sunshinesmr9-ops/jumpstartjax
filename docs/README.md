@@ -40,6 +40,8 @@ WorkJax is not intended to process opportunity applications or provide direct me
 ### Data
 
 - [Target Data Model](data/data-model.md)
+- [Current Data Dictionary](data/current-data-dictionary.md)
+- [Migration Map](data/migration-map.md)
 
 ### Operations and Governance
 
