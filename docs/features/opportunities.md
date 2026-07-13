@@ -27,7 +27,7 @@ Help high school and college students discover relevant experiential learning op
 | Type filter | Internship, job shadow, co-op, fellowship, volunteer, apprenticeship |
 | Industry filter | Eight current categories |
 | Compensation filter | Paid or unpaid/credit |
-| Sort | Featured, deadline, alphabetical |
+| Sort | Featured, deadline, alphabetical. Featured sort uses each record's `isFeatured` boolean (`LIVE`): featured records are placed first, and original array order is preserved within both the featured and non-featured groups. |
 | Opportunity cards | Built from employer records |
 | Detail page | Shows description, requirements, program details, location, and application link |
 | Save | Stored only in browser `localStorage` |
@@ -79,7 +79,9 @@ flowchart TD
 
 ## Featured Opportunities
 
-Current behavior is positional and should be replaced.
+**Current status:** `LIVE`. Featured status is stored as an explicit `isFeatured` boolean on each record in the `employers` array in `data.js`, not derived from array position. The homepage (`renderHomeFeatured()`) shows up to six records with `isFeatured === true`. The opportunities page "Featured" sort places `isFeatured === true` records first, preserving original array order within the featured group and within the non-featured group.
+
+There is still no formal selection rule, review date, or owner for which records are marked `isFeatured: true` — that curation remains manual. The richer criteria and controls below remain `PROPOSED`.
 
 ### Proposed criteria
 
@@ -95,10 +97,10 @@ A featured opportunity may be selected because it is:
 
 ### Required controls
 
-- `is_featured`
-- `featured_reason`
-- `featured_until`
-- `featured_by`
+- `is_featured` — `LIVE` today as the `isFeatured` boolean field on `employers` records in `data.js`.
+- `featured_reason` — `PROPOSED`
+- `featured_until` — `PROPOSED`
+- `featured_by` — `PROPOSED`
 - Approval owner: `TBD`
 
 ## Success Metrics
