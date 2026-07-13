@@ -7,7 +7,7 @@
 
 ## Why Dun & Bradstreet
 
-`docs/integrations/api-evaluation.md` identified the Lever Postings API as the opportunity source with the best field-level fit for WorkJax's target data model (`commitment`, `workplaceType`, `salaryRange`, `applyUrl`), but noted that no current WorkJax employer had been confirmed to use Lever. Dun & Bradstreet's public Lever site (`api.lever.co/v0/postings/dnb`) was identified as a real, live, unauthenticated Lever board suitable for a small read-only proof of concept, independent of whether D&B is added to WorkJax's employer list. This proof of concept validates the request/filter/normalize pattern only — it is not a decision to add Dun & Bradstreet to `data.js`.
+`docs/integrations/api-evaluation.md` identified the Lever Postings API as the opportunity source with the best field-level fit for WorkJax's target data model (`commitment`, `workplaceType`, `salaryRange`, `applyUrl`). **Dun & Bradstreet already exists in WorkJax's curated employer dataset** — `data.js` record `id: 41` — with a hand-written description of its Jacksonville summer internship program. Dun & Bradstreet also operates a public, unauthenticated Lever postings board (`api.lever.co/v0/postings/dnb`), which made it a real, live source suitable for a small read-only proof of concept for an employer WorkJax already lists. This proof of concept validates the request/filter/normalize pattern only — it does not create or modify the existing `data.js` employer record, and its output is not merged into that record or any live listing.
 
 ## Fixed source
 
@@ -45,11 +45,27 @@ A Dun & Bradstreet posting is included only if it passes **all** of the followin
 
 1. **Jacksonville, Florida match** — `categories.location` or any entry in `categories.allLocations` case-insensitively contains `"jacksonville"` together with `"florida"` or `"fl"`.
 2. **Student/early-talent relevance** — at least one of:
-   - `categories.commitment` equals `"Intern"` (case-insensitive), or
+   - `categories.commitment` **starts with** `"intern"` (case-insensitive), so `"Intern"`, `"Intern: Full Time"`, and `"Intern: Part Time"` all match — the check is a prefix match, not an exact-equality match, or
    - `categories.department` or `categories.team` contains `"internship"`, or
    - the title contains, as a whole word or phrase, `Internship`, `Intern`, `Early Talent`, `Co-op`/`Coop`, `Apprentice`/`Apprenticeship`, or `Graduate Program`. Word-boundary matching is used so `"international"` never matches on `"intern"`.
 
 Ordinary full-time Dun & Bradstreet roles in Jacksonville that do not hit any of the above signals are excluded — they are not classified as student opportunities. The result set is capped at 20 records.
+
+## Open opportunity vs. talent network
+
+Not every Dun & Bradstreet posting that passes the filters above is an actual open job. Lever also hosts "talent network" postings — recruitment-interest signups, not specific job openings. Each normalized record carries a `postingKind` field:
+
+- `"open_opportunity"` — a specific job or internship posting.
+- `"talent_network"` — a recruitment-interest network, not a confirmed open position.
+
+A posting is classified `"talent_network"` when either:
+
+- its title contains the phrase `"Early Talent Network"`, or
+- its description explicitly states the posting is not an open job opportunity/position/role (e.g. "This is not an open job opportunity...").
+
+For a `"talent_network"` record, `opportunityType` is always forced to `"Early Talent"` and `status` is set to `"active_network"` (instead of `"active"`), specifically so it is never described as a currently open internship. Its `externalUrl`/`applicationUrl` are still populated from Lever's own `hostedUrl`/`applyUrl`, since joining the network is still a legitimate, official action a student can take.
+
+**As of this proof of concept, the Dun & Bradstreet feed's qualifying Jacksonville record is an Early Talent Network posting, not a confirmed open internship.** Any future caller of this endpoint must treat `postingKind: "talent_network"` results as a recruitment-interest signup, not an available position, and must not present them as a current job opening.
 
 ## Normalized job shape
 
@@ -64,6 +80,7 @@ Every returned posting is normalized into:
 | `title` | Lever `text` |
 | `description` | Lever `content.description` (raw HTML, unmodified) |
 | `descriptionPlain` | The same description with HTML tags mechanically stripped |
+| `postingKind` | `"open_opportunity"` or `"talent_network"` — see Open opportunity vs. talent network above |
 | `opportunityType` | `"Internship"`, `"Apprenticeship"`, or `"Early Talent"` — see Classification below |
 | `studentLevel` | `"College"` or `"Unspecified"` — see Classification below |
 | `employerName` | `"Dun & Bradstreet"` |
@@ -80,11 +97,12 @@ Every returned posting is normalized into:
 | `applicationUrl` | Lever `applyUrl` |
 | `sourceLastSeenAt` / `lastVerifiedAt` | The server's request timestamp (ISO 8601), both set identically |
 | `dateVerificationStatus` | `"verified"` — the live fetch is the verification |
-| `status` | `"active"` |
+| `status` | `"active"` for an open opportunity, `"active_network"` for a talent-network posting |
 
 ## Classification limitations
 
-- **opportunityType** is conservative: `"Internship"` requires a structural signal (`commitment`, `department`/`team`, or title) or an explicit title match; `"Apprenticeship"` requires an explicit structural or title match; everything else that passed the relevance filter falls back to `"Early Talent"`. Nothing is inferred beyond these fields.
+- **postingKind** is conservative: only an explicit `"Early Talent Network"` title phrase or explicit "not an open job opportunity/position/role" description language triggers `"talent_network"`. Anything else that passes the relevance filter is treated as `"open_opportunity"`.
+- **opportunityType** is conservative: for a talent-network posting it is always `"Early Talent"`. For an open opportunity, `"Internship"` requires a structural signal (`commitment` starting with `"intern"`, `department`/`team`, or title) or an explicit title match; `"Apprenticeship"` requires an explicit structural or title match; everything else that passed the relevance filter falls back to `"Early Talent"`. Nothing is inferred beyond these fields.
 - **studentLevel** is `"College"` only when the title or description text explicitly contains `college`, `university`, `undergraduate`, `graduate`, or `degree`. It is otherwise `"Unspecified"`. **High-school eligibility is never inferred** — this endpoint has no mechanism to determine or claim high-school eligibility.
 - No compensation amount, application deadline, or age/eligibility requirement is invented. `salaryRange` is passed through only if Lever provides it; otherwise it is `null`.
 
@@ -102,18 +120,22 @@ Every returned posting is normalized into:
 3. Independently fetch `https://api.lever.co/v0/postings/dnb?mode=json` and manually cross-check 3–5 returned jobs' `location`/`allLocations` to confirm Jacksonville filtering has no false positives or negatives.
 4. Identify at least one ordinary full-time Dun & Bradstreet Jacksonville posting in the raw feed and confirm it does **not** appear in the endpoint's output.
 5. Confirm no job in the response has `studentLevel: "College"` unless its title or description text actually contains one of the listed college-reference words.
-6. Confirm the response has no `error` field and the correct `Cache-Control` header on a normal run.
-7. Load the existing WorkJax homepage and Opportunities page and confirm no console errors or behavior change — this endpoint is not called from anywhere in the current UI.
+6. Confirm a posting with `categories.commitment` of `"Intern: Full Time"` or `"Intern: Part Time"` is still recognized and included (prefix match, not exact match).
+7. Confirm any Early Talent Network posting returns `postingKind: "talent_network"`, `opportunityType: "Early Talent"`, and `status: "active_network"` — and is not labeled as a currently open internship.
+8. Confirm the response has no `error` field and the correct `Cache-Control` header on a normal run.
+9. Load the existing WorkJax homepage and Opportunities page and confirm no console errors or behavior change — this endpoint is not called from anywhere in the current UI.
 
 ## What this proof of concept is not
 
 - It is **not** a citywide job aggregator. It reflects only Dun & Bradstreet's own Lever board, one employer among many in Jacksonville.
-- It does **not** add Dun & Bradstreet to WorkJax's live employer or opportunity listings. `data.js` remains the site's only live data source.
+- It does **not** modify Dun & Bradstreet's existing employer record (`data.js`, `id: 41`) or any other live listing. `data.js` remains the site's only live data source, and this endpoint's output is not merged into it.
 - It does **not** appear anywhere in the user interface. There is no link, button, or fetch call in `index.html` or `app.js` that reaches this endpoint.
 - It does **not** process applications or store applicant information — every `applicationUrl` sends the user to Dun & Bradstreet's own official application page.
+- Its current qualifying Jacksonville result is a **recruitment-interest talent network, not a confirmed open internship** — see "Open opportunity vs. talent network" above.
 
 ## Change Log
 
 | Date | Change | Author |
 |---|---|---|
 | 2026-07-13 | Documented the Dun & Bradstreet Lever Postings API endpoint-only proof of concept | Claude (implementation task) |
+| 2026-07-13 | Corrected the claim that Dun & Bradstreet's presence in WorkJax's employer dataset was undecided (it already exists as `data.js` `id: 41`); added the `postingKind` field distinguishing an open opportunity from a talent-network posting, the `commitment` prefix-match behavior for `"Intern: Full Time"`/`"Intern: Part Time"`, and explicit documentation that the current Jacksonville result is a talent network, not a confirmed open internship | Claude (implementation task) |
