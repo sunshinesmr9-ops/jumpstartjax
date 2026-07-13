@@ -672,7 +672,7 @@
     .nav-badge-icon { font-size: 0.85rem; }
     .stat-icon { font-size: 1.4rem; margin-bottom: 4px; color: var(--teal); }
 
-    /* ── ExperienceJax Page ── */
+    /* ── Third Spaces Page ── */
     .exp-hero {
       background: linear-gradient(135deg, #024B52 0%, #01474C 60%, #01696F 100%);
       padding: 52px 32px 44px;
@@ -840,7 +840,7 @@
       font-size: 0.8rem; color: var(--gray); margin-left: 8px; white-space: nowrap;
     }
 
-    /* ── ConnectJax Page ── */
+    /* ── Community Hub Page ── */
     .connect-hero {
       background: linear-gradient(135deg, #024B52 0%, #01696F 100%);
       padding: 52px 32px 44px;

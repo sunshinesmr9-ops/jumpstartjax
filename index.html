@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WorkJax, Northeast Florida Experiential Learning</title>
+  <title>Jumpstart Jax, Northeast Florida Experiential Learning</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,14 +15,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
-  <!-- WorkJax styles -->
+  <!-- Jumpstart Jax styles -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
 <!-- ── Navigation ── -->
 <nav>
-  <div class="nav-logo" onclick="showPage('home')">Work<span>Jax</span></div>
+  <div class="nav-logo" onclick="showPage('home')">Jumpstart<span>Jax</span></div>
   <button class="nav-toggle" id="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle menu">
     <i class="fa-solid fa-bars"></i>
   </button>
@@ -30,8 +30,8 @@
     <button class="nav-link active" id="nav-home" onclick="showPage('home')"><i class="fa-solid fa-house" style="margin-right:5px"></i>Home</button>
     <button class="nav-link" id="nav-opportunities" onclick="showPage('opportunities')"><i class="fa-solid fa-magnifying-glass" style="margin-right:5px"></i>Find Opportunities</button>
     <button class="nav-link" id="nav-map" onclick="showPage('map'); initMap()"><i class="fa-solid fa-map" style="margin-right:5px"></i>Employer Map</button>
-    <button class="nav-link" id="nav-experience" onclick="showPage('experience')"><i class="fa-solid fa-calendar-star" style="margin-right:5px"></i>ExperienceJax</button>
-    <button class="nav-link" id="nav-connect" onclick="showPage('connect')"><i class="fa-solid fa-users" style="margin-right:5px"></i>ConnectJax</button>
+    <button class="nav-link" id="nav-experience" onclick="showPage('experience')"><i class="fa-solid fa-calendar-star" style="margin-right:5px"></i>Third Spaces</button>
+    <button class="nav-link" id="nav-connect" onclick="showPage('connect')"><i class="fa-solid fa-users" style="margin-right:5px"></i>Community Hub</button>
   </div>
 </nav>
 
@@ -46,8 +46,8 @@
     <div class="hero-video-overlay"></div>
     <div class="hero-content-wrap">
       <div class="hero-badge"><i class="fa-solid fa-map-pin hero-badge-icon"></i> Northeast Florida's Experiential Learning Hub</div>
-      <h1>Discover Real Work.<br/>Build Your Future in <em style="color: #64D9C4">Jacksonville.</em></h1>
-      <p>Dozens of opportunities. Connect with top employers across Northeast Florida and launch your career right here at home.</p>
+      <h1>Your next opportunity is closer than you think.<br/>Build Your Future in <em style="color: #64D9C4">Jacksonville.</em></h1>
+      <p>Connect with Northeast Florida employers, explore real-world experiences, and start building a career right here in Jacksonville.</p>
       <div class="hero-search">
         <div class="hero-search-box">
           <input type="text" placeholder="Search internships, industries, employers…" id="hero-search-input" autocomplete="off" oninput="showSuggestions('hero')" onfocus="showSuggestions('hero')" onkeydown="searchKeydown(event,'hero')" />
@@ -75,9 +75,9 @@
   </div>
 
   <div class="section">
-    <div class="section-label" style="font-size: 14px">What WorkJax Offers</div>
+    <div class="section-label" style="font-size: 14px">What Jumpstart Jax Offers</div>
     <div class="section-title">Everything You Need, in One Place.</div>
-    <div class="section-sub">WorkJax is your all-in-one hub for launching your career, building your network, and making the most of your time in Northeast Florida through internships, apprenticeships, volunteering, and other experiential learning opportunities.</div>
+    <div class="section-sub">Jumpstart Jax is your all-in-one hub for launching your career, building your network, and making the most of your time in Northeast Florida through internships, apprenticeships, volunteering, and other experiential learning opportunities.</div>
     <div class="how-grid">
       <div class="how-card" onclick="showPage('opportunities')" style="cursor:pointer">
         <div class="how-num">1</div>
@@ -94,7 +94,7 @@
       <div class="how-card" onclick="showPage('experience')" style="cursor:pointer">
         <div class="how-num">3</div>
         <div class="how-icon"><i class="fa-solid fa-map-pin" style="color:var(--teal)"></i></div>
-        <h3>Discover Jacksonville</h3>
+        <h3>Explore Third Spaces</h3>
         <p>Your experience here is just the beginning. Explore what the River City has to offer, from waterfront events and live music to food markets and free cultural experiences.</p>
       </div>
     </div>
@@ -255,12 +255,12 @@
 
 
 <!-- ═══════════════════════════════════════
-     EXPERIENCEJAX
+     THIRD SPACES
 ════════════════════════════════════════ -->
 <div id="page-experience" class="page">
   <div class="exp-hero">
     <div class="exp-hero-content">
-      <h1><i class="fa-solid fa-calendar-star" style="margin-right:12px"></i>Experience<span style="color: #64D9C4">Jax</span></h1>
+      <h1><i class="fa-solid fa-calendar-star" style="margin-right:12px"></i>Third <span style="color: #64D9C4">Spaces</span></h1>
       <p>Jacksonville has more to offer than internships. Explore free days, live music, art walks, baseball, markets, and community events, curated for interns making the most of their summer in the River City.</p>
       <div class="exp-hero-badge"><i class="fa-solid fa-record-vinyl" style="margin-right:8px"></i>Since the Harlem of the South, Jax has always known how to gather</div>
     </div>
@@ -358,12 +358,12 @@
 
 
 <!-- ═══════════════════════════════════════
-     CONNECTJAX
+     COMMUNITY HUB
 ════════════════════════════════════════ -->
 <div id="page-connect" class="page">
   <div class="connect-hero">
     <div class="connect-hero-content">
-      <h1><i class="fa-solid fa-users" style="margin-right:12px"></i>Connect<span style="color: #64D9c4">Jax</span></h1>
+      <h1><i class="fa-solid fa-users" style="margin-right:12px"></i>Community <span style="color: #64D9c4">Hub</span></h1>
       <p>Whether you're interning, apprenticing, volunteering, or job shadowing, you're building your network. Meet fellow students across Jacksonville, see who's working where, share interests, and grow together as young professionals in the River City.</p>
     </div>
   </div>
@@ -412,7 +412,7 @@
 
 
 
-<!-- WorkJax scripts, data first, then app logic -->
+<!-- Jumpstart Jax scripts, data first, then app logic -->
 <script src="data.js"></script>
 <script src="app.js"></script>
 

@@ -366,7 +366,7 @@ const employers = [
     grade: "College", paid: true,
     lat: 30.2823, lng: -81.6470,
     location: "Jacksonville, FL",
-    description: "A registered, union-affiliated electrical apprenticeship run with IBEW Local 177 and NECA. Apprentices are placed with a member contractor and \"earn while they learn\", four years of paid on-the-job training paired with classroom instruction, leading to a journeyworker credential.",
+    description: "A registered, union-affiliated electrical apprenticeship run with IBEW Local 177 and NECA. Apprentices are placed with a member contractor and earn a wage while they learn, four years of paid on-the-job training paired with classroom instruction, leading to a journeyworker credential.",
     duration: "4 years (on-the-job training + 2 nights/week classes)",
     deadline: "Rolling, applications accepted year-round",
     internshipUrl: "https://www.etajax.org/",
@@ -491,6 +491,45 @@ const employers = [
     programs: ["River Cleanup Volunteer", "Education & Outreach Volunteer"]
   },
   {
+    id: 39, name: "FIS Global", icon: "fa-solid fa-money-check-dollar", logo: "https://www.google.com/s2/favicons?domain=fisglobal.com&sz=256",
+    industry: "Finance", industryLabel: "Finance/Fintech", type: "Internship",
+    grade: "College", paid: true,
+    lat: 30.3193, lng: -81.6640,
+    location: "347 Riverside Ave, Jacksonville, FL 32202",
+    description: "FIS is a global fintech leader headquartered in Jacksonville. The FIS University Program is a full-time, paid summer internship spanning finance, business process analysis, UI/UX design, and data analytics tracks, with team projects, mentors, and professional development seminars.",
+    duration: "10 weeks (June\u2013August)",
+    deadline: "Rolling, check fisglobal.com/careers for current openings",
+    internshipUrl: "https://www.fisglobal.com/en/careers",
+    requirements: ["Currently enrolled college student", "Interest in finance, technology, or design", "Full-time availability for the summer term"],
+    programs: ["FIS University Summer Internship Program"]
+  },
+  {
+    id: 40, name: "Jacksonville Jaguars", icon: "fa-solid fa-football", logo: "https://www.google.com/s2/favicons?domain=jaguars.com&sz=256",
+    industry: "Media", industryLabel: "Media/Sports", type: "Internship",
+    grade: "College", paid: false,
+    lat: 30.3239, lng: -81.6373,
+    location: "1 TIAA Bank Field Dr, Jacksonville, FL 32202",
+    description: "The Jaguars offer internships across Marketing, Social Media, Communications, and Business Operations, giving students hands-on experience in professional sports and entertainment alongside NFL staff. Interns must be eligible for college credit or have graduated within 18 months of the internship start.",
+    duration: "Semester-based (Fall/Spring/Summer)",
+    deadline: "Rolling, check jaguars.com/careers for current openings",
+    internshipUrl: "https://www.jaguars.com/careers/",
+    requirements: ["Eligible for college credit, or graduated within 18 months", "In-person at TIAA Bank Field", "Strong written and verbal communication"],
+    programs: ["Marketing Internship", "Social Media Internship"]
+  },
+  {
+    id: 41, name: "Dun & Bradstreet", icon: "fa-solid fa-chart-pie", logo: "https://www.google.com/s2/favicons?domain=dnb.com&sz=256",
+    industry: "Technology", industryLabel: "Technology/Data Analytics", type: "Internship",
+    grade: "College", paid: true,
+    lat: 30.2947, lng: -81.6412,
+    location: "Jacksonville, FL (Southpoint office)",
+    description: "Dun & Bradstreet's Jacksonville office runs a structured summer internship program with tracks in Data & Analytics, People Analytics, Environmental/Social/Governance (ESG), and Accounting, working on real business challenges alongside experienced mentors.",
+    duration: "Summer, ~10\u201312 weeks",
+    deadline: "Rolling, check dnb.com/careers for current openings",
+    internshipUrl: "https://www.dnb.com/about-us/careers.html",
+    requirements: ["Currently enrolled college student", "Interest in data analytics, ESG, or accounting", "Must be eligible to return to school after the internship"],
+    programs: ["Data & Analytics Internship", "Accounting Internship", "ESG Internship"]
+  },
+  {
     id: 37, name: "Big Brothers Big Sisters of Northeast Florida", icon: "fa-solid fa-children", logo: "https://www.google.com/s2/favicons?domain=bbbsnefl.org&sz=256",
     industry: "Nonprofit", type: "Volunteer",
     grade: "College", paid: false,
@@ -526,29 +565,15 @@ function empLogo(e, imgSize, iconSize) {
     <img src="${e.logo}" alt="${e.name} logo"
       style="width:${iSize};height:${iSize};object-fit:contain;display:block;border-radius:4px;"
       onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-    <span class="emp-icon-wrap" style="display:none;"
+    <span class="emp-icon-wrap" style="display:none;">
       <i class="${e.icon}" style="color:${color};font-size:${fs}"></i>
     </span>`;
 }
 
 /* ════════════════════════════════════
-   EXPERIENCEJAX DATA
+   THIRD SPACES DATA
 ═══════════════════════════════════ */
 const events = [
-  {
-    id: 1,
-    title: "Freedom Fest, America's 250th Anniversary",
-    categories: ["Arts & Culture", "Outdoors"],
-    date: "July 3–4, 2026 | Starts 4 PM",
-    location: "Riverfront Plaza & Friendship Fountain, Downtown Jacksonville",
-    price: "Free",
-    free: true,
-    icon: "fa-solid fa-flag-usa",
-    color: "#B71C1C",
-    description: "Jacksonville celebrates America's 250th birthday with two nights of live music, performances, and fireworks along the St. Johns River. Riverfront Plaza lights up July 3rd starting at 4 PM, and Friendship Fountain hosts festivities July 4th from 5:30–10 PM with the fireworks finale over the water.",
-    link: "https://www.jacksonville.gov/welcome/featured-news/city-to-celebrate-america%E2%80%99s-250th-anniversary-on-july-3-and-4,-2026",
-    recurring: false
-  },
   {
     id: 2,
     title: "First Wednesday Art Walk",
@@ -595,13 +620,13 @@ const events = [
     id: 5,
     title: "Jacksonville Jumbo Shrimp Baseball",
     categories: ["Sports", "Outdoors"],
-    date: "Multiple dates through September | Next home games: Jul 7–11",
-    location: "121 Financial Ballpark, 301 A. Philip Randolph Blvd, Downtown",
+    date: "Home games through Sept 20 | Next homestand: Aug 11–16 vs. Syracuse",
+    location: "VyStar Ballpark, 301 A. Philip Randolph Blvd, Downtown",
     price: "From $10",
     free: false,
     icon: "fa-solid fa-baseball",
     color: "#E65100",
-    description: "Catch a Double-A baseball game at 121 Financial Ballpark right in downtown Jacksonville. The Jumbo Shrimp are the Miami Marlins' affiliate, affordable tickets, great food, and fireworks on select nights. Check the full July–September schedule at milb.com/jacksonville.",
+    description: "Catch a Triple-A baseball game at VyStar Ballpark right in downtown Jacksonville. The Jumbo Shrimp are the Miami Marlins' affiliate and defending Triple-A national champions, affordable tickets, great food, and fireworks on select nights. Check the full schedule at milb.com/jacksonville.",
     link: "https://www.milb.com/jacksonville/schedule",
     recurring: true
   },
@@ -609,7 +634,7 @@ const events = [
     id: 6,
     title: "Riverside Arts Market",
     categories: ["Food & Market", "Arts & Culture", "Outdoors"],
-    date: "Every Saturday, 10 AM–3 PM | July dates: 5, 12, 19, 26",
+    date: "Every Saturday, 10 AM–3 PM",
     location: "715 Riverside Ave (Under the Fuller Warren Bridge)",
     price: "Free",
     free: true,
@@ -764,7 +789,7 @@ const events = [
 let activeEventFilters = new Set();
 
 /* ════════════════════════════════════
-   CONNECTJAX DATA
+   COMMUNITY HUB DATA
 ═══════════════════════════════════ */
 const avatarColors = ['#0D2F6B','#00695C','#AD1457','#E65100','#1565C0','#6A1B9A','#00838F','#558B2F','#F57F17','#4527A0'];
 

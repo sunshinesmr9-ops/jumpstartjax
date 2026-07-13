@@ -25,7 +25,7 @@ function closeMobileNav() {
 }
 
 /* ════════════════════════════════════
-   EXPERIENCEJAX
+   THIRD SPACES
 ═══════════════════════════════════ */
 function filterEvents(cat) {
   if (cat === 'All') {
@@ -139,7 +139,7 @@ function toggleRSVP(eventId) {
 }
 
 /* ════════════════════════════════════
-   CONNECTJAX
+   COMMUNITY HUB
 ═══════════════════════════════════ */
 function renderConnectJax() {
   const grid = document.getElementById('intern-grid');
@@ -167,7 +167,7 @@ function renderConnectJax() {
     return matchQ && matchCo && matchType;
   });
 
-  countEl.textContent = filtered.length + ' student' + (filtered.length !== 1 ? 's' : '') + ' in the WorkJax network';
+  countEl.textContent = filtered.length + ' student' + (filtered.length !== 1 ? 's' : '') + ' in the Jumpstart Jax network';
 
   if (!filtered.length) {
     grid.innerHTML = `<div class="connect-empty">
@@ -257,7 +257,7 @@ function openProfileModal() {
       <button class="modal-close" onclick="closeMsgModal()"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <p style="font-size:0.87rem;color:var(--gray);margin-bottom:16px;line-height:1.5;">
-      No password needed, your profile is saved on this device. It appears in the ConnectJax directory, links your LinkedIn, and keeps your saved opportunities and RSVPs.
+      No password needed, your profile is saved on this device. It appears in the Community Hub directory, links your LinkedIn, and keeps your saved opportunities and RSVPs.
     </p>
     <label class="modal-label">Name *</label>
     <input type="text" class="form-input" id="pf-name" placeholder="Your full name" value="${p.name || ''}" style="width:100%;margin-bottom:10px;" />
