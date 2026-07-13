@@ -3,7 +3,7 @@
 ═══════════════════════════════════ */
 const employers = [
   {
-    id: 1, name: "Mayo Clinic Florida", icon: "fa-solid fa-hospital", logo: "https://www.google.com/s2/favicons?domain=mayoclinic.org&sz=256",
+    id: 1, isFeatured: true, name: "Mayo Clinic Florida", icon: "fa-solid fa-hospital", logo: "https://www.google.com/s2/favicons?domain=mayoclinic.org&sz=256",
     industry: "Healthcare", type: "Internship",
     grade: "College", paid: true,
     lat: 30.2645, lng: -81.4423,
@@ -20,7 +20,7 @@ const employers = [
     programs: ["Summer Research Fellowship", "Clinical Shadowing Program"]
   },
   {
-    id: 2, name: "Fidelity Investments", icon: "fa-solid fa-chart-line", logo: "https://www.google.com/s2/favicons?domain=fidelity.com&sz=256",
+    id: 2, isFeatured: true, name: "Fidelity Investments", icon: "fa-solid fa-chart-line", logo: "https://www.google.com/s2/favicons?domain=fidelity.com&sz=256",
     industry: "Finance", type: "Co-op",
     grade: "College", paid: true,
     lat: 30.2631, lng: -81.5483,
@@ -36,7 +36,7 @@ const employers = [
     programs: ["Technology Co-op", "Finance Analyst Track"]
   },
   {
-    id: 3, name: "JEA", icon: "fa-solid fa-bolt", logo: "https://www.google.com/s2/favicons?domain=jea.com&sz=256",
+    id: 3, isFeatured: true, name: "JEA", icon: "fa-solid fa-bolt", logo: "https://www.google.com/s2/favicons?domain=jea.com&sz=256",
     industry: "Engineering", type: "Internship",
     grade: "Both", paid: true,
     lat: 30.3275, lng: -81.6622,
@@ -53,7 +53,7 @@ const employers = [
     programs: ["Engineering Intern", "IT & Cybersecurity Intern"]
   },
   {
-    id: 4, name: "City of Jacksonville", icon: "fa-solid fa-landmark", logo: "https://www.google.com/s2/favicons?domain=coj.net&sz=256",
+    id: 4, isFeatured: true, name: "City of Jacksonville", icon: "fa-solid fa-landmark", logo: "https://www.google.com/s2/favicons?domain=coj.net&sz=256",
     industry: "Government", type: "Fellowship",
     grade: "Both", paid: true,
     lat: 30.3300, lng: -81.6594,
@@ -69,7 +69,7 @@ const employers = [
     programs: ["Mayor's Civic Innovation Fellowship", "Public Works Internship"]
   },
   {
-    id: 5, name: "Nemours Children's Health", icon: "fa-solid fa-heart-pulse", logo: "https://www.google.com/s2/favicons?domain=nemours.org&sz=256",
+    id: 5, isFeatured: true, name: "Nemours Children's Health", icon: "fa-solid fa-heart-pulse", logo: "https://www.google.com/s2/favicons?domain=nemours.org&sz=256",
     industry: "Healthcare", type: "Job Shadow",
     grade: "High School", paid: false,
     lat: 30.3129, lng: -81.6632,
@@ -85,7 +85,7 @@ const employers = [
     programs: ["Healthcare Explorer Program"]
   },
   {
-    id: 6, name: "CSX Transportation", icon: "fa-solid fa-train", logo: "https://www.google.com/s2/favicons?domain=csx.com&sz=256",
+    id: 6, isFeatured: true, name: "CSX Transportation", icon: "fa-solid fa-train", logo: "https://www.google.com/s2/favicons?domain=csx.com&sz=256",
     industry: "Engineering", type: "Internship",
     grade: "College", paid: true,
     lat: 30.3244, lng: -81.6640,
@@ -101,7 +101,7 @@ const employers = [
     programs: ["Engineering Internship", "Supply Chain & Logistics Intern"]
   },
   {
-    id: 7, name: "VyStar Credit Union", icon: "fa-solid fa-building-columns", logo: "https://www.google.com/s2/favicons?domain=vystarcu.org&sz=256",
+    id: 7, isFeatured: false, name: "VyStar Credit Union", icon: "fa-solid fa-building-columns", logo: "https://www.google.com/s2/favicons?domain=vystarcu.org&sz=256",
     industry: "Finance", type: "Internship",
     grade: "High School", paid: true,
     lat: 30.3259, lng: -81.6599,
@@ -122,7 +122,7 @@ const employers = [
     programs: ["Academy of Business High School Branch Program"]
   },
   {
-    id: 8, name: "UF Health Jacksonville", icon: "fa-solid fa-stethoscope", logo: "https://www.google.com/s2/favicons?domain=ufhealth.org&sz=256",
+    id: 8, isFeatured: false, name: "UF Health Jacksonville", icon: "fa-solid fa-stethoscope", logo: "https://www.google.com/s2/favicons?domain=ufhealth.org&sz=256",
     industry: "Healthcare", type: "Internship",
     grade: "Both", paid: true,
     lat: 30.3470, lng: -81.6635,
@@ -138,7 +138,7 @@ const employers = [
     programs: ["Clinical Research Intern", "Public Health Fellow"]
   },
   {
-    id: 9, name: "Intercontinental Exchange (ICE)", icon: "fa-solid fa-code", logo: "https://www.google.com/s2/favicons?domain=ice.com&sz=256",
+    id: 9, isFeatured: false, name: "Intercontinental Exchange (ICE)", icon: "fa-solid fa-code", logo: "https://www.google.com/s2/favicons?domain=ice.com&sz=256",
     industry: "Technology", type: "Internship",
     grade: "College", paid: true,
     lat: 30.2587, lng: -81.5488,
@@ -155,7 +155,7 @@ const employers = [
     programs: ["Software Engineering Intern", "Data Analytics Intern", "Business Analyst Intern", "Partner Success Intern"]
   },
   {
-    id: 10, name: "JAXPORT", icon: "fa-solid fa-ship", logo: "https://www.google.com/s2/favicons?domain=jaxport.com&sz=256",
+    id: 10, isFeatured: false, name: "JAXPORT", icon: "fa-solid fa-ship", logo: "https://www.google.com/s2/favicons?domain=jaxport.com&sz=256",
     industry: "Logistics", type: "Internship",
     grade: "College", paid: true,
     lat: 30.3355, lng: -81.6335,
@@ -171,7 +171,7 @@ const employers = [
     programs: ["Port Operations Intern", "Trade & Logistics Intern"]
   },
   {
-    id: 13, name: "Miller Electric Company", icon: "fa-solid fa-plug", logo: "https://www.google.com/s2/favicons?domain=mecojax.com&sz=256",
+    id: 13, isFeatured: false, name: "Miller Electric Company", icon: "fa-solid fa-plug", logo: "https://www.google.com/s2/favicons?domain=mecojax.com&sz=256",
     industry: "Engineering", industryLabel: "Engineering/Construction", type: "Internship",
     grade: "College", paid: true,
     lat: 30.2592, lng: -81.5910,
@@ -192,7 +192,7 @@ const employers = [
     internshipUrl: "https://mecojax.com/join-the-team/internships"
   },
   {
-    id: 14, name: "Jacksonville Transportation Authority (JTA)", icon: "fa-solid fa-bus", logo: "https://www.google.com/s2/favicons?domain=jtafla.com&sz=256",
+    id: 14, isFeatured: false, name: "Jacksonville Transportation Authority (JTA)", icon: "fa-solid fa-bus", logo: "https://www.google.com/s2/favicons?domain=jtafla.com&sz=256",
     industry: "Government", type: "Internship",
     grade: "College", paid: true,
     lat: 30.3291, lng: -81.6725,
@@ -205,7 +205,7 @@ const employers = [
     programs: ["Transportation Planning Intern", "Finance & Administration Intern", "Public Affairs Intern"]
   },
   {
-    id: 15, name: "Jacksonville Aviation Authority (JAA)", icon: "fa-solid fa-plane", logo: "https://www.google.com/s2/favicons?domain=flyjacksonville.com&sz=256",
+    id: 15, isFeatured: false, name: "Jacksonville Aviation Authority (JAA)", icon: "fa-solid fa-plane", logo: "https://www.google.com/s2/favicons?domain=flyjacksonville.com&sz=256",
     industry: "Government", type: "Internship",
     grade: "College", paid: true,
     lat: 30.4916, lng: -81.6842,
@@ -218,7 +218,7 @@ const employers = [
     programs: ["Airport Operations Intern", "Marketing & Communications Intern", "Facilities Management Intern"]
   },
   {
-    id: 16, name: "Jacksonville Urban League", icon: "fa-solid fa-handshake", logo: "https://www.google.com/s2/favicons?domain=ul-jacksonville.iamempowered.com&sz=256",
+    id: 16, isFeatured: false, name: "Jacksonville Urban League", icon: "fa-solid fa-handshake", logo: "https://www.google.com/s2/favicons?domain=ul-jacksonville.iamempowered.com&sz=256",
     industry: "Nonprofit", type: "Internship",
     grade: "Both", paid: true,
     lat: 30.3332, lng: -81.6671,
@@ -231,7 +231,7 @@ const employers = [
     programs: ["Youth Employment Services (YES) Program", "Summer Youth Internship Placement"]
   },
   {
-    id: 17, name: "Goodwill of North Florida", icon: "fa-solid fa-seedling", logo: "https://www.google.com/s2/favicons?domain=goodwillnorthfl.org&sz=256",
+    id: 17, isFeatured: false, name: "Goodwill of North Florida", icon: "fa-solid fa-seedling", logo: "https://www.google.com/s2/favicons?domain=goodwillnorthfl.org&sz=256",
     industry: "Nonprofit", type: "Internship",
     grade: "Both", paid: true,
     lat: 30.2471, lng: -81.7234,
@@ -244,7 +244,7 @@ const employers = [
     programs: ["Mayor's Youth at Work Partnership (MYAWP)"]
   },
   {
-    id: 18, name: "Jacksonville Youth Works", icon: "fa-solid fa-people-group", logo: "https://www.google.com/s2/favicons?domain=jaxyouthworks.org&sz=256",
+    id: 18, isFeatured: false, name: "Jacksonville Youth Works", icon: "fa-solid fa-people-group", logo: "https://www.google.com/s2/favicons?domain=jaxyouthworks.org&sz=256",
     industry: "Nonprofit", type: "Internship",
     grade: "Both", paid: true,
     lat: 30.3569, lng: -81.6590,
@@ -257,7 +257,7 @@ const employers = [
     programs: ["Workforce Training Program", "Youth Internship Placement", "Community Apprenticeship"]
   },
   {
-    id: 19, name: "Fanatics", icon: "fa-solid fa-shirt", logo: "https://www.google.com/s2/favicons?domain=fanaticsinc.com&sz=256",
+    id: 19, isFeatured: false, name: "Fanatics", icon: "fa-solid fa-shirt", logo: "https://www.google.com/s2/favicons?domain=fanaticsinc.com&sz=256",
     industry: "Technology", type: "Internship",
     grade: "College", paid: true,
     lat: 30.2402, lng: -81.5928,
@@ -270,7 +270,7 @@ const employers = [
     programs: ["Software Engineering Intern", "Data Analytics Intern", "Merchandising Intern", "Supply Chain Intern"]
   },
   {
-    id: 20, name: "Crowley Maritime", icon: "fa-solid fa-anchor", logo: "https://www.google.com/s2/favicons?domain=crowley.com&sz=256",
+    id: 20, isFeatured: false, name: "Crowley Maritime", icon: "fa-solid fa-anchor", logo: "https://www.google.com/s2/favicons?domain=crowley.com&sz=256",
     industry: "Logistics", type: "Internship",
     grade: "College", paid: true,
     lat: 30.3284, lng: -81.5500,
@@ -283,7 +283,7 @@ const employers = [
     programs: ["Logistics & Supply Chain Intern", "Engineering Intern", "Finance Intern"]
   },
   {
-    id: 21, name: "Baptist Health Jacksonville", icon: "fa-solid fa-hospital-user", logo: "https://www.google.com/s2/favicons?domain=baptistjax.com&sz=256",
+    id: 21, isFeatured: false, name: "Baptist Health Jacksonville", icon: "fa-solid fa-hospital-user", logo: "https://www.google.com/s2/favicons?domain=baptistjax.com&sz=256",
     industry: "Healthcare", type: "Internship",
     grade: "College", paid: true,
     lat: 30.3156, lng: -81.6633,
@@ -296,7 +296,7 @@ const employers = [
     programs: ["Allied Health Scholars Program", "CT Technologist Internship", "Clinical Rotation Program"]
   },
   {
-    id: 22, name: "WJCT Public Media", icon: "fa-solid fa-radio", logo: "https://www.google.com/s2/favicons?domain=wjct.org&sz=256",
+    id: 22, isFeatured: false, name: "WJCT Public Media", icon: "fa-solid fa-radio", logo: "https://www.google.com/s2/favicons?domain=wjct.org&sz=256",
     industry: "Media", type: "Internship",
     grade: "Both", paid: false,
     lat: 30.3199, lng: -81.6368,
@@ -309,7 +309,7 @@ const employers = [
     programs: ["Broadcast Journalism Intern", "Radio Production Intern", "Digital Media & Content Intern"]
   },
   {
-    id: 23, name: "Jacksonville Jaguars", icon: "fa-solid fa-football", logo: "https://www.google.com/s2/favicons?domain=jaguars.com&sz=256",
+    id: 23, isFeatured: false, name: "Jacksonville Jaguars", icon: "fa-solid fa-football", logo: "https://www.google.com/s2/favicons?domain=jaguars.com&sz=256",
     industry: "Media", type: "Internship",
     grade: "College", paid: false,
     lat: 30.3238, lng: -81.6373,
@@ -322,7 +322,7 @@ const employers = [
     programs: ["Guest Experience Intern", "Marketing Intern", "Community Relations Intern", "Operations Intern"]
   },
   {
-    id: 24, name: "HabiJax (Habitat for Humanity Jacksonville)", icon: "fa-solid fa-house-chimney", logo: "https://www.google.com/s2/favicons?domain=habijax.org&sz=256",
+    id: 24, isFeatured: false, name: "HabiJax (Habitat for Humanity Jacksonville)", icon: "fa-solid fa-house-chimney", logo: "https://www.google.com/s2/favicons?domain=habijax.org&sz=256",
     industry: "Nonprofit", type: "Volunteer",
     grade: "Both", paid: false,
     lat: 30.3417, lng: -81.6423,
@@ -335,7 +335,7 @@ const employers = [
     programs: ["Home Build Volunteer", "ReStore Volunteer"]
   },
   {
-    id: 25, name: "Feeding Northeast Florida", icon: "fa-solid fa-box-open", logo: "https://www.google.com/s2/favicons?domain=feedingnefl.org&sz=256",
+    id: 25, isFeatured: false, name: "Feeding Northeast Florida", icon: "fa-solid fa-box-open", logo: "https://www.google.com/s2/favicons?domain=feedingnefl.org&sz=256",
     industry: "Nonprofit", type: "Volunteer",
     grade: "Both", paid: false,
     lat: 30.3345, lng: -81.6472,
@@ -348,7 +348,7 @@ const employers = [
     programs: ["Warehouse Sorting Volunteer", "Mobile Pantry Volunteer"]
   },
   {
-    id: 26, name: "Jacksonville Humane Society", icon: "fa-solid fa-paw", logo: "https://www.google.com/s2/favicons?domain=jaxhumane.org&sz=256",
+    id: 26, isFeatured: false, name: "Jacksonville Humane Society", icon: "fa-solid fa-paw", logo: "https://www.google.com/s2/favicons?domain=jaxhumane.org&sz=256",
     industry: "Nonprofit", type: "Volunteer",
     grade: "Both", paid: false,
     lat: 30.2949, lng: -81.5386,
@@ -361,7 +361,7 @@ const employers = [
     programs: ["Animal Care Volunteer", "Adoption Events Volunteer"]
   },
   {
-    id: 27, name: "Electrical Training Alliance of Jacksonville (ETAJ)", icon: "fa-solid fa-bolt-lightning", logo: "https://www.google.com/s2/favicons?domain=etajax.org&sz=256",
+    id: 27, isFeatured: false, name: "Electrical Training Alliance of Jacksonville (ETAJ)", icon: "fa-solid fa-bolt-lightning", logo: "https://www.google.com/s2/favicons?domain=etajax.org&sz=256",
     industry: "Engineering", type: "Apprenticeship",
     grade: "College", paid: true,
     lat: 30.2823, lng: -81.6470,
@@ -374,7 +374,7 @@ const employers = [
     programs: ["Registered Electrical Apprenticeship"]
   },
   {
-    id: 28, name: "State Attorney's Office, 4th Judicial Circuit", icon: "fa-solid fa-gavel", logo: "https://www.google.com/s2/favicons?domain=sao4th.com&sz=256",
+    id: 28, isFeatured: false, name: "State Attorney's Office, 4th Judicial Circuit", icon: "fa-solid fa-gavel", logo: "https://www.google.com/s2/favicons?domain=sao4th.com&sz=256",
     industry: "Government", type: "Internship",
     grade: "College", paid: false,
     lat: 30.3283, lng: -81.6577,
@@ -387,7 +387,7 @@ const employers = [
     programs: ["Prosecutorial Internship"]
   },
   {
-    id: 29, name: "Jacksonville Zoo and Gardens", icon: "fa-solid fa-paw", logo: "https://www.google.com/s2/favicons?domain=jacksonvillezoo.org&sz=256",
+    id: 29, isFeatured: false, name: "Jacksonville Zoo and Gardens", icon: "fa-solid fa-paw", logo: "https://www.google.com/s2/favicons?domain=jacksonvillezoo.org&sz=256",
     industry: "Nonprofit", type: "Volunteer",
     grade: "Both", paid: false,
     lat: 30.3958, lng: -81.6198,
@@ -400,7 +400,7 @@ const employers = [
     programs: ["ZooTeens! (year-round teen volunteer program)", "Interpretive Host Volunteer", "Special Events Volunteer"]
   },
   {
-    id: 30, name: "MOSH (Museum of Science &amp; History)", icon: "fa-solid fa-flask", logo: "https://www.google.com/s2/favicons?domain=themosh.org&sz=256",
+    id: 30, isFeatured: false, name: "MOSH (Museum of Science &amp; History)", icon: "fa-solid fa-flask", logo: "https://www.google.com/s2/favicons?domain=themosh.org&sz=256",
     industry: "Nonprofit", type: "Volunteer",
     grade: "Both", paid: false,
     lat: 30.3186, lng: -81.6636,
@@ -413,7 +413,7 @@ const employers = [
     programs: ["Exhibit Floor Volunteer", "Planetarium Volunteer"]
   },
   {
-    id: 31, name: "JEA Skilled Craft Apprenticeship", icon: "fa-solid fa-bolt", logo: "https://www.google.com/s2/favicons?domain=jea.com&sz=256",
+    id: 31, isFeatured: false, name: "JEA Skilled Craft Apprenticeship", icon: "fa-solid fa-bolt", logo: "https://www.google.com/s2/favicons?domain=jea.com&sz=256",
     industry: "Engineering", industryLabel: "Engineering/Utilities", type: "Apprenticeship",
     grade: "College", paid: true,
     lat: 30.3275, lng: -81.6622,
@@ -426,7 +426,7 @@ const employers = [
     programs: ["Meter Specialist Trainee", "Substation Technician Apprentice"]
   },
   {
-    id: 32, name: "Northeast Florida Builders Association Apprenticeship", icon: "fa-solid fa-helmet-safety", logo: "https://www.google.com/s2/favicons?domain=nefba.com&sz=256",
+    id: 32, isFeatured: false, name: "Northeast Florida Builders Association Apprenticeship", icon: "fa-solid fa-helmet-safety", logo: "https://www.google.com/s2/favicons?domain=nefba.com&sz=256",
     industry: "Engineering", industryLabel: "Engineering/Construction", type: "Apprenticeship",
     grade: "College", paid: true,
     lat: 30.2967, lng: -81.6394,
@@ -439,7 +439,7 @@ const employers = [
     programs: ["Residential Construction Apprenticeship"]
   },
   {
-    id: 33, name: "UNF Florida Data Science for Social Good (FL-DSSG)", icon: "fa-solid fa-chart-simple", logo: "https://www.google.com/s2/favicons?domain=unf.edu&sz=256",
+    id: 33, isFeatured: false, name: "UNF Florida Data Science for Social Good (FL-DSSG)", icon: "fa-solid fa-chart-simple", logo: "https://www.google.com/s2/favicons?domain=unf.edu&sz=256",
     industry: "Technology", type: "Internship",
     grade: "College", paid: true,
     lat: 30.2697, lng: -81.5060,
@@ -452,7 +452,7 @@ const employers = [
     programs: ["FL-DSSG Summer Internship"]
   },
   {
-    id: 34, name: "The Haskell Company", icon: "fa-solid fa-compass-drafting", logo: "https://www.google.com/s2/favicons?domain=haskell.com&sz=256",
+    id: 34, isFeatured: false, name: "The Haskell Company", icon: "fa-solid fa-compass-drafting", logo: "https://www.google.com/s2/favicons?domain=haskell.com&sz=256",
     industry: "Engineering", industryLabel: "Engineering/Construction", type: "Internship",
     grade: "College", paid: true,
     lat: 30.3220, lng: -81.6690,
@@ -465,7 +465,7 @@ const employers = [
     programs: ["Construction & Engineering Internship"]
   },
   {
-    id: 35, name: "RF-SMART", icon: "fa-solid fa-barcode", logo: "https://www.google.com/s2/favicons?domain=rfsmart.com&sz=256",
+    id: 35, isFeatured: false, name: "RF-SMART", icon: "fa-solid fa-barcode", logo: "https://www.google.com/s2/favicons?domain=rfsmart.com&sz=256",
     industry: "Technology", type: "Internship",
     grade: "College", paid: true,
     lat: 30.2410, lng: -81.5540,
@@ -478,7 +478,7 @@ const employers = [
     programs: ["Product Strategy Internship", "Summer Internship Program"]
   },
   {
-    id: 36, name: "St. Johns Riverkeeper", icon: "fa-solid fa-water", logo: "https://www.google.com/s2/favicons?domain=stjohnsriverkeeper.org&sz=256",
+    id: 36, isFeatured: false, name: "St. Johns Riverkeeper", icon: "fa-solid fa-water", logo: "https://www.google.com/s2/favicons?domain=stjohnsriverkeeper.org&sz=256",
     industry: "Nonprofit", type: "Volunteer",
     grade: "Both", paid: false,
     lat: 30.3540, lng: -81.6030,
@@ -491,7 +491,7 @@ const employers = [
     programs: ["River Cleanup Volunteer", "Education & Outreach Volunteer"]
   },
   {
-    id: 39, name: "FIS Global", icon: "fa-solid fa-money-check-dollar", logo: "https://www.google.com/s2/favicons?domain=fisglobal.com&sz=256",
+    id: 39, isFeatured: false, name: "FIS Global", icon: "fa-solid fa-money-check-dollar", logo: "https://www.google.com/s2/favicons?domain=fisglobal.com&sz=256",
     industry: "Finance", industryLabel: "Finance/Fintech", type: "Internship",
     grade: "College", paid: true,
     lat: 30.3193, lng: -81.6640,
@@ -504,7 +504,7 @@ const employers = [
     programs: ["FIS University Summer Internship Program"]
   },
   {
-    id: 40, name: "Jacksonville Jaguars", icon: "fa-solid fa-football", logo: "https://www.google.com/s2/favicons?domain=jaguars.com&sz=256",
+    id: 40, isFeatured: false, name: "Jacksonville Jaguars", icon: "fa-solid fa-football", logo: "https://www.google.com/s2/favicons?domain=jaguars.com&sz=256",
     industry: "Media", industryLabel: "Media/Sports", type: "Internship",
     grade: "College", paid: false,
     lat: 30.3239, lng: -81.6373,
@@ -517,7 +517,7 @@ const employers = [
     programs: ["Marketing Internship", "Social Media Internship"]
   },
   {
-    id: 41, name: "Dun & Bradstreet", icon: "fa-solid fa-chart-pie", logo: "https://www.google.com/s2/favicons?domain=dnb.com&sz=256",
+    id: 41, isFeatured: false, name: "Dun & Bradstreet", icon: "fa-solid fa-chart-pie", logo: "https://www.google.com/s2/favicons?domain=dnb.com&sz=256",
     industry: "Technology", industryLabel: "Technology/Data Analytics", type: "Internship",
     grade: "College", paid: true,
     lat: 30.2947, lng: -81.6412,
@@ -530,7 +530,7 @@ const employers = [
     programs: ["Data & Analytics Internship", "Accounting Internship", "ESG Internship"]
   },
   {
-    id: 37, name: "Big Brothers Big Sisters of Northeast Florida", icon: "fa-solid fa-children", logo: "https://www.google.com/s2/favicons?domain=bbbsnefl.org&sz=256",
+    id: 37, isFeatured: false, name: "Big Brothers Big Sisters of Northeast Florida", icon: "fa-solid fa-children", logo: "https://www.google.com/s2/favicons?domain=bbbsnefl.org&sz=256",
     industry: "Nonprofit", type: "Volunteer",
     grade: "College", paid: false,
     lat: 30.3290, lng: -81.6570,

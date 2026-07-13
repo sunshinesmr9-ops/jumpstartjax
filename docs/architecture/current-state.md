@@ -83,9 +83,9 @@ A profile created through the prototype is saved to browser `localStorage`. It i
 
 RSVP information is stored in JavaScript memory and can reset when the page reloads. It is not connected to a user account or shared database.
 
-### 4. Featured opportunities are positional
+### 4. Featured opportunities have no selection rule, review date, or owner
 
-The homepage currently treats the first records in the employer dataset as featured. There is no formal featured flag, ranking rule, review date, or owner.
+The homepage and the opportunities-page "Featured" sort now use an explicit `isFeatured` boolean stored on each `employers` record in `data.js` (`LIVE`), rather than treating the first records in array order as featured. However, there is still no formal ranking rule, review date, or owner governing which records are marked `isFeatured: true` — that selection remains a manual edit to `data.js`.
 
 ### 5. Dates are unstructured text
 

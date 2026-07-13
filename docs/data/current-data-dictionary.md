@@ -30,7 +30,7 @@ This is a **current-state** artifact. Nothing here is `PROPOSED` unless explicit
 
 **Purpose:** Powers Find Opportunities (listing, search, filter, sort, detail page) and the Employer Map. Each record currently represents one employer that offers one or more named programs.
 
-**Used in `app.js`:** `renderHomeFeatured()`, `oppCardHTML()`, `renderOpportunities()`, `deadlineSortKey()`, `showDetail()`, `initMap()`, `focusEmployer()`, `getSearchMatches()`, `showSuggestions()`, `fillHomeCounts()`, and indirectly in `renderConnectJax()` via `companyColor()` (`app.js:180-183`), which looks up an employer by matching `intern.company` against `employer.name`.
+**Used in `app.js`:** `renderHomeFeatured()` (now filters on `isFeatured === true`), `oppCardHTML()`, `renderOpportunities()` (the "Featured" sort mode now sorts on `isFeatured`), `deadlineSortKey()`, `showDetail()`, `initMap()`, `focusEmployer()`, `getSearchMatches()`, `showSuggestions()`, `fillHomeCounts()`, and indirectly in `renderConnectJax()` via `companyColor()` (`app.js:180-183`), which looks up an employer by matching `intern.company` against `employer.name`.
 
 **Entity represented:** **More than one entity.** This is the limitation documented in `docs/architecture/current-state.md` ("Employer and opportunity are combined"). A single `employers` record mixes:
 - Employer-level fields (`name`, `icon`, `logo`, `location`, `lat`/`lng`, `description`)
@@ -41,6 +41,7 @@ This is a **current-state** artifact. Nothing here is `PROPOSED` unless explicit
 
 | Field | Type | Example (from `data.js`) | Used / displayed | Target entity | Recommendation | Missing / ambiguous | Human review required |
 |---|---|---|---|---|---|---|---|
+| `isFeatured` | boolean | `true` | Homepage featured selection in `renderHomeFeatured()` (`app.js:343-348`, filters `isFeatured === true`, capped at 6) and the opportunities-page "Featured" sort (`app.js:454-457`, featured records first, original array order preserved within each group) | Opportunity.`is_featured` | Rename | None — set explicitly on all 38 records (6 `true`, 32 `false`). No selection rule, review date, or owner exists for which records are marked `true`. | No |
 | `id` | number | `1` | Primary key for lookups: `showDetail()`, `focusEmployer()`, `toggleSaveOpportunity()`, map markers, saved-opportunity `Set` (`app.js:659-662`) | Opportunity.id (and implicitly Employer.id, undifferentiated) | Split | Currently one ID serves both the employer and the "opportunity" (the whole record). IDs are non-contiguous (11, 12, and 38 do not exist in the 38 records present), suggesting past deletions with no audit trail. | Yes |
 | `name` | string | `"Mayo Clinic Florida"` | Card/detail employer name, map popups/sidebar, search, and matched by exact string equality against `interns[].company` in `companyColor()` | Employer.name | Keep (move to Employer) | The Employer↔Profile relationship is joined by matching this free-text string against `interns.company`, not by ID. A rename or typo in either dataset silently breaks the join. | Yes |
 | `icon` | string (Font Awesome class) | `"fa-solid fa-hospital"` | Fallback icon in `empIcon()`/`empLogo()` (`data.js:553-571`) when `logo` fails to load; used in cards, detail, map markers, search suggestions | Not present in target Employer schema | Replace | Target model has `logo_url` only; no fallback-icon field is defined. Decision needed on whether a fallback icon asset is a permanent UI need. | Yes |
@@ -206,7 +207,7 @@ Cross-referencing `docs/data/data-model.md` against every field actually present
 
 **Employer Location** — the entity does not exist at all as a separate structure. Missing: `id`, `employer_id`, `label`, structured `address`, `is_opportunity_site`, `access_notes`, `status`.
 
-**Opportunity** — missing: `id` (UUID), `external_id`, `opportunity_types` as an array/relationship, `student_levels` as an array, `seasonality`, `work_mode`, `location_id`, `compensation_type` enum (only a `paid` boolean exists), `compensation_text`, `application_open_at`, `application_close_at`, `starts_at`, `ends_at`, `is_featured`, `featured_until`, `source_id`, `source_last_seen_at`, `last_verified_at`, `status`, `confidence_score`. Note: `docs/architecture/current-state.md` already flags "Featured opportunities are positional" — confirmed: `renderHomeFeatured()` (`app.js:343-348`) simply takes `employers.slice(0, 6)`, with no `is_featured` field anywhere.
+**Opportunity** — missing: `id` (UUID), `external_id`, `opportunity_types` as an array/relationship, `student_levels` as an array, `seasonality`, `work_mode`, `location_id`, `compensation_type` enum (only a `paid` boolean exists), `compensation_text`, `application_open_at`, `application_close_at`, `starts_at`, `ends_at`, `featured_until`, `source_id`, `source_last_seen_at`, `last_verified_at`, `status`, `confidence_score`. Note: `is_featured` is no longer missing — `employers.isFeatured` (`LIVE`) now provides it directly; `renderHomeFeatured()` (`app.js:343-348`) filters on `isFeatured === true` instead of taking `employers.slice(0, 6)`. `featured_reason`, `featured_until`, and `featured_by` remain `PROPOSED` and unimplemented.
 
 **Experience** (`events`) — missing: `id` (UUID), `experience_type` enum, structured `starts_at`/`ends_at`, `recurrence_rule`, `location_name` vs. `address` split, `latitude`/`longitude`, `transportation_notes`, `accessibility_notes`, `age_restrictions`, `source_id`, `last_verified_at`, `status`.
 
@@ -223,3 +224,4 @@ Cross-referencing `docs/data/data-model.md` against every field actually present
 | Date | Change | Author |
 |---|---|---|
 | 2026-07-13 | Initial data dictionary created from `data.js` and `app.js` | Claude (documentation task) |
+| 2026-07-13 | Documented new `isFeatured` boolean field on `employers`, replacing positional (`employers.slice(0, 6)`) featured selection | Claude (documentation task) |

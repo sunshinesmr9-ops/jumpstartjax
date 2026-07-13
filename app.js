@@ -343,7 +343,7 @@ function filterAndGo(industry) {
 function renderHomeFeatured() {
   const container = document.getElementById('home-listings');
   if (!container) return;
-  const featured = employers.slice(0, 6);
+  const featured = employers.filter(e => e.isFeatured === true).slice(0, 6);
   container.innerHTML = featured.map(e => oppCardHTML(e, true)).join('');
 }
 
@@ -452,7 +452,9 @@ function renderOpportunities() {
 
   // Sorting
   const sortMode = document.getElementById('results-sort')?.value || 'featured';
-  if (sortMode === 'alpha') {
+  if (sortMode === 'featured') {
+    results = [...results].sort((a, b) => (b.isFeatured === true) - (a.isFeatured === true));
+  } else if (sortMode === 'alpha') {
     results = [...results].sort((a, b) => a.programs[0].localeCompare(b.programs[0]));
   } else if (sortMode === 'deadline') {
     results = [...results].sort((a, b) => deadlineSortKey(a.deadline) - deadlineSortKey(b.deadline));

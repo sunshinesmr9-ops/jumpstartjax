@@ -57,8 +57,9 @@ This is a planning artifact, not a migration script. No values are invented — 
 | `employers` | `requirements` | *(no target field exists)* | — | Pending product decision: fold into `Opportunity.description`, or propose a new field | Target schema has no home for this today | No | Yes |
 | `employers` | `supplementals` | *(none — not in target schema)* | — | Do not migrate; confirm with product owner that essay-prompt data is intentionally dropped, consistent with "applications remain external" | N/A | Yes (exclude) | Yes — confirm the drop |
 | `employers` | `programs[]` (each entry) | Opportunity | `title` | **Fan-out**: create one Opportunity row per array entry, referencing the deduplicated parent Employer | Per-program values for `type`/`grade`/`paid`/`deadline`/`duration` are not actually known — migration can only assume they match the parent record | Partial | Yes, for all 29 employers with more than one program |
+| `employers` | `isFeatured` | Opportunity | `is_featured` | Direct copy onto each fanned-out Opportunity row for that employer | No | Yes | No — value already exists per-record; no selection rule, review date, or owner exists for *which* records are `true`, but the boolean itself carries over directly |
 
-**Not present on `employers` at all, so not mappable from current data (see Section 5):** `Employer.slug`, `Employer.website_url`, `Employer.careers_url`, `Employer.status`, `Employer.last_verified_at`, `Employer.created_at`/`updated_at`; `Opportunity.work_mode`, `Opportunity.location_id`, `Opportunity.is_featured`, `Opportunity.featured_until`, `Opportunity.source_id`, `Opportunity.source_last_seen_at`, `Opportunity.last_verified_at`, `Opportunity.status`, `Opportunity.confidence_score`; `Employer Location.id`, `Employer Location.employer_id`, `Employer Location.label`, `Employer Location.is_opportunity_site`, `Employer Location.access_notes`, `Employer Location.status`.
+**Not present on `employers` at all, so not mappable from current data (see Section 5):** `Employer.slug`, `Employer.website_url`, `Employer.careers_url`, `Employer.status`, `Employer.last_verified_at`, `Employer.created_at`/`updated_at`; `Opportunity.work_mode`, `Opportunity.location_id`, `Opportunity.featured_until`, `Opportunity.source_id`, `Opportunity.source_last_seen_at`, `Opportunity.last_verified_at`, `Opportunity.status`, `Opportunity.confidence_score`; `Employer Location.id`, `Employer Location.employer_id`, `Employer Location.label`, `Employer Location.is_opportunity_site`, `Employer Location.access_notes`, `Employer Location.status`.
 
 ---
 
@@ -245,3 +246,4 @@ This category is structurally different from the rest of the migration: `workjax
 | Date | Change | Author |
 |---|---|---|
 | 2026-07-13 | Initial migration map created from `data.js`, `app.js`, and `docs/data/data-model.md` | Claude (documentation task) |
+| 2026-07-13 | Added `employers.isFeatured` → `Opportunity.is_featured` mapping; removed `is_featured` from the "not present" list now that the field exists in `data.js` | Claude (documentation task) |
