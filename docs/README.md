@@ -47,6 +47,7 @@ WorkJax is not intended to process opportunity applications or provide direct me
 ### Integrations
 
 - [API Evaluation](integrations/api-evaluation.md)
+- [Ticketmaster Proof of Concept](integrations/ticketmaster-poc.md)
 
 ### Operations and Governance
 
