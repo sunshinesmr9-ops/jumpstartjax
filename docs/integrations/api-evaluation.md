@@ -285,6 +285,8 @@ Every source above returns data in its own shape; none matches `data.js`'s curre
 
 ## 10. Recommended First Event Proof of Concept
 
+**Superseded, `2026-07-13`:** [ADR-002](../decisions/ADR-002-ticketmaster-event-poc.md) advanced past the local-script spike described below to an endpoint-only Vercel Function proof of concept, documented in [Ticketmaster Proof of Concept](ticketmaster-poc.md). The section below is retained unchanged as the original research record; it is no longer the current recommended next step.
+
 **Ticketmaster Discovery API, local read-only spike — not integrated into the live site.**
 
 - Write a small, throwaway script (not a Vercel Function, not committed to the deployed site) that calls the Discovery API's `events` search with a Jacksonville-area `city` or `dmaId` parameter and a short date window (e.g., the next 30 days).
@@ -347,3 +349,4 @@ At every phase, `docs/operations/content-ingestion.md`'s existing rule applies w
 |---|---|---|
 | 2026-07-13 | Initial API evaluation created from official documentation research (Ticketmaster, Eventbrite, SeatGeek, City of Jacksonville, Downtown Vision Inc./dtjax.com, JaxEvents, Visit Jacksonville, Greenhouse, Lever, Adzuna, USAJOBS, schema.org JobPosting, and public-apis/public-apis) | Claude (documentation task) |
 | 2026-07-13 | Corrected the Ticketmaster rate-limit language to document the conflict between the Discovery API docs page (5 req/sec) and Ticketmaster's official FAQ (2 req/sec), both under a 5,000 calls/day cap; linked to ADR-002 | Claude (documentation task) |
+| 2026-07-13 | Noted that Section 10's local-script spike recommendation was superseded by the ADR-002 endpoint-only Vercel Function proof of concept; linked to `ticketmaster-poc.md` | Claude (implementation task) |

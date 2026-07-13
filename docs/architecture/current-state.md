@@ -5,7 +5,7 @@
 
 ## Summary
 
-WorkJax is currently a static, browser-based prototype. It does not use a frontend framework, application server, database, user authentication system, or shared content-management system.
+WorkJax is currently a static, browser-based prototype. It does not use a frontend framework, database, user authentication system, or shared content-management system. One server-side Vercel Function exists as a `DEMO ONLY` proof of concept (below); it is not called by the live site and does not change this prototype's overall static architecture.
 
 ## Current Technology
 
@@ -15,6 +15,7 @@ WorkJax is currently a static, browser-based prototype. It does not use a fronte
 | `styles.css` | Visual design and responsive styling |
 | `data.js` | Hard-coded employers, opportunities, events, sample student profiles, and map coordinates |
 | `app.js` | Page switching, rendering, filtering, saving, RSVP behavior, profiles, and map behavior |
+| `api/ticketmaster-events.js` | `DEMO ONLY` — server-side Vercel Function proof of concept that queries the Ticketmaster Discovery API for Jacksonville events; not called by `app.js` or `index.html` (see [ADR-002](../decisions/ADR-002-ticketmaster-event-poc.md) and [Ticketmaster Proof of Concept](../integrations/ticketmaster-poc.md)) |
 | Vercel | Static deployment and hosting |
 | Leaflet / map tiles | Interactive employer map |
 | Browser `localStorage` | Device-specific saved opportunities and prototype profile data |
