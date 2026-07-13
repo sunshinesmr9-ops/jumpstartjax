@@ -17,7 +17,8 @@ const employers = [
       { q: "Describe a time you demonstrated empathy in a challenging situation. How did this shape your interest in healthcare? (250 words max)" },
       { q: "Which department at Mayo Clinic Florida interests you most and why? (150 words max)" }
     ],
-    programs: ["Summer Research Fellowship", "Clinical Shadowing Program"]
+    programs: ["Summer Research Fellowship", "Clinical Shadowing Program"],
+    applicationTiming: "annual_recurring", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 2, isFeatured: true, name: "Fidelity Investments", icon: "fa-solid fa-chart-line", logo: "https://www.google.com/s2/favicons?domain=fidelity.com&sz=256",
@@ -33,7 +34,8 @@ const employers = [
     supplementals: [
       { q: "Why are you interested in financial services, and how does this role fit your career goals? (200 words max)" }
     ],
-    programs: ["Technology Co-op", "Finance Analyst Track"]
+    programs: ["Technology Co-op", "Finance Analyst Track"],
+    applicationTiming: "seasonal_window", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 3, isFeatured: true, name: "JEA", icon: "fa-solid fa-bolt", logo: "https://www.google.com/s2/favicons?domain=jea.com&sz=256",
@@ -50,7 +52,8 @@ const employers = [
       { q: "How do you see the future of sustainable energy in Northeast Florida? (200 words max)" },
       { q: "Describe a project where you solved a complex technical problem. (200 words max)" }
     ],
-    programs: ["Engineering Intern", "IT & Cybersecurity Intern"]
+    programs: ["Engineering Intern", "IT & Cybersecurity Intern"],
+    applicationTiming: "unknown", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 4, isFeatured: true, name: "City of Jacksonville", icon: "fa-solid fa-landmark", logo: "https://www.google.com/s2/favicons?domain=coj.net&sz=256",
@@ -66,7 +69,8 @@ const employers = [
     supplementals: [
       { q: "What is one challenge facing Jacksonville that you would want to work on during this fellowship, and how would you approach it? (300 words max)" }
     ],
-    programs: ["Mayor's Civic Innovation Fellowship", "Public Works Internship"]
+    programs: ["Mayor's Civic Innovation Fellowship", "Public Works Internship"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 5, isFeatured: true, name: "Nemours Children's Health", icon: "fa-solid fa-heart-pulse", logo: "https://www.google.com/s2/favicons?domain=nemours.org&sz=256",
@@ -82,7 +86,8 @@ const employers = [
     supplementals: [
       { q: "Why are you interested in working with children in a healthcare setting? (150 words max)" }
     ],
-    programs: ["Healthcare Explorer Program"]
+    programs: ["Healthcare Explorer Program"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 6, isFeatured: true, name: "CSX Transportation", icon: "fa-solid fa-train", logo: "https://www.google.com/s2/favicons?domain=csx.com&sz=256",
@@ -98,7 +103,8 @@ const employers = [
     supplementals: [
       { q: "How does transportation infrastructure connect to economic growth? What excites you about the freight industry? (250 words max)" }
     ],
-    programs: ["Engineering Internship", "Supply Chain & Logistics Intern"]
+    programs: ["Engineering Internship", "Supply Chain & Logistics Intern"],
+    applicationTiming: "seasonal_window", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 7, isFeatured: false, name: "VyStar Credit Union", icon: "fa-solid fa-building-columns", logo: "https://www.google.com/s2/favicons?domain=vystarcu.org&sz=256",
@@ -119,7 +125,8 @@ const employers = [
       { q: "Why are you interested in working in financial services, and how do you think managing a real bank branch at your school would help prepare you for your future? (200 words max)" },
       { q: "VyStar's mission is to 'Do Good' for its members and community. Describe a time you demonstrated leadership or service in your school or community. (150 words max)" }
     ],
-    programs: ["Academy of Business High School Branch Program"]
+    programs: ["Academy of Business High School Branch Program"],
+    applicationTiming: "unknown", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 8, isFeatured: false, name: "UF Health Jacksonville", icon: "fa-solid fa-stethoscope", logo: "https://www.google.com/s2/favicons?domain=ufhealth.org&sz=256",
@@ -135,7 +142,8 @@ const employers = [
     supplementals: [
       { q: "Describe your experience with or commitment to serving diverse and underserved populations. (250 words max)" }
     ],
-    programs: ["Clinical Research Intern", "Public Health Fellow"]
+    programs: ["Clinical Research Intern", "Public Health Fellow"],
+    applicationTiming: "unknown", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 9, isFeatured: false, name: "Intercontinental Exchange (ICE)", icon: "fa-solid fa-code", logo: "https://www.google.com/s2/favicons?domain=ice.com&sz=256",
@@ -152,7 +160,8 @@ const employers = [
       { q: "Describe a software project you've built or contributed to. What was your role and what did you learn? (250 words max)" },
       { q: "How do you see AI transforming the financial technology industry? (200 words max)" }
     ],
-    programs: ["Software Engineering Intern", "Data Analytics Intern", "Business Analyst Intern", "Partner Success Intern"]
+    programs: ["Software Engineering Intern", "Data Analytics Intern", "Business Analyst Intern", "Partner Success Intern"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 10, isFeatured: false, name: "JAXPORT", icon: "fa-solid fa-ship", logo: "https://www.google.com/s2/favicons?domain=jaxport.com&sz=256",
@@ -168,7 +177,8 @@ const employers = [
     supplementals: [
       { q: "How does international trade impact the Jacksonville economy and local communities? (200 words max)" }
     ],
-    programs: ["Port Operations Intern", "Trade & Logistics Intern"]
+    programs: ["Port Operations Intern", "Trade & Logistics Intern"],
+    applicationTiming: "unknown", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 13, isFeatured: false, name: "Miller Electric Company", icon: "fa-solid fa-plug", logo: "https://www.google.com/s2/favicons?domain=mecojax.com&sz=256",
@@ -189,7 +199,8 @@ const employers = [
       { q: "Describe a time you worked as part of a team to complete a project or solve a problem. What was your role and what did you learn? (200 words max)" }
     ],
     programs: ["Construction Management Internship", "Engineering Internship", "IT Internship", "Accounting Internship", "Marketing Internship", "Virtual Design & Construction Internship"],
-    internshipUrl: "https://mecojax.com/join-the-team/internships"
+    internshipUrl: "https://mecojax.com/join-the-team/internships",
+    applicationTiming: "seasonal_window", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 14, isFeatured: false, name: "Jacksonville Transportation Authority (JTA)", icon: "fa-solid fa-bus", logo: "https://www.google.com/s2/favicons?domain=jtafla.com&sz=256",
@@ -202,7 +213,8 @@ const employers = [
     deadline: "Applications typically open February – March each year",
     internshipUrl: "https://www.jtafla.com/contact-us/careers/summer-internship/",
     requirements: ["Enrolled in trade school, undergraduate, or graduate program", "Interest in public transportation and urban mobility"],
-    programs: ["Transportation Planning Intern", "Finance & Administration Intern", "Public Affairs Intern"]
+    programs: ["Transportation Planning Intern", "Finance & Administration Intern", "Public Affairs Intern"],
+    applicationTiming: "seasonal_window", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 15, isFeatured: false, name: "Jacksonville Aviation Authority (JAA)", icon: "fa-solid fa-plane", logo: "https://www.google.com/s2/favicons?domain=flyjacksonville.com&sz=256",
@@ -215,7 +227,8 @@ const employers = [
     deadline: "Check flyjacksonville.com for current openings",
     internshipUrl: "https://www.flyjacksonville.com/jaa/content.aspx?id=79",
     requirements: ["College student in marketing, airport operations, aviation management, or related field", "Interest in aviation and public infrastructure"],
-    programs: ["Airport Operations Intern", "Marketing & Communications Intern", "Facilities Management Intern"]
+    programs: ["Airport Operations Intern", "Marketing & Communications Intern", "Facilities Management Intern"],
+    applicationTiming: "unknown", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 16, isFeatured: false, name: "Jacksonville Urban League", icon: "fa-solid fa-handshake", logo: "https://www.google.com/s2/favicons?domain=ul-jacksonville.iamempowered.com&sz=256",
@@ -228,7 +241,8 @@ const employers = [
     deadline: "Applications open each Spring, check ul-jacksonville.iamempowered.com",
     internshipUrl: "https://ul-jacksonville.iamempowered.com/employment-and-training",
     requirements: ["Ages 16–21", "Duval County resident", "Interest in career readiness and workforce development"],
-    programs: ["Youth Employment Services (YES) Program", "Summer Youth Internship Placement"]
+    programs: ["Youth Employment Services (YES) Program", "Summer Youth Internship Placement"],
+    applicationTiming: "seasonal_window", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 17, isFeatured: false, name: "Goodwill of North Florida", icon: "fa-solid fa-seedling", logo: "https://www.google.com/s2/favicons?domain=goodwillnorthfl.org&sz=256",
@@ -241,7 +255,8 @@ const employers = [
     deadline: "Applications typically open April – May each year",
     internshipUrl: "https://goodwillnorthfl.org/mayors-youth-at-work-partnership-myawp/",
     requirements: ["Eligible youth (see website for age/income criteria)", "Duval County resident", "Interest in building career and professional skills"],
-    programs: ["Mayor's Youth at Work Partnership (MYAWP)"]
+    programs: ["Mayor's Youth at Work Partnership (MYAWP)"],
+    applicationTiming: "seasonal_window", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 18, isFeatured: false, name: "Jacksonville Youth Works", icon: "fa-solid fa-people-group", logo: "https://www.google.com/s2/favicons?domain=jaxyouthworks.org&sz=256",
@@ -254,7 +269,8 @@ const employers = [
     deadline: "Rolling, visit jaxyouthworks.org",
     internshipUrl: "https://www.jaxyouthworks.org/",
     requirements: ["Ages 14–25", "Jacksonville resident", "Interest in career development and community impact"],
-    programs: ["Workforce Training Program", "Youth Internship Placement", "Community Apprenticeship"]
+    programs: ["Workforce Training Program", "Youth Internship Placement", "Community Apprenticeship"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 19, isFeatured: false, name: "Fanatics", icon: "fa-solid fa-shirt", logo: "https://www.google.com/s2/favicons?domain=fanaticsinc.com&sz=256",
@@ -267,7 +283,8 @@ const employers = [
     deadline: "Applications open each Fall, check fanaticsinc.com/join-our-team",
     internshipUrl: "https://www.fanaticsinc.com/join-our-team",
     requirements: ["College junior or senior (graduating Dec 2026 or Spring/Summer 2027)", "GPA 3.3+", "CS, Business, Marketing, Supply Chain, or related major"],
-    programs: ["Software Engineering Intern", "Data Analytics Intern", "Merchandising Intern", "Supply Chain Intern"]
+    programs: ["Software Engineering Intern", "Data Analytics Intern", "Merchandising Intern", "Supply Chain Intern"],
+    applicationTiming: "seasonal_window", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 20, isFeatured: false, name: "Crowley Maritime", icon: "fa-solid fa-anchor", logo: "https://www.google.com/s2/favicons?domain=crowley.com&sz=256",
@@ -280,7 +297,8 @@ const employers = [
     deadline: "Applications typically open in Spring, check crowley.com",
     internshipUrl: "https://www.crowley.com/crowley-for-students/",
     requirements: ["Junior or Senior in a degree-seeking program", "Logistics, supply chain, engineering, finance, or marketing major"],
-    programs: ["Logistics & Supply Chain Intern", "Engineering Intern", "Finance Intern"]
+    programs: ["Logistics & Supply Chain Intern", "Engineering Intern", "Finance Intern"],
+    applicationTiming: "seasonal_window", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 21, isFeatured: false, name: "Baptist Health Jacksonville", icon: "fa-solid fa-hospital-user", logo: "https://www.google.com/s2/favicons?domain=baptistjax.com&sz=256",
@@ -293,7 +311,8 @@ const employers = [
     deadline: "Rolling, visit baptistjax.com/about-us/careers",
     internshipUrl: "https://www.baptistjax.com/about-us/careers",
     requirements: ["College student in healthcare, allied health, or related field", "Program-specific clinical prerequisites may apply"],
-    programs: ["Allied Health Scholars Program", "CT Technologist Internship", "Clinical Rotation Program"]
+    programs: ["Allied Health Scholars Program", "CT Technologist Internship", "Clinical Rotation Program"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 22, isFeatured: false, name: "WJCT Public Media", icon: "fa-solid fa-radio", logo: "https://www.google.com/s2/favicons?domain=wjct.org&sz=256",
@@ -306,7 +325,8 @@ const employers = [
     deadline: "Rolling, visit wjct.org for current openings",
     internshipUrl: "https://wjct.org/employment/2022/07/internships-at-wjct-public-media/",
     requirements: ["Interest in journalism, media production, communications, or community engagement", "Ability to commit to broadcast schedule hours"],
-    programs: ["Broadcast Journalism Intern", "Radio Production Intern", "Digital Media & Content Intern"]
+    programs: ["Broadcast Journalism Intern", "Radio Production Intern", "Digital Media & Content Intern"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 23, isFeatured: false, name: "Jacksonville Jaguars", icon: "fa-solid fa-football", logo: "https://www.google.com/s2/favicons?domain=jaguars.com&sz=256",
@@ -319,7 +339,8 @@ const employers = [
     deadline: "Applications typically open Summer – Fall each year",
     internshipUrl: "https://www.jaguars.com/careers",
     requirements: ["College student aged 18+", "Currently enrolled or graduated within the last year", "Available for game days and special events"],
-    programs: ["Guest Experience Intern", "Marketing Intern", "Community Relations Intern", "Operations Intern"]
+    programs: ["Guest Experience Intern", "Marketing Intern", "Community Relations Intern", "Operations Intern"],
+    applicationTiming: "seasonal_window", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 24, isFeatured: false, name: "HabiJax (Habitat for Humanity Jacksonville)", icon: "fa-solid fa-house-chimney", logo: "https://www.google.com/s2/favicons?domain=habijax.org&sz=256",
@@ -332,7 +353,8 @@ const employers = [
     deadline: "Rolling, sign up for build days anytime",
     internshipUrl: "https://www.habijax.org/volunteer/",
     requirements: ["Ages 16+ (minors need a signed waiver)", "No experience necessary", "Closed-toe shoes required on build sites"],
-    programs: ["Home Build Volunteer", "ReStore Volunteer"]
+    programs: ["Home Build Volunteer", "ReStore Volunteer"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 25, isFeatured: false, name: "Feeding Northeast Florida", icon: "fa-solid fa-box-open", logo: "https://www.google.com/s2/favicons?domain=feedingnefl.org&sz=256",
@@ -345,7 +367,8 @@ const employers = [
     deadline: "Rolling, sign up for warehouse shifts online",
     internshipUrl: "https://feedingnefl.org/get-involved/volunteer/",
     requirements: ["Ages 10+ with an adult, 14+ independently", "Closed-toe shoes required", "Group and individual slots available"],
-    programs: ["Warehouse Sorting Volunteer", "Mobile Pantry Volunteer"]
+    programs: ["Warehouse Sorting Volunteer", "Mobile Pantry Volunteer"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 26, isFeatured: false, name: "Jacksonville Humane Society", icon: "fa-solid fa-paw", logo: "https://www.google.com/s2/favicons?domain=jaxhumane.org&sz=256",
@@ -358,7 +381,8 @@ const employers = [
     deadline: "Rolling, orientation sessions held monthly",
     internshipUrl: "https://www.jaxhumane.org/volunteer/",
     requirements: ["Ages 14+ (14–15 with a parent volunteering alongside)", "Orientation session required", "Comfort working around animals"],
-    programs: ["Animal Care Volunteer", "Adoption Events Volunteer"]
+    programs: ["Animal Care Volunteer", "Adoption Events Volunteer"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 27, isFeatured: false, name: "Electrical Training Alliance of Jacksonville (ETAJ)", icon: "fa-solid fa-bolt-lightning", logo: "https://www.google.com/s2/favicons?domain=etajax.org&sz=256",
@@ -371,7 +395,8 @@ const employers = [
     deadline: "Rolling, applications accepted year-round",
     internshipUrl: "https://www.etajax.org/",
     requirements: ["18 years or older", "High school diploma or GED with one algebra credit", "Valid driver's license"],
-    programs: ["Registered Electrical Apprenticeship"]
+    programs: ["Registered Electrical Apprenticeship"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 28, isFeatured: false, name: "State Attorney's Office, 4th Judicial Circuit", icon: "fa-solid fa-gavel", logo: "https://www.google.com/s2/favicons?domain=sao4th.com&sz=256",
@@ -384,7 +409,8 @@ const employers = [
     deadline: "Applications open Dec 1, close Feb 15",
     internshipUrl: "https://sao4th.com/careers/internship-program/",
     requirements: ["Completed first year of college", "Minimum 25 hours/week for 6 weeks (college) or 8 weeks (law students)", "Complete application emailed to SAO4th@coj.net"],
-    programs: ["Prosecutorial Internship"]
+    programs: ["Prosecutorial Internship"],
+    applicationTiming: "fixed_dated", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 29, isFeatured: false, name: "Jacksonville Zoo and Gardens", icon: "fa-solid fa-paw", logo: "https://www.google.com/s2/favicons?domain=jacksonvillezoo.org&sz=256",
@@ -397,7 +423,8 @@ const employers = [
     deadline: "Rolling, orientation sessions held regularly",
     internshipUrl: "https://www.jacksonvillezoo.org/support/volunteer/",
     requirements: ["Ages vary by role (teens and adults)", "ZooTeens! applications open Nov 1 and close Nov 25 each year", "Orientation and training required", "Comfort speaking with the public"],
-    programs: ["ZooTeens! (year-round teen volunteer program)", "Interpretive Host Volunteer", "Special Events Volunteer"]
+    programs: ["ZooTeens! (year-round teen volunteer program)", "Interpretive Host Volunteer", "Special Events Volunteer"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 30, isFeatured: false, name: "MOSH (Museum of Science &amp; History)", icon: "fa-solid fa-flask", logo: "https://www.google.com/s2/favicons?domain=themosh.org&sz=256",
@@ -410,7 +437,8 @@ const employers = [
     deadline: "Rolling",
     internshipUrl: "https://themosh.org/about/volunteer/",
     requirements: ["Ages 16+", "Volunteer orientation required", "Interest in science education"],
-    programs: ["Exhibit Floor Volunteer", "Planetarium Volunteer"]
+    programs: ["Exhibit Floor Volunteer", "Planetarium Volunteer"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 31, isFeatured: false, name: "JEA Skilled Craft Apprenticeship", icon: "fa-solid fa-bolt", logo: "https://www.google.com/s2/favicons?domain=jea.com&sz=256",
@@ -423,7 +451,8 @@ const employers = [
     deadline: "Rolling, check jea.com/careers for current openings",
     internshipUrl: "https://www.jea.com/about/careers/skilled_craft_apprenticeships/",
     requirements: ["High school diploma or GED", "Willingness to complete a physical agilities test for some roles", "Enters a formal apprenticeship agreement with JEA and the State of Florida"],
-    programs: ["Meter Specialist Trainee", "Substation Technician Apprentice"]
+    programs: ["Meter Specialist Trainee", "Substation Technician Apprentice"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 32, isFeatured: false, name: "Northeast Florida Builders Association Apprenticeship", icon: "fa-solid fa-helmet-safety", logo: "https://www.google.com/s2/favicons?domain=nefba.com&sz=256",
@@ -436,7 +465,8 @@ const employers = [
     deadline: "Rolling, applications accepted year-round",
     internshipUrl: "https://www.nefba.com/",
     requirements: ["18 years or older", "High school diploma or GED", "Interest in residential construction trades"],
-    programs: ["Residential Construction Apprenticeship"]
+    programs: ["Residential Construction Apprenticeship"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 33, isFeatured: false, name: "UNF Florida Data Science for Social Good (FL-DSSG)", icon: "fa-solid fa-chart-simple", logo: "https://www.google.com/s2/favicons?domain=unf.edu&sz=256",
@@ -449,7 +479,8 @@ const employers = [
     deadline: "Applications due Mar 20, 5 PM",
     internshipUrl: "https://dssg.unf.edu/dssgfellow.html",
     requirements: ["Undergraduate or graduate student", "Interest in data science for social good", "In-person at UNF campus"],
-    programs: ["FL-DSSG Summer Internship"]
+    programs: ["FL-DSSG Summer Internship"],
+    applicationTiming: "fixed_dated", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 34, isFeatured: false, name: "The Haskell Company", icon: "fa-solid fa-compass-drafting", logo: "https://www.google.com/s2/favicons?domain=haskell.com&sz=256",
@@ -462,7 +493,8 @@ const employers = [
     deadline: "Rolling, check haskell.com/careers for current openings",
     internshipUrl: "https://www.haskell.com/careers/",
     requirements: ["Enrolled in construction management, engineering, architecture, or related program", "Interest in design-build project delivery"],
-    programs: ["Construction & Engineering Internship"]
+    programs: ["Construction & Engineering Internship"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 35, isFeatured: false, name: "RF-SMART", icon: "fa-solid fa-barcode", logo: "https://www.google.com/s2/favicons?domain=rfsmart.com&sz=256",
@@ -475,7 +507,8 @@ const employers = [
     deadline: "Rolling, check rfsmart.com/careers for current openings",
     internshipUrl: "https://www.rfsmart.com/careers",
     requirements: ["Currently enrolled college student", "Interest in supply chain technology or product strategy"],
-    programs: ["Product Strategy Internship", "Summer Internship Program"]
+    programs: ["Product Strategy Internship", "Summer Internship Program"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 36, isFeatured: false, name: "St. Johns Riverkeeper", icon: "fa-solid fa-water", logo: "https://www.google.com/s2/favicons?domain=stjohnsriverkeeper.org&sz=256",
@@ -488,7 +521,8 @@ const employers = [
     deadline: "Rolling, sign up for cleanups anytime",
     internshipUrl: "https://www.stjohnsriverkeeper.org/",
     requirements: ["All ages welcome (minors with an adult)", "Interest in conservation and the St. Johns River"],
-    programs: ["River Cleanup Volunteer", "Education & Outreach Volunteer"]
+    programs: ["River Cleanup Volunteer", "Education & Outreach Volunteer"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 39, isFeatured: false, name: "FIS Global", icon: "fa-solid fa-money-check-dollar", logo: "https://www.google.com/s2/favicons?domain=fisglobal.com&sz=256",
@@ -501,7 +535,8 @@ const employers = [
     deadline: "Rolling, check fisglobal.com/careers for current openings",
     internshipUrl: "https://www.fisglobal.com/en/careers",
     requirements: ["Currently enrolled college student", "Interest in finance, technology, or design", "Full-time availability for the summer term"],
-    programs: ["FIS University Summer Internship Program"]
+    programs: ["FIS University Summer Internship Program"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 40, isFeatured: false, name: "Jacksonville Jaguars", icon: "fa-solid fa-football", logo: "https://www.google.com/s2/favicons?domain=jaguars.com&sz=256",
@@ -514,7 +549,8 @@ const employers = [
     deadline: "Rolling, check jaguars.com/careers for current openings",
     internshipUrl: "https://www.jaguars.com/careers/",
     requirements: ["Eligible for college credit, or graduated within 18 months", "In-person at TIAA Bank Field", "Strong written and verbal communication"],
-    programs: ["Marketing Internship", "Social Media Internship"]
+    programs: ["Marketing Internship", "Social Media Internship"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 41, isFeatured: false, name: "Dun & Bradstreet", icon: "fa-solid fa-chart-pie", logo: "https://www.google.com/s2/favicons?domain=dnb.com&sz=256",
@@ -527,7 +563,8 @@ const employers = [
     deadline: "Rolling, check dnb.com/careers for current openings",
     internshipUrl: "https://www.dnb.com/about-us/careers.html",
     requirements: ["Currently enrolled college student", "Interest in data analytics, ESG, or accounting", "Must be eligible to return to school after the internship"],
-    programs: ["Data & Analytics Internship", "Accounting Internship", "ESG Internship"]
+    programs: ["Data & Analytics Internship", "Accounting Internship", "ESG Internship"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   },
   {
     id: 37, isFeatured: false, name: "Big Brothers Big Sisters of Northeast Florida", icon: "fa-solid fa-children", logo: "https://www.google.com/s2/favicons?domain=bbbsnefl.org&sz=256",
@@ -540,7 +577,8 @@ const employers = [
     deadline: "Rolling, enrollment year-round",
     internshipUrl: "https://www.bbbsnefl.org/",
     requirements: ["18 years or older", "Background check required", "Consistent monthly time commitment"],
-    programs: ["Community-Based Mentoring", "School-Based Mentoring"]
+    programs: ["Community-Based Mentoring", "School-Based Mentoring"],
+    applicationTiming: "rolling", applicationOpenAt: null, applicationCloseAt: null, dateVerificationStatus: "unverified"
   }
 ];
 
@@ -586,7 +624,8 @@ const events = [
     color: "#6A1B9A",
     description: "Downtown Vision's monthly Art Walk transforms the urban core into an open-air gallery. Galleries, studios, pop-up installations, live music, and local vendors fill Laura and Duval Street corridors every first Wednesday. One of Jacksonville's most beloved free events.",
     link: "https://www.visitjacksonville.com/events/downtown-first-wednesday-art-walk/",
-    recurring: true
+    recurring: true,
+    experienceType: "recurring_space", startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 3,
@@ -600,7 +639,8 @@ const events = [
     color: "#1565C0",
     description: "One of the Southeast's finest art museums offers free admission on the first Saturday of every month. Explore European masterworks, American paintings, and stunning riverside gardens along the St. Johns River. College students with valid ID also receive free admission Tuesday–Friday year-round.",
     link: "https://www.cummermuseum.org",
-    recurring: true
+    recurring: true,
+    experienceType: "recurring_space", startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 4,
@@ -614,7 +654,8 @@ const events = [
     color: "#283593",
     description: "The Cummer Museum opens for free every third Tuesday evening, perfect for interns who can't make weekend visits. Wander the galleries and the beautiful riverside gardens along the St. Johns River after work.",
     link: "https://www.cummermuseum.org",
-    recurring: true
+    recurring: true,
+    experienceType: "recurring_space", startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 5,
@@ -628,7 +669,8 @@ const events = [
     color: "#E65100",
     description: "Catch a Triple-A baseball game at VyStar Ballpark right in downtown Jacksonville. The Jumbo Shrimp are the Miami Marlins' affiliate and defending Triple-A national champions, affordable tickets, great food, and fireworks on select nights. Check the full schedule at milb.com/jacksonville.",
     link: "https://www.milb.com/jacksonville/schedule",
-    recurring: true
+    recurring: true,
+    experienceType: null, startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 6,
@@ -642,7 +684,8 @@ const events = [
     color: "#00695C",
     description: "A beloved Saturday institution under the Fuller Warren Bridge drawing 4,000+ visitors weekly. Features 150+ local makers, live music, fresh food, and handmade goods in one of Jacksonville's most vibrant neighborhoods, Riverside/Avondale. Starts with 9 AM yoga on the lawn.",
     link: "https://riversideartsmarket.org/",
-    recurring: true
+    recurring: true,
+    experienceType: "recurring_space", startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 7,
@@ -656,7 +699,8 @@ const events = [
     color: "#F57F17",
     description: "Country music star Cody Johnson brings his Live '26 tour to VyStar Veterans Memorial Arena for two nights. One of the summer's biggest concert events in Jacksonville, grab tickets early.",
     link: "https://www.ticketmaster.com/discover/jacksonville",
-    recurring: false
+    recurring: false,
+    experienceType: null, startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 8,
@@ -670,7 +714,8 @@ const events = [
     color: "#E65100",
     description: "Jacksonville's oldest public park in the heart of downtown hosts a weekly lunchtime food truck gathering. Perfect for interns working downtown who want a great lunch and some fresh air. Dozens of trucks rotate each week with cuisines from around the world.",
     link: "https://www.hemmingpark.org",
-    recurring: true
+    recurring: true,
+    experienceType: "recurring_space", startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 9,
@@ -684,7 +729,8 @@ const events = [
     color: "#0277BD",
     description: "Paddle one of the few north-flowing rivers in the US, the St. Johns River cuts through the heart of Jacksonville. Rentals available at multiple outfitters, with routes ranging from beginner-friendly urban paddles to wildlife-rich backcountry excursions. Manatees and dolphins are common sightings.",
     link: "https://www.visitjacksonville.com/things-to-do/outdoor-adventures/",
-    recurring: true
+    recurring: true,
+    experienceType: null, startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 10,
@@ -698,7 +744,8 @@ const events = [
     color: "#0288D1",
     description: "One of Florida's most accessible Atlantic beaches is just 30 minutes from downtown. The boardwalk, fishing pier, volleyball courts, and local restaurants make Jax Beach a go-to for interns on weekends. Parking is free in most areas along the beachfront.",
     link: "https://www.jacksonvillebeach.org",
-    recurring: true
+    recurring: true,
+    experienceType: null, startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 11,
@@ -712,7 +759,8 @@ const events = [
     color: "#33691E",
     description: "Jacksonville is home to a National Park! The Timucuan Preserve protects over 46,000 acres of wetlands, marsh, and tidal forest. Fort Caroline and the Theodore Roosevelt Area offer free hiking trails, kayak launches, wildlife watching, and a window into Florida's 500-year colonial history.",
     link: "https://www.nps.gov/timu",
-    recurring: true
+    recurring: true,
+    experienceType: null, startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 12,
@@ -726,7 +774,8 @@ const events = [
     color: "#AD1457",
     description: "One of Florida's top juried fine art markets takes place just down the road in historic St. Augustine. Featuring 150+ local artists across painting, sculpture, jewelry, and photography, a perfect weekend day trip for anyone interning in Northeast Florida.",
     link: "https://www.artsmarketofsa.com",
-    recurring: true
+    recurring: true,
+    experienceType: "recurring_space", startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 13,
@@ -740,7 +789,8 @@ const events = [
     color: "#AD1457",
     description: "A four-day, free concert series bringing local and internationally known artists to the riverfront at Metropolitan Park. One of Jacksonville's most beloved summer music festivals.",
     link: "https://folioweekly.com/2026/06/18/summer-festival-season-2026/",
-    recurring: false
+    recurring: false,
+    experienceType: null, startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 14,
@@ -754,7 +804,8 @@ const events = [
     color: "#5E35B1",
     description: "A symphonic rock tribute to David Bowie at the historic Florida Theatre, part of the city's packed summer concert calendar.",
     link: "https://folioweekly.com/2026/06/18/summer-festival-season-2026/",
-    recurring: false
+    recurring: false,
+    experienceType: "scheduled_event", startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 15,
@@ -768,7 +819,8 @@ const events = [
     color: "#00897B",
     description: "A unique all-ages dance party at the Jacksonville Beach Pier with multiple music channels, an easy weekly beachside meetup.",
     link: "https://folioweekly.com/2026/06/18/summer-festival-season-2026/",
-    recurring: true
+    recurring: true,
+    experienceType: "recurring_space", startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   },
   {
     id: 16,
@@ -782,7 +834,8 @@ const events = [
     color: "#2E7D32",
     description: "A Saturday-morning green market at Penman Park with local produce, makers, and live music, an easy weekend hang at the Beaches.",
     link: "https://www.jacksonvillebeach.org/calendar.aspx?CID=23",
-    recurring: true
+    recurring: true,
+    experienceType: "recurring_space", startsAt: null, endsAt: null, recurrenceRule: null, dateVerificationStatus: "unverified"
   }
 ];
 

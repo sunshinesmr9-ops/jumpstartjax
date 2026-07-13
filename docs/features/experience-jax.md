@@ -80,3 +80,13 @@ flowchart TD
 ## Future WorkJax-Hosted Events
 
 The concept of a WorkJax-hosted intern event is `TBD`. It should not be treated as an existing product capability until an operator, liability plan, event owner, and budget are identified.
+
+## Structured Date Fields (`LIVE`, values currently `null`/unverified)
+
+Per `docs/data/date-normalization-audit.md`, every `events` record in `data.js` now carries:
+
+- `experienceType` — `"scheduled_event"` or `"recurring_space"` where the audit clearly recommends one of those two values; `null` where the audit instead flags the record as needing a future split (e.g. Cody Johnson Live '26, Jax River Jams, Jumbo Shrimp Baseball) or as a standing/evergreen activity that doesn't fit the current two-value enum (e.g. Kayaking, Jacksonville Beach, Timucuan Preserve)
+- `startsAt`, `endsAt`, `recurrenceRule` — `null` on every current record, including Cody Johnson Live '26 and The Music of David Bowie (Symphonic), whose source verification is still incomplete
+- `dateVerificationStatus` — `"unverified"` on every current record
+
+`isEventActive(record)` in `app.js` gates the Experience Jax grid: it only excludes a record when `dateVerificationStatus === "verified"` **and** `endsAt` is a past date. Since every current record is unverified, the helper returns `true` for all 15 records today and nothing is hidden. The original `date` text field remains the display source of truth; no event record was split as part of adding these fields.

@@ -31,6 +31,17 @@ Help high school and college students discover relevant experiential learning op
 | Opportunity cards | Built from employer records |
 | Detail page | Shows description, requirements, program details, location, and application link |
 | Save | Stored only in browser `localStorage` |
+| Active-record filtering | `LIVE`. `isOpportunityActive(record)` in `app.js` gates homepage featured opportunities and opportunity search results. It only excludes a record when `dateVerificationStatus === "verified"` **and** `applicationCloseAt` is a past date. Every current record has `dateVerificationStatus: "unverified"` (see `docs/data/date-normalization-audit.md`), so the helper currently returns `true` for all 38 records and nothing is hidden. |
+
+## Structured Date Fields (`LIVE`, values currently `null`/unverified)
+
+Every `employers` record in `data.js` now carries:
+
+- `applicationTiming` — the audit's classification (`annual_recurring`, `fixed_dated`, `seasonal_window`, `rolling`, or `unknown`)
+- `applicationOpenAt` / `applicationCloseAt` — `null` on every current record; no year or date was invented
+- `dateVerificationStatus` — `"unverified"` on every current record
+
+These fields exist so a future, separately-approved verification pass can populate real timestamps and flip `dateVerificationStatus` to `"verified"` without a schema change. The `deadline` text field remains the display source of truth and the existing deadline sort (`deadlineSortKey()`) is unchanged.
 
 ## Target User Flow
 

@@ -59,7 +59,9 @@ This is a planning artifact, not a migration script. No values are invented — 
 | `employers` | `programs[]` (each entry) | Opportunity | `title` | **Fan-out**: create one Opportunity row per array entry, referencing the deduplicated parent Employer | Per-program values for `type`/`grade`/`paid`/`deadline`/`duration` are not actually known — migration can only assume they match the parent record | Partial | Yes, for all 29 employers with more than one program |
 | `employers` | `isFeatured` | Opportunity | `is_featured` | Direct copy onto each fanned-out Opportunity row for that employer | No | Yes | No — value already exists per-record; no selection rule, review date, or owner exists for *which* records are `true`, but the boolean itself carries over directly |
 
-**Not present on `employers` at all, so not mappable from current data (see Section 5):** `Employer.slug`, `Employer.website_url`, `Employer.careers_url`, `Employer.status`, `Employer.last_verified_at`, `Employer.created_at`/`updated_at`; `Opportunity.work_mode`, `Opportunity.location_id`, `Opportunity.featured_until`, `Opportunity.source_id`, `Opportunity.source_last_seen_at`, `Opportunity.last_verified_at`, `Opportunity.status`, `Opportunity.confidence_score`; `Employer Location.id`, `Employer Location.employer_id`, `Employer Location.label`, `Employer Location.is_opportunity_site`, `Employer Location.access_notes`, `Employer Location.status`.
+**Not present on `employers` at all, so not mappable from current data (see Section 5):** `Employer.slug`, `Employer.website_url`, `Employer.careers_url`, `Employer.status`, `Employer.last_verified_at`, `Employer.created_at`/`updated_at`; `Opportunity.work_mode`, `Opportunity.location_id`, `Opportunity.featured_until`, `Opportunity.source_id`, `Opportunity.source_last_seen_at`, `Opportunity.status`, `Opportunity.confidence_score`; `Employer Location.id`, `Employer Location.employer_id`, `Employer Location.label`, `Employer Location.is_opportunity_site`, `Employer Location.access_notes`, `Employer Location.status`.
+
+**Update (`LIVE`):** `Opportunity.application_open_at`/`application_close_at`/`last_verified_at` are no longer entirely absent from current data. `employers` now carries `applicationOpenAt` (always `null`), `applicationCloseAt` (always `null`), and `dateVerificationStatus` (always `"unverified"`, the closest current-data proxy for `last_verified_at`/`status`), plus `applicationTiming` holding the audit's classification. These are a structured-date **foundation**, not populated migration values — every value is `null`/`"unverified"` on every current record, so the migration steps in Section 4 below ("Replacing text deadlines with structured dates") are unchanged and still required before any real timestamp is populated.
 
 ---
 
@@ -93,6 +95,8 @@ This is a planning artifact, not a migration script. No values are invented — 
 | `events` | `recurring` | Experience | `experience_type` | Combined with `date` parsing above: `true` → contributes to `recurring_space`, `false` → contributes to `scheduled_event` | Feeds into the `date` row above | Partial | Yes |
 
 **Not present on `events` at all, so not mappable from current data (see Section 5):** `transportation_notes`, `accessibility_notes`, `age_restrictions`, `source_id`, `last_verified_at`, `status`.
+
+**Update (`LIVE`):** `events` now carries `experienceType` (`scheduled_event`, `recurring_space`, or `null` per the audit's split/evergreen flags), `startsAt`, `endsAt`, `recurrenceRule` (all `null`), and `dateVerificationStatus` (always `"unverified"`) as a structured-date foundation. This does not shortcut the parsing/splitting/geocoding work described in Section 3's table and Section 4 below — no date, time, or recurrence rule has actually been computed for any record.
 
 ---
 
@@ -247,3 +251,4 @@ This category is structurally different from the rest of the migration: `workjax
 |---|---|---|
 | 2026-07-13 | Initial migration map created from `data.js`, `app.js`, and `docs/data/data-model.md` | Claude (documentation task) |
 | 2026-07-13 | Added `employers.isFeatured` → `Opportunity.is_featured` mapping; removed `is_featured` from the "not present" list now that the field exists in `data.js` | Claude (documentation task) |
+| 2026-07-13 | Noted new structured-date foundation fields on `employers` and `events` (all `null`/`"unverified"`); clarified this is a schema foundation, not populated migration data | Claude (documentation task) |

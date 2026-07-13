@@ -10,6 +10,15 @@
 
 Before `application_open_at`, `application_close_at`, `starts_at`, `ends_at`, `recurrence_rule`, or any automatic-expiration logic is implemented (per `docs/architecture/target-state.md` and `docs/data/data-model.md`), every current deadline, duration, event date, and recurrence value in `data.js` needs to be reviewed record-by-record. This document is that review. It does not change any data or code — it is the input to a future, separately-approved migration.
 
+## Implementation Status (`LIVE`)
+
+The recommendations in this audit have since been carried into `data.js` and `app.js` as a structured-date **foundation**, with no values invented and no automatic expiration enabled:
+
+- Every `employers` record now has `applicationTiming` (the `applicationTiming` column below, copied verbatim), `applicationOpenAt` (`null`), `applicationCloseAt` (`null`), and `dateVerificationStatus` (`"unverified"`).
+- Every `events` record now has `experienceType` (the recommended value below where the audit clearly recommends `scheduled_event` or `recurring_space`; `null` where the audit flags a needed split or an evergreen/standing activity — see records 5, 7, 9, 10, 11, 13), `startsAt`/`endsAt`/`recurrenceRule` (`null`), and `dateVerificationStatus` (`"unverified"`). Cody Johnson Live '26 (id 7) and The Music of David Bowie (Symphonic) (id 14) were **not** given date values, consistent with this audit's finding that their source verification is still incomplete.
+- `isOpportunityActive(record)` and `isEventActive(record)` now exist in `app.js` and are used when rendering homepage featured opportunities, opportunity search results, and Experience Jax events. Both only exclude a record when `dateVerificationStatus === "verified"` and the relevant close/end timestamp is in the past — so, consistent with this audit's conclusion that no record is verified enough for automatic expiration, every current record remains visible and no counts changed.
+- This audit's underlying findings (missing years, employer duplicates, hidden deadlines, records needing a split, etc.) are unchanged and still require the human review and source verification described below before any real timestamp is populated.
+
 ## Method and Ground Rules
 
 1. No year, month, day, time, or timezone is ever guessed. Where the source text does not state something, the recommended structured value is `null`.
@@ -164,3 +173,4 @@ No employer/opportunity record and no other event record has enough information 
 | Date | Change | Author |
 |---|---|---|
 | 2026-07-13 | Initial date-normalization audit created from `data.js`; no code or data files modified | Claude (documentation task) |
+| 2026-07-13 | Added "Implementation Status" section: this audit's recommendations were carried into `data.js` (`applicationTiming`/`applicationOpenAt`/`applicationCloseAt`/`dateVerificationStatus` on `employers`; `experienceType`/`startsAt`/`endsAt`/`recurrenceRule`/`dateVerificationStatus` on `events`) and `app.js` (`isOpportunityActive`, `isEventActive`), with all structured date values `null` and all records `"unverified"` | Claude (documentation task) |

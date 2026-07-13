@@ -1,6 +1,25 @@
 /* ════════════════════════════════════
    APP LOGIC
 ═══════════════════════════════════ */
+
+/* ════════════════════════════════════
+   SAFE FILTERING FOUNDATIONS
+   Every current record is dateVerificationStatus: "unverified", so both
+   functions return true for all of them today — no visible behavior change
+   until a record is verified with a past close/end date.
+═══════════════════════════════════ */
+function isOpportunityActive(record) {
+  if (record.dateVerificationStatus !== 'verified') return true;
+  if (record.applicationCloseAt == null) return true;
+  return new Date(record.applicationCloseAt) >= new Date();
+}
+
+function isEventActive(record) {
+  if (record.dateVerificationStatus !== 'verified') return true;
+  if (record.endsAt == null) return true;
+  return new Date(record.endsAt) >= new Date();
+}
+
 function showPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -51,9 +70,9 @@ function renderEvents() {
   const countEl = document.getElementById('exp-count');
   if (!grid) return;
 
-  let filtered = events;
+  let filtered = events.filter(isEventActive);
   if (activeEventFilters.size > 0) {
-    filtered = events.filter(e =>
+    filtered = filtered.filter(e =>
       (activeEventFilters.has('Free') && e.free) ||
       e.categories.some(c => activeEventFilters.has(c))
     );
@@ -343,7 +362,7 @@ function filterAndGo(industry) {
 function renderHomeFeatured() {
   const container = document.getElementById('home-listings');
   if (!container) return;
-  const featured = employers.filter(e => e.isFeatured === true).slice(0, 6);
+  const featured = employers.filter(e => e.isFeatured === true && isOpportunityActive(e)).slice(0, 6);
   container.innerHTML = featured.map(e => oppCardHTML(e, true)).join('');
 }
 
@@ -431,6 +450,8 @@ function renderOpportunities() {
   const anyCompChecked = paidChecked || unpaidChecked;
 
   let results = employers.filter(e => {
+    // structured-date active check (no-op today; every record is unverified)
+    if (!isOpportunityActive(e)) return false;
     // search
     if (searchVal && !e.name.toLowerCase().includes(searchVal) &&
         !e.programs.join(' ').toLowerCase().includes(searchVal) &&
