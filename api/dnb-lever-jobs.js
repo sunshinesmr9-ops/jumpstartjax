@@ -32,6 +32,24 @@ const STUDENT_TITLE_PATTERN = new RegExp(
 
 const COLLEGE_REFERENCE_PATTERN = /\b(college|university|undergraduate|graduate|degree)\b/i;
 
+// Lever's "Intern" commitment value can appear with a suffix, e.g.
+// "Intern: Full Time" or "Intern: Part Time" — match the prefix, not the
+// exact string.
+const TALENT_NETWORK_TITLE_PATTERN = /early talent network/i;
+const TALENT_NETWORK_DESCRIPTION_PATTERN =
+  /(not\s+(?:currently\s+)?(?:an?\s+)?(?:specific\s+|current\s+)?open\s+(?:job\s+)?(?:opportunity|position|role|opening))|(no\s+specific\s+(?:job\s+)?(?:opportunity|position|opening|role))/i;
+
+function commitmentIndicatesIntern(commitment) {
+  return typeof commitment === "string" && commitment.trim().toLowerCase().startsWith("intern");
+}
+
+function isTalentNetworkPosting(title, descriptionPlain) {
+  if (TALENT_NETWORK_TITLE_PATTERN.test(title || "")) {
+    return true;
+  }
+  return TALENT_NETWORK_DESCRIPTION_PATTERN.test(descriptionPlain || "");
+}
+
 function stripHtml(html) {
   if (typeof html !== "string" || html.length === 0) {
     return "";
@@ -74,8 +92,7 @@ function isJacksonvilleFloridaPosting(posting) {
 
 function isStudentRelevantPosting(posting, title) {
   const categories = posting.categories || {};
-  const commitment = typeof categories.commitment === "string" ? categories.commitment.toLowerCase() : "";
-  if (commitment === "intern") {
+  if (commitmentIndicatesIntern(categories.commitment)) {
     return true;
   }
 
@@ -90,13 +107,12 @@ function isStudentRelevantPosting(posting, title) {
 
 function classifyOpportunityType(posting, title) {
   const categories = posting.categories || {};
-  const commitment = typeof categories.commitment === "string" ? categories.commitment.toLowerCase() : "";
   const department = typeof categories.department === "string" ? categories.department.toLowerCase() : "";
   const team = typeof categories.team === "string" ? categories.team.toLowerCase() : "";
   const titleText = title || "";
 
   if (
-    commitment === "intern" ||
+    commitmentIndicatesIntern(categories.commitment) ||
     department.includes("internship") ||
     team.includes("internship") ||
     INTERNSHIP_TITLE_PATTERN.test(titleText)
@@ -140,6 +156,7 @@ function normalizePosting(posting, requestTimestamp) {
   const location = typeof categories.location === "string" ? categories.location : null;
   const allLocations = Array.isArray(categories.allLocations) ? categories.allLocations : [];
   const { city, stateCode } = parseCityAndState(location);
+  const isTalentNetwork = isTalentNetworkPosting(title, descriptionPlain);
 
   return {
     id: `lever:dnb:${posting.id}`,
@@ -149,7 +166,8 @@ function normalizePosting(posting, requestTimestamp) {
     title,
     description,
     descriptionPlain,
-    opportunityType: classifyOpportunityType(posting, title),
+    postingKind: isTalentNetwork ? "talent_network" : "open_opportunity",
+    opportunityType: isTalentNetwork ? "Early Talent" : classifyOpportunityType(posting, title),
     studentLevel: classifyStudentLevel(title, descriptionPlain),
     employerName: SOURCE_EMPLOYER,
     location,
@@ -167,7 +185,7 @@ function normalizePosting(posting, requestTimestamp) {
     sourceLastSeenAt: requestTimestamp,
     lastVerifiedAt: requestTimestamp,
     dateVerificationStatus: "verified",
-    status: "active",
+    status: isTalentNetwork ? "active_network" : "active",
   };
 }
 
