@@ -1,80 +1,18 @@
-# WorkJax Documentation Hub
+# WorkJax
 
-## Purpose
+WorkJax helps young people in the Northeast Florida workforce ecosystem find experiential learning opportunities, understand where employers and opportunity sites are located, discover Jacksonville events and recurring community spaces, and connect with other young people through external contact channels.
 
-This directory is the single source of truth for the WorkJax product and its technical and operational architecture.
+## Current Prototype
 
-It documents both:
+WorkJax is currently a static, browser-based prototype built with plain HTML, CSS, and JavaScript, hosted on Vercel.
 
-1. **Current state** — what the prototype actually does today.
-2. **Target state** — what must exist for WorkJax to operate as a sustainable public platform.
-
-Proposed functionality must not be described as live functionality.
-
-## Product Definition
-
-WorkJax is intended to support the broader Northeast Florida workforce ecosystem by helping young people:
-
-- Find experiential learning opportunities
-- Understand where employers and opportunity sites are located
-- Discover Jacksonville events and recurring community spaces
-- Connect with other young people through external contact channels
-
-WorkJax is not intended to process opportunity applications or provide direct messaging.
-
-## Documentation Map
-
-### Architecture
-
-- [Current State](architecture/current-state.md)
-- [Target State](architecture/target-state.md)
-- [System Context](architecture/system-context.md)
-
-### Features
-
-- [Find Opportunities](features/opportunities.md)
-- [Employer Map](features/employer-map.md)
-- [Experience Jax](features/experience-jax.md)
-- [Connect Jax](features/connect-jax.md)
-
-### Data
-
-- [Target Data Model](data/data-model.md)
-
-### Operations and Governance
-
-- [Content Ingestion](operations/content-ingestion.md)
-- [Privacy and Safety](governance/privacy-and-safety.md)
-- [Open Governance Questions](governance/open-questions.md)
-
-### Roadmap and Decisions
-
-- [Implementation Roadmap](roadmap/implementation-roadmap.md)
-- [ADR-001: Managed Backend and Automated Ingestion](decisions/ADR-001-managed-backend.md)
-
-### Templates
-
-- [Feature Documentation Template](templates/feature-template.md)
-
-## Status Labels
-
-Use these labels consistently:
-
-| Label | Meaning |
+| File | Responsibility |
 |---|---|
-| `LIVE` | Implemented and usable in the current deployed site |
-| `DEMO ONLY` | Simulated locally and not shared across users |
-| `PROPOSED` | Recommended target-state functionality |
-| `TBD` | Requires a product, technical, legal, or governance decision |
-| `DEPRECATED` | No longer intended for use |
+| `index.html` | Page structure, navigation, forms, filters, and feature containers |
+| `styles.css` | Visual design and responsive styling |
+| `data.js` | Hard-coded employers, opportunities, events, sample student profiles, and map coordinates |
+| `app.js` | Page switching, rendering, filtering, saving, RSVP behavior, profiles, and map behavior |
 
-## Documentation Ownership
+## Documentation
 
-| Area | Current Owner | Long-Term Owner |
-|---|---|---|
-| Product documentation | Civic Collaboration team | TBD ecosystem operator |
-| Source code | Serena Ray / current repository owner | TBD |
-| Opportunity content | No formal owner | TBD |
-| Event content | No formal owner | TBD |
-| Student profile moderation | No formal owner | TBD |
-| Infrastructure and deployment | Current repository/Vercel owner | TBD |
+Full product and technical documentation, including current-state and target-state architecture, feature specs, the target data model, governance, and the implementation roadmap, lives in [`docs/README.md`](docs/README.md).
