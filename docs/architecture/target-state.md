@@ -41,7 +41,7 @@ flowchart LR
 | Authentication | Allow users to own, edit, and delete their profiles and saved items |
 | Row-level authorization | Ensure users can edit only their own records and administrators can moderate |
 | Daily scheduled ingestion | Check approved sources for new, changed, closed, and expired content |
-| Source registry | Define where every employer and event record comes from |
+| Source registry | Define where every employer and event record comes from. A first, narrow version of this idea exists today (`LIVE`) as `live-opportunity-sources.js` — a browser-visible registry matching one employer (Dun & Bradstreet) to its live Lever feed endpoint by stable employer ID. The target-state Source Registry described in `docs/data/data-model.md` is a full database table covering every employer and event source, with sync health fields (`last_sync_at`, `last_error`, etc.) that the current frontend-only registry does not have. |
 | Review queue | Surface ambiguous, conflicting, or low-confidence records for human review |
 | Audit log | Record when and why records changed |
 | Analytics | Measure searches, application clicks, saves, RSVPs, and content freshness |
