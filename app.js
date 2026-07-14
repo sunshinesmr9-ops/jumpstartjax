@@ -33,6 +33,7 @@ function showPage(pageId) {
 
   if (pageId === 'experience') { renderEvents(); if (window.CommunityEventPlatform) window.CommunityEventPlatform.initialize(); }
   if (pageId === 'connect') { renderConnectJax(); updateProfileButton(); }
+  if (pageId === 'map') ensureMapReady();
 }
 
 function toggleMobileNav() {
@@ -42,6 +43,219 @@ function toggleMobileNav() {
 function closeMobileNav() {
   document.getElementById('nav-links')?.classList.remove('open');
 }
+
+/* ════════════════════════════════════
+   BROWSER HISTORY ROUTING
+   Lightweight History API routing (no framework, no path-based routes).
+   Routes are ?view=<page>[&employer=<id>] on this same static document.
+   showPage() and showDetail() remain pure render functions with no history
+   side effects; everything below is responsible only for reading/writing
+   browser history and calling those render functions. Rendering triggered
+   by `popstate` must never call pushState() again, or pressing Back could
+   create another entry and loop.
+═══════════════════════════════════ */
+history.scrollRestoration = 'manual';
+
+const VALID_PAGES = ['home', 'opportunities', 'detail', 'map', 'experience', 'connect'];
+const PAGE_TITLES = {
+  home: 'Home',
+  opportunities: 'Find Opportunities',
+  map: 'Employer Map',
+  experience: 'Third Spaces',
+  connect: 'Community Hub'
+};
+const HEADING_SELECTORS = {
+  home: '#page-home h1',
+  opportunities: '#page-opportunities h1',
+  detail: '#detail-main h1',
+  map: '#page-map h1',
+  experience: '#page-experience h1',
+  connect: '#page-connect h1'
+};
+const ORIGIN_LABELS = {
+  home: 'Home',
+  opportunities: 'Find Opportunities',
+  map: 'Employer Map',
+  experience: 'Third Spaces',
+  connect: 'Community Hub'
+};
+
+let navIndex = 0; // our own monotonically increasing history-depth counter (not history.length)
+
+function routeFromLocation() {
+  const params = new URLSearchParams(window.location.search);
+  let page = params.get('view') || 'home';
+  if (!VALID_PAGES.includes(page)) page = 'home';
+
+  let employerId = null;
+  if (page === 'detail') {
+    const raw = params.get('employer');
+    const id = raw != null ? parseInt(raw, 10) : NaN;
+    if (!Number.isNaN(id) && employers.some(e => e.id === id)) {
+      employerId = id;
+    } else {
+      page = 'home'; // invalid or missing employer id -> fall back, never throw
+    }
+  }
+  return { page, employerId };
+}
+
+function getCurrentRoute() {
+  if (history.state && history.state.app === 'jumpstart-jax') return history.state;
+  return routeFromLocation();
+}
+
+function buildRouteUrl(route) {
+  const params = new URLSearchParams(window.location.search); // preserve unrelated params
+  params.delete('view');
+  params.delete('employer');
+  params.set('view', route.page);
+  if (route.page === 'detail' && route.employerId != null) {
+    params.set('employer', String(route.employerId));
+  }
+  const qs = params.toString();
+  return window.location.pathname + (qs ? '?' + qs : '');
+}
+
+function saveScrollToCurrentEntry() {
+  if (history.state && history.state.app === 'jumpstart-jax') {
+    const updated = { ...history.state, scrollY: window.scrollY };
+    history.replaceState(updated, '', buildRouteUrl(updated));
+  }
+}
+
+// Continuously keeps the active entry's saved scroll position fresh, so
+// restoration is accurate whether the user leaves via our own navigation
+// functions, the in-page Back button, or the browser's native Back/Forward
+// (which give our code no chance to run immediately beforehand).
+let scrollSaveTimer = null;
+window.addEventListener('scroll', () => {
+  if (scrollSaveTimer) clearTimeout(scrollSaveTimer);
+  scrollSaveTimer = setTimeout(saveScrollToCurrentEntry, 200);
+}, { passive: true });
+
+function pushRoute(route) {
+  navIndex++;
+  const state = {
+    app: 'jumpstart-jax',
+    page: route.page,
+    employerId: route.employerId != null ? route.employerId : null,
+    originPage: route.originPage != null ? route.originPage : null,
+    scrollY: 0,
+    navIndex
+  };
+  history.pushState(state, '', buildRouteUrl(state));
+  return state;
+}
+
+function updateDocumentTitle(route) {
+  if (route.page === 'detail' && route.employerId != null) {
+    const e = employers.find(x => x.id === route.employerId);
+    document.title = (e ? e.name : 'Employer') + ' | Jumpstart Jax';
+  } else {
+    document.title = (PAGE_TITLES[route.page] || PAGE_TITLES.home) + ' | Jumpstart Jax';
+  }
+}
+
+function focusMainHeading(pageId) {
+  const sel = HEADING_SELECTORS[pageId] || HEADING_SELECTORS.home;
+  const heading = document.querySelector(sel);
+  if (!heading) return;
+  if (!heading.hasAttribute('tabindex')) heading.setAttribute('tabindex', '-1');
+  heading.focus({ preventScroll: true });
+}
+
+function updateDetailBackButton(originPage) {
+  const btn = document.getElementById('detail-back-btn');
+  if (!btn) return;
+  const label = ORIGIN_LABELS[originPage] || ORIGIN_LABELS.opportunities;
+  btn.setAttribute('aria-label', 'Back to ' + label);
+}
+
+function ensureMapReady() {
+  initMap(); // idempotent (mapInitialized guard)
+  if (mapInstance) {
+    setTimeout(() => mapInstance.invalidateSize(), 0);
+  }
+}
+
+function renderRoute(route, options = {}) {
+  const { restoreScrollY, moveFocus = true } = options;
+
+  if (route.page === 'detail' && route.employerId != null && employers.some(e => e.id === route.employerId)) {
+    showDetail(route.employerId);
+    updateDetailBackButton(route.originPage);
+  } else {
+    showPage(route.page !== 'detail' && VALID_PAGES.includes(route.page) ? route.page : 'home');
+  }
+
+  updateDocumentTitle(route);
+
+  if (typeof restoreScrollY === 'number') {
+    window.scrollTo(0, restoreScrollY);
+  }
+  if (moveFocus) focusMainHeading(route.page);
+}
+
+function navigateToPage(pageId) {
+  const current = getCurrentRoute();
+  const samePage = current && current.page === pageId;
+  if (!samePage) {
+    saveScrollToCurrentEntry();
+    pushRoute({ page: pageId });
+  }
+  renderRoute({ page: pageId }, { moveFocus: !samePage });
+}
+
+function navigateToEmployer(employerId) {
+  const id = Number(employerId);
+  if (!employers.some(e => e.id === id)) return;
+  const current = getCurrentRoute();
+  const originPage = (current && current.page !== 'detail')
+    ? current.page
+    : ((current && current.originPage) || 'opportunities');
+  saveScrollToCurrentEntry();
+  pushRoute({ page: 'detail', employerId: id, originPage });
+  renderRoute({ page: 'detail', employerId: id, originPage }, { moveFocus: true });
+}
+
+function goBackFromDetail() {
+  const state = history.state;
+  const cameFromInApp = !!state && state.app === 'jumpstart-jax' && state.page === 'detail' && Number(state.navIndex) > 0;
+  if (cameFromInApp) {
+    history.back();
+  } else {
+    // Direct/first-loaded detail URL, or no safe prior Jumpstart Jax entry —
+    // never leave the site; land on Find Opportunities instead.
+    navigateToPage('opportunities');
+  }
+}
+
+function handlePopState(event) {
+  const route = (event.state && event.state.app === 'jumpstart-jax') ? event.state : routeFromLocation();
+  navIndex = Number(route.navIndex) || 0;
+  renderRoute(route, {
+    restoreScrollY: typeof route.scrollY === 'number' ? route.scrollY : undefined,
+    moveFocus: false
+  });
+}
+
+function replaceInitialRoute() {
+  const route = routeFromLocation();
+  const state = {
+    app: 'jumpstart-jax',
+    page: route.page,
+    employerId: route.employerId != null ? route.employerId : null,
+    originPage: null,
+    scrollY: 0,
+    navIndex: 0
+  };
+  history.replaceState(state, '', buildRouteUrl(state));
+  navIndex = 0;
+  renderRoute(state, { moveFocus: false });
+}
+
+window.addEventListener('popstate', handlePopState);
 
 /* ════════════════════════════════════
    THIRD SPACES
@@ -355,7 +569,7 @@ function searchAndGo() {
   const q = document.getElementById('hero-search-input').value;
   document.getElementById('board-search-input').value = q;
   hideAllSuggestions();
-  showPage('opportunities');
+  navigateToPage('opportunities');
 }
 
 function filterAndGo(industry) {
@@ -366,7 +580,7 @@ function filterAndGo(industry) {
   });
   const map = {Healthcare:'fi-health',Technology:'fi-tech',Finance:'fi-fin',Government:'fi-gov',Engineering:'fi-eng',Nonprofit:'fi-non',Logistics:'fi-log',Media:'fi-media'};
   if (map[industry]) document.getElementById(map[industry]).checked = true;
-  showPage('opportunities');
+  navigateToPage('opportunities');
 }
 
 function renderHomeFeatured() {
@@ -382,7 +596,7 @@ function renderHomeFeatured() {
 function oppCardHTML(e, compact = false) {
   const isSaved = savedOpportunities.has(e.id);
   return `
-    <div class="opp-card" onclick="showDetail(${e.id})">
+    <div class="opp-card" onclick="navigateToEmployer(${e.id})">
       <div class="opp-logo">${empLogo(e, '38px', '1.3rem')}</div>
       <div class="opp-body">
         <div class="opp-top">
@@ -594,7 +808,7 @@ function showDetail(id) {
     <div class="card">
       <h3>Location</h3>
       <p style="font-size:0.85rem;color:var(--gray);line-height:1.5"><i class="fa-solid fa-location-dot" style="color:var(--teal);margin-right:6px"></i>${e.location}</p>
-      <a onclick="showPage('map');initMap();setTimeout(()=>focusEmployer(${id}),500)" style="color:var(--teal);font-size:0.82rem;font-weight:600;cursor:pointer;display:block;margin-top:8px">View on Map →</a>
+      <a onclick="navigateToPage('map');setTimeout(()=>focusEmployer(${id}),500)" style="color:var(--teal);font-size:0.82rem;font-weight:600;cursor:pointer;display:block;margin-top:8px">View on Map →</a>
     </div>
 
     <div class="card">
@@ -841,6 +1055,9 @@ async function renderLiveOpportunitySection(employer, source) {
 /* ════════════════════════════════════
    MAP
 ═══════════════════════════════════ */
+let mapInitialized = false;
+let mapInstance = null;
+
 function initMap() {
   if (mapInitialized) return;
   mapInitialized = true;
@@ -880,7 +1097,7 @@ function initMap() {
         <div class="popup-name">${e.name}</div>
         <div class="popup-cat">${e.industry} · ${e.type}</div>
         <div class="popup-desc">${e.programs.join(', ')}</div>
-        <button class="popup-btn" onclick="showDetail(${e.id})">View Programs →</button>
+        <button class="popup-btn" onclick="navigateToEmployer(${e.id})">View Programs →</button>
       </div>
     `, { maxWidth: 240 });
   });
@@ -899,7 +1116,7 @@ function initMap() {
         </div>
       </div>
       <div class="map-emp-detail">${e.location}<br>${e.programs.length} program${e.programs.length>1?'s':''} · ${e.type}</div>
-      <span class="map-emp-link" onclick="event.stopPropagation();showDetail(${e.id})">View Programs →</span>
+      <span class="map-emp-link" onclick="event.stopPropagation();navigateToEmployer(${e.id})">View Programs →</span>
     </div>
   `).join('');
 }
@@ -948,6 +1165,7 @@ function fillHomeCounts() {
 }
 fillHomeCounts();
 renderHomeFeatured();
+replaceInitialRoute();
 
 /* ════════════════════════════════════
    SEARCH SUGGESTIONS
@@ -995,7 +1213,7 @@ function showSuggestions(scope) {
 
 function goToSuggestion(id) {
   hideAllSuggestions();
-  showDetail(id);
+  navigateToEmployer(id);
 }
 
 function hideAllSuggestions() {
