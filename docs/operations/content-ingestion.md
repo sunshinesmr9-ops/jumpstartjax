@@ -2,6 +2,8 @@
 
 **Status:** `PROPOSED`
 
+**A narrower, real exception exists today (`LIVE`):** `docs/operations/employer-feed-monitoring.md` describes a GitHub Actions workflow that weekly rechecks a small, fixed set of public Lever and Greenhouse boards (Dun & Bradstreet, Fanatics) and maintains a single GitHub issue reporting qualifying Jacksonville student/early-talent postings. It is not the daily, database-backed ingestion pipeline described below — it does not write to `data.js`, does not publish to the WorkJax UI, and covers only two ATS providers. It is a monitoring aid for human review, not an implementation of this document's target-state pipeline.
+
 ## Objective
 
 Keep opportunities and experiences current without requiring employers and organizers to re-enter information already published elsewhere.
