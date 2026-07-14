@@ -1,6 +1,6 @@
 # Community Event Platform
 
-- **Current status:** `DEMO ONLY` prototype nested inside the `LIVE` Third Spaces page
+- **Current status:** `DEMO ONLY` prototype, shown as the first section of the `LIVE` Third Spaces page
 - **Product owner:** TBD
 - **Technical owner:** TBD
 - **Content owner:** TBD
@@ -10,22 +10,26 @@
 
 ## 1. Purpose
 
-Community Event Platform is a prototype nested subtab on the existing Third Spaces page. It adapts a separate public concept — a hospitality-first, SMS-oriented community app for Jacksonville — into a browser-only preview inside WorkJax, so the idea of "standing weekly traditions" can be explored alongside WorkJax's own curated Third Spaces content, without merging the two systems.
+Community Event Platform is a prototype section shown first on the existing Third Spaces page. It adapts a separate public concept — a hospitality-first, SMS-oriented community app for Jacksonville — into a browser-only preview inside WorkJax, so the idea of "standing weekly traditions" can be explored alongside WorkJax's own curated Third Spaces content, without merging the two systems.
 
 ## 2. Relationship to the WorkJax Third Spaces Page
 
-The Third Spaces page (`#page-experience`) now contains two nested subtabs, controlled by an accessible tab widget:
+The Third Spaces page (`#page-experience`) is now a single continuous page, in this order:
 
-1. **Explore Jacksonville** (default) — the original, unchanged WorkJax Third Spaces experience: curated recurring-spot cards, the "ideas we're exploring" chips, and the scheduled-events grid with filters and demo RSVP. Nothing about this tab's markup, data, or behavior changed.
-2. **Community Event Platform** — the new prototype described in this document.
+1. The existing Third Spaces page introduction (unchanged).
+2. **Community Event Platform** — the prototype described in this document, shown first.
+3. A visual divider (`.cep-explore-transition`).
+4. **Explore Jacksonville** — a heading and short introduction, followed directly underneath by the original, unchanged WorkJax Third Spaces experience: curated recurring-spot cards, the "ideas we're exploring" chips, and the scheduled-events grid with filters and demo RSVP. Nothing about this content's markup, data, or behavior changed — it was only un-wrapped from its former tab panel.
 
-The two are independent. Community Event Platform does not read from or write to the `events` array, `renderEvents()`, or the RSVP system that power Explore Jacksonville.
+**As of 2026-07-14, the two sections are no longer presented as nested tabs.** A previous version of this page used an accessible tabs pattern (`role="tablist"`/`role="tab"`/`role="tabpanel"`) to switch between "Explore Jacksonville" and "Community Event Platform." That tab interface has been removed; both sections now render together on one continuous, scrollable page, with Community Event Platform first. An optional in-page link at the end of the Community Event Platform section ("Explore more Jacksonville spaces") points to `#explore-jacksonville` using normal anchor scrolling — no custom scroll animation was added.
+
+The two sections remain functionally independent. Community Event Platform does not read from or write to the `events` array, `renderEvents()`, or the RSVP system that power Explore Jacksonville.
 
 ## 3. Source-Repository Attribution
 
 - **Original repository:** [`espil77/3rd-Space`](https://github.com/espil77/3rd-Space) (public GitHub repository).
 - **Original concept and assets:** the "Third Space" hospitality concept, its front-porch web copy ("Someone's already making plans for tonight.", the third-place explainer, the weekly schedule framing, "A peek at what's next," the closing line "The website is not the destination. Jacksonville is."), the weekly schedule in `content/traditions/weekly_schedule.md`, the time-of-day ("daypart") visual theming concept, and the three daypart reference images (`app/images/daypart-morning.png`, `daypart-midday.png`, `daypart-evening.png`) all originate from that repository's `app/index.html`, `app/script.js`, `app/styles.css`, and `content/traditions/weekly_schedule.md`.
-- **Adaptation location in WorkJax:** `community-event-data.js`, `community-event-platform.js`, the `#exp-panel-cep` markup in `index.html`, the `cep-` prefixed rules in `styles.css`, and the three copied images in `assets/community-event-platform/`.
+- **Adaptation location in WorkJax:** `community-event-data.js`, `community-event-platform.js`, the `#cep-shell` markup in `index.html`, the `cep-` prefixed rules in `styles.css`, and the three copied images in `assets/community-event-platform/`.
 - Being a public repository does not, by itself, grant a license to reuse its content or images. This adaptation is made for an internal prototype under the same product umbrella; before any real public launch, ownership and licensing of the concept, copy, and art should be explicitly confirmed with the source project.
 - **Known limitation — asset licensing:** the three daypart images are reference art that the source repository's own code comments describe as supplied by its founder "for direction" and explicitly **not licensed for a public launch** ("needs a real commission or licensed source before shipping"). They have been copied into this repository as-is for prototype fidelity, per an explicit decision to proceed with a documented limitation rather than omit them. **Before any real public launch of this feature, these three images must be replaced with commissioned or properly licensed art**, or removed.
 
@@ -53,13 +57,17 @@ The source repository's internal planning material is **not** reproduced on the 
 - **Discovery-layer concept** (`docs/06_DISCOVERY_LAYER.md`): the source project explicitly considered, and declined to build, a broader citywide event aggregator/feed, to avoid becoming a content treadmill. WorkJax's Community Event Platform likewise stays to the same seven curated traditions — it is not a scraper or aggregator.
 - **Design brief** (`docs/08_DESIGN_BRIEF.md`): the emotional arc ("uncertain → welcomed → comfortable → known → belonging") and non-negotiables (no gamification, no infinite feed, no bot-mediated interaction) informed the tone of the adapted copy and the deliberate absence of attendee counts or fabricated names.
 
-## 6. Nested-Tab Behavior
+## 6. Page Layout (Nested Tabs Removed 2026-07-14)
 
-- Implemented with an accessible tabs pattern: `role="tablist"` on the container, `role="tab"` on each button, `role="tabpanel"` on each panel, `aria-selected`, `aria-controls`/`aria-labelledby`, and roving `tabindex` (0 on the active tab, -1 on the inactive one).
-- Both tabs are real `<button>` elements — no links with placeholder URLs.
-- **Explore Jacksonville is selected by default** the first time the Third Spaces page is initialized in a session. Revisiting the page later in the same session preserves whichever tab the visitor last had open (the tab system initializes once, not on every navigation).
-- Supported interaction: mouse click, touch tap, `Enter`/`Space` on a focused tab, and `ArrowLeft`/`ArrowRight` to move focus between tabs (wrapping at the ends) and activate the newly focused tab.
-- Visible focus is preserved (`:focus-visible` outline on `.exp-subtab`) — no focus outline is suppressed.
+Community Event Platform is no longer presented in a nested tab alongside Explore Jacksonville. `index.html` previously wrapped both sections in a `role="tablist"` with two `role="tab"` buttons (`aria-selected`, roving `tabindex`) controlling two `role="tabpanel"` containers, and `community-event-platform.js` drove that pattern with `activateSubtab()`/`focusSubtab()`/`handleTabKeydown()`/`resetToDefaultSubtab()`. All of that markup and JavaScript has been removed. Community Event Platform now renders as a plain content section (`#cep-shell`) that is simply the first thing shown on the Third Spaces page; Explore Jacksonville renders directly beneath it as its own section (`#explore-jacksonville`) on the same continuous page. See §2 above for the full page order.
+
+`community-event-platform.js`'s public interface is now minimal:
+
+```js
+window.CommunityEventPlatform = Object.freeze({ initialize });
+```
+
+`initialize()` only requires `#cep-shell` to exist in the DOM; it no longer depends on any tab elements. It is still called once, from `app.js`, when the visitor opens the Third Spaces page, and is idempotent (an internal `initialized` guard prevents duplicate timers or event listeners if it is ever called more than once).
 
 ## 7. Data Structure
 
@@ -93,9 +101,20 @@ window.COMMUNITY_EVENT_PLATFORM_DATA = {
 
 This dataset is **never merged into `data.js`'s `events` array**. It is read only by `community-event-platform.js`.
 
-## 8. Daypart Behavior
+## 8. Daypart Behavior and Theme-Preview Controls
 
-Three time-of-day themes — morning (5:00–10:59), midday (11:00–16:59), evening (all other hours) — are computed from the visitor's local device clock, re-checked every 60 seconds. The `data-daypart` attribute is applied **only to `#cep-shell`**, never to `document.body`; every corresponding CSS custom property and rule is scoped under `.cep-shell[data-daypart="…"]`. No other page or component changes appearance when the daypart changes. The source project's developer-only daypart preview toggle (buttons to force morning/midday/evening for QA) is intentionally not included in this public build.
+Three time-of-day themes — Morning (5:00–10:59), Afternoon (11:00–16:59), Evening (all other hours) — are computed from the visitor's local device clock (`new Date().getHours()`), re-checked every 60 seconds. The `data-daypart` attribute is applied **only to `#cep-shell`**, never to `document.body`; every corresponding CSS custom property and rule is scoped under `.cep-shell[data-daypart="…"]`. No other page or component changes appearance when the daypart changes. The visible label for this theme is "Afternoon"; internally, the value, the CSS attribute, and the existing image filename all remain `midday` (no image was renamed).
+
+**As of 2026-07-14, a public, accessible theme-preview control is included** (this reverses the earlier note in this document, which said the source project's developer-only preview toggle was intentionally omitted). Near the top of the section, before the hero, three native `<button>` controls — Morning, Afternoon, Evening — are grouped under `role="group" aria-label="Preview Community Event Platform theme"`, each with `aria-pressed="true"`/`"false"` reflecting the currently displayed theme. A smaller "Use my current time" button restores automatic behavior. A `role="status"` paragraph announces the active state in text (e.g., "Using Morning based on your device time." / "Previewing Afternoon.") to assistive technology.
+
+**Automatic vs. manual state:**
+
+- On page load, the module always computes and applies the visitor's current local-time theme first (automatic mode), marking the matching button as selected.
+- Clicking Morning, Afternoon, or Evening immediately applies that theme, swaps the hero image, marks that button `aria-pressed="true"` (and visually distinguishes it with a checkmark and a heavier border — not color alone), and enters manual-preview mode.
+- While in manual-preview mode, the 60-second automatic clock keeps running internally but does not overwrite the manually selected theme.
+- Clicking "Use my current time" exits manual-preview mode, immediately recalculates the current local-time theme, updates the button/status text, and resumes normal automatic 60-second checking.
+- The manual override is held only in an in-memory JavaScript variable for the current page load — it is **not** written to `localStorage`. A full page reload always re-initializes from the visitor's current local time.
+- The automatic 60-second check only re-applies the theme (and only updates the status text) when the computed daypart has actually changed, so it does not repeatedly announce an unchanged theme to assistive technology.
 
 ## 9. Demo Attendance Behavior
 
@@ -125,9 +144,11 @@ A small, clearly labeled `PROPOSED` note explains that an opt-in text-message lo
 
 ## 13. Mobile and Accessibility Behavior
 
-- Responsive: the hero image/panel pair stacks to a single column under 640px width; the tab row and shell padding adjust under 520px.
-- Full ARIA tabs pattern (see §6) with keyboard support and visible focus.
-- All interactive elements are native `<button>` elements (no fake links), and the verification notice, demo note, and future-concept note are all rendered as visible text (not tooltip-only or icon-only).
+- Responsive: the hero image/panel pair stacks to a single column under 640px width; the theme-preview controls wrap onto additional lines and the shell padding adjusts under 520px, without introducing horizontal scrolling at narrow (~320px) widths.
+- All interactive elements are native `<button>` elements (no fake links, no custom `<div>`-based controls, no custom select menu for theme choice), and the verification notice, demo note, future-concept note, and theme-status text are all rendered as visible text (not tooltip-only or icon-only).
+- The theme-preview buttons use native keyboard activation (`Enter`/`Space` work automatically on `<button>` elements) and a visible `:focus-visible` outline; the currently selected theme is communicated through `aria-pressed`, a checkmark, and a heavier border — never through color alone.
+- The theme-status text is exposed to assistive technology via `role="status"`.
+- **This is a material interface change, and none of the above constitutes a completed accessibility evaluation.** Accessibility status for this feature remains `NOT ASSESSED`. Keyboard-execution, focus-order/visibility, color-contrast (in all three themes), 200%-zoom/reflow, screen-reader, and mobile touch-target testing have not been performed for this revised layout and remain required before any accessibility-verified claim can be made, per `docs/operations/accessibility.md`. The existing paused baseline accessibility audit (`docs/accessibility/baseline-audit-2026-07-14.md`) describes the previous nested-tab markup and was intentionally not updated as part of this change; its tab-specific findings (e.g. regarding `role="tablist"`/`role="tab"`) no longer describe the current markup and will need to be revisited in a future accessibility-focused pass.
 
 ## 14. Future Path to a Real Community Service
 
@@ -146,3 +167,4 @@ When a tradition's day/time/place is actually confirmed with the venue by a name
 | Date | Change | Author |
 |---|---|---|
 | 2026-07-14 | Initial documentation; feature created | WorkJax engineering |
+| 2026-07-14 | Restructured Third Spaces into one continuous page with Community Event Platform shown first; removed the nested Explore Jacksonville / Community Event Platform tab interface; added accessible Morning/Afternoon/Evening theme-preview controls and a "Use my current time" control; automatic local-time theme selection on initialize is preserved; accessibility status remains NOT ASSESSED | WorkJax engineering |

@@ -93,13 +93,15 @@ Per `docs/data/date-normalization-audit.md`, every `events` record in `data.js` 
 
 `isEventActive(record)` in `app.js` gates the Experience Jax grid: it only excludes a record when `dateVerificationStatus === "verified"` **and** `endsAt` is a past date. Since every current record is unverified, the helper returns `true` for all 15 records today and nothing is hidden. The original `date` text field remains the display source of truth; no event record was split as part of adding these fields.
 
-## Nested Subtabs: Explore Jacksonville vs. Community Event Platform
+## Third Spaces Page Layout: Community Event Platform + Explore Jacksonville
 
-**Current status:** `LIVE` nested-tab shell; `DEMO ONLY` content in the second tab
+**Current status:** `LIVE` single continuous page; `DEMO ONLY` Community Event Platform content shown first on it
 
-The Third Spaces page now contains two nested subtabs:
+As of 2026-07-14, the Third Spaces page is one continuous page (the previous nested-tab interface has been removed) in this order:
 
-- **Explore Jacksonville** (default) — everything described above in this document. Unchanged.
-- **Community Event Platform** — a separate, `DEMO ONLY` prototype adapted from a different public project (`espil77/3rd-Space`). It uses its own isolated data (`community-event-data.js`) and its own script (`community-event-platform.js`); it does not read or write the `events` array, `renderEvents()`, or the RSVP data described above. See [Community Event Platform](community-event-platform.md) for full detail.
+1. The existing Third Spaces page introduction (unchanged).
+2. **Community Event Platform** — a separate, `DEMO ONLY` prototype adapted from a different public project (`espil77/3rd-Space`), now shown first. It uses its own isolated data (`community-event-data.js`) and its own script (`community-event-platform.js`); it does not read or write the `events` array, `renderEvents()`, or the RSVP data described above. It includes an accessible Morning/Afternoon/Evening theme-preview control (see [Community Event Platform](community-event-platform.md) §8) in addition to its existing automatic local-time theming.
+3. A visual divider.
+4. **Explore Jacksonville** — everything described above in this document (recurring Third Spaces cards, "ideas we're exploring" chips, scheduled-events filters/grid/RSVP), now under its own "Explore Jacksonville" heading and introduction, directly beneath Community Event Platform on the same page. This content's markup, data, and behavior are unchanged from before the restructuring — only its wrapping tab panel was removed.
 
-These two must not be conflated in future documentation or code: this page's existing event-discovery content is WorkJax's own curated data; the Community Event Platform tab is an adapted external concept; and a possible future SMS-based version of that concept remains `PROPOSED` and unbuilt.
+These two sections must not be conflated in future documentation or code: this page's event-discovery content (item 4) is WorkJax's own curated data; the Community Event Platform section (item 2) is an adapted external concept; and a possible future SMS-based version of that concept remains `PROPOSED` and unbuilt. See [Community Event Platform](community-event-platform.md) for full detail on the theme-preview control and the removal of the nested-tab interface. This was a material interface change; accessibility status for the page remains `NOT ASSESSED`.
