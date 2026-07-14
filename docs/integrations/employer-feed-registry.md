@@ -1,9 +1,9 @@
 # Employer Live-Opportunity Feed Registry
 
-**Status:** `LIVE`, one entry enabled (Dun & Bradstreet). The registry mechanism itself is generic; adding a second employer requires its own separately validated, documented, and tested registry entry — see "Adding a future source" below.
+**Status:** `LIVE`, two entries enabled (Dun & Bradstreet, Miller Electric Company). The registry mechanism itself is generic; adding another employer requires its own separately validated, documented, and tested registry entry — see "Adding a future source" below.
 **Registry file:** `live-opportunity-sources.js`
-**Consumer:** `app.js` (`getLiveOpportunitySource`, `fetchLiveOpportunities`, `renderLiveOpportunitySection`, and the `liveOpportunity*HTML` rendering functions)
-**Related:** `docs/integrations/dnb-lever-poc.md`, `docs/decisions/ADR-003-dnb-lever-job-poc.md`, `docs/features/opportunities.md`
+**Consumer:** `app.js` (`getLiveOpportunitySource`, `fetchLiveOpportunities`, `renderLiveOpportunitySection`, and the `liveOpportunity*HTML` rendering functions, including the generic `postingKind: "official_program"` handling added for Miller)
+**Related:** `docs/integrations/dnb-lever-poc.md`, `docs/decisions/ADR-003-dnb-lever-job-poc.md`, `docs/integrations/miller-internship-program.md`, `docs/features/opportunities.md`
 
 ## Purpose
 
@@ -23,7 +23,8 @@ Each entry in `window.LIVE_OPPORTUNITY_SOURCES` is a frozen object with:
 | `employerName` | string | Human-readable label, used only for documentation/debugging clarity in the registry itself. Rendering code reads the employer's live `name` from `data.js`, not this field. |
 | `provider` | string | The upstream ATS/job-board type this endpoint talks to (e.g. `"lever"`). Informational today; not branched on by `app.js`, since the endpoint already returns a normalized shape. |
 | `endpoint` | string | The WorkJax API path to call for this employer's live feed (e.g. `/api/dnb-lever-jobs`). Always a same-origin path under `/api/`, never an external URL supplied at runtime. |
-| `sourceLabel` | string | The badge text shown on each live result card (e.g. `"Live from employer"`). |
+| `sourceLabel` | string | The badge text shown on each live result card (e.g. `"Live from employer"`, `"Verified on employer site"`). |
+| `sectionTitle` | string, optional | When present, used verbatim as the live-feed section heading in place of the default `"Current opportunities from [Employer]"` text (e.g. Miller's `"Miller Electric Internship Program"`). Omitted entries (like D&B's) keep the default heading unchanged. |
 | `enabled` | boolean | Whether this entry may currently be used. A disabled or missing entry means no live feed renders and no request is made for that employer. |
 
 The registry array and every entry object are wrapped in `Object.freeze()` so the configuration cannot be mutated at runtime by other script code.
@@ -54,9 +55,9 @@ Only a **successful** response is written to `liveOpportunityCache`. A failed re
 
 `renderLiveOpportunitySection(employer, source)` also checks that the DOM container `live-opportunities-<employerId>` still exists before writing into it, in case the visitor has navigated to a different page while the request was still in flight.
 
-## Only Dun & Bradstreet is currently enabled
+## Currently enabled entries
 
-`window.LIVE_OPPORTUNITY_SOURCES` today contains exactly one entry:
+`window.LIVE_OPPORTUNITY_SOURCES` today contains two entries:
 
 ```js
 {
@@ -66,16 +67,25 @@ Only a **successful** response is written to `liveOpportunityCache`. A failed re
   endpoint: "/api/dnb-lever-jobs",
   sourceLabel: "Live from employer",
   enabled: true
+},
+{
+  employerId: 13,
+  employerName: "Miller Electric Company",
+  provider: "official_program_page",
+  endpoint: "/api/miller-internship-program",
+  sourceLabel: "Verified on employer site",
+  sectionTitle: "Miller Electric Internship Program",
+  enabled: true
 }
 ```
 
-No other employer record in `data.js` has a matching, enabled registry entry, so `getLiveOpportunitySource()` returns `null` for every other employer and no other employer's detail page makes a live-feed request or shows a live-feed section.
+Dun & Bradstreet's entry is unchanged from its original form. Miller's entry uses a different `provider`, `"official_program_page"`, because `api/miller-internship-program.js` reads Miller's own official internship-program webpage rather than a structured ATS API — see `docs/integrations/miller-internship-program.md` for why, and how its normalized record (`postingKind: "official_program"`) differs from a job listing. No other employer record in `data.js` has a matching, enabled registry entry, so `getLiveOpportunitySource()` returns `null` for every other employer and no other employer's detail page makes a live-feed request or shows a live-feed section.
 
-## Adding a future source (e.g. a second Lever employer, or a Greenhouse employer)
+## Adding a future source (e.g. a second Lever employer, a Greenhouse employer, or another official employer program page)
 
 Adding a new entry to the registry is a small, mechanical step — but it is **not**, by itself, sufficient to bring a new employer's live feed online safely. A future addition must include, at minimum:
 
-1. **A new, dedicated API endpoint** implemented as its own Vercel Function (following the pattern in `api/dnb-lever-jobs.js`): a fixed upstream URL, response normalization into the same job shape (`postingKind`, `opportunityType`, `studentLevel`, etc.), a request timeout, and a controlled error response. A registry entry alone does not create this endpoint.
+1. **A new, dedicated API endpoint** implemented as its own Vercel Function, following the pattern of either `api/dnb-lever-jobs.js` (a structured ATS API) or `api/miller-internship-program.js` (an official employer webpage, when no structured API exists): a fixed upstream URL, response normalization into the same job shape (`postingKind`, `opportunityType`, `studentLevel`, etc.), a request timeout, a finite response-size limit, and a controlled error response. A registry entry alone does not create this endpoint.
 2. **A new registry entry** with the new employer's stable `employerId` (matching an existing `data.js` record), the correct `provider`, the new `endpoint` path, an appropriate `sourceLabel`, and `enabled: true` only once the endpoint has been validated.
 3. **Separate validation** of the new endpoint's filtering and normalization logic against that employer's real feed data (Jacksonville/Northeast Florida relevance, student/early-talent relevance, talent-network vs. open-opportunity classification), following the same rigor as `docs/integrations/dnb-lever-poc.md`'s manual testing checklist.
 4. **Separate documentation** describing the new source's filtering rules, field mapping, and known classification limitations, following the shape of `docs/integrations/dnb-lever-poc.md`.
@@ -94,3 +104,4 @@ Adding a new entry to the registry is a small, mechanical step — but it is **n
 | Date | Change | Author |
 |---|---|---|
 | 2026-07-14 | Introduced `live-opportunity-sources.js` and the generic `liveOpportunity*` frontend functions in `app.js`, replacing the Dun & Bradstreet-specific implementation with a registry-driven one. Dun & Bradstreet's behavior, endpoint, caching, and rendering are unchanged; it is now the registry's one enabled entry. | Claude (implementation task) |
+| 2026-07-14 | Added a second registry entry, Miller Electric Company (`employerId: 13`, `provider: "official_program_page"`, `endpoint: "/api/miller-internship-program"`), plus the optional `sectionTitle` field. Extended the generic frontend to render a `postingKind: "official_program"` record (status, internship areas, action button) with no Miller-specific functions. Dun & Bradstreet's entry and behavior are unchanged. See `docs/integrations/miller-internship-program.md`. | Claude (implementation task) |
