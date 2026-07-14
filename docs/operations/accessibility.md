@@ -2,7 +2,14 @@
 
 **Status:** `PROPOSED` — a policy prepared for the eventual WorkJax operator. It is not yet formally adopted because no formal operator exists.
 
-**Current WorkJax accessibility status:** `NOT ASSESSED`
+**Current Jumpstart Jax accessibility assessment status:** `ASSESSMENT IN PROGRESS`
+
+* `ASSESSMENT IN PROGRESS` means limited evidence has been collected and the evaluation is incomplete.
+* It does not mean the website is WCAG conformant or ADA compliant.
+* No site-wide conformance determination has been made.
+* Formal operator, accessibility owner, and remediation owner remain `UNASSIGNED`.
+
+See `docs/accessibility/baseline-audit-2026-07-14.md` for the evidence supporting this status and `docs/accessibility/accessibility-audit-log.md` for the full audit record.
 
 **Formal WorkJax operator:** `UNASSIGNED`
 **Product owner:** `UNASSIGNED`
@@ -159,7 +166,7 @@ Do not use `ADA COMPLIANT`, `FULLY ACCESSIBLE`, or `WCAG CERTIFIED`, unless quot
 
 `CONFORMANT FOR REVIEWED SCOPE` must always identify: pages and functionality reviewed, WCAG version, conformance level, review date, reviewer, testing methods, exclusions, and known limitations.
 
-The current WorkJax accessibility status is `NOT ASSESSED`.
+The current Jumpstart Jax accessibility assessment status is `ASSESSMENT IN PROGRESS`. This means limited evidence has been collected (see `docs/accessibility/baseline-audit-2026-07-14.md`) and the evaluation is incomplete — it does not mean the website is WCAG conformant or ADA compliant, and no site-wide conformance determination has been made. Formal operator, accessibility owner, and remediation owner remain `UNASSIGNED`.
 
 ## 9. Ownership Prerequisites
 
@@ -205,4 +212,5 @@ A legal-risk article supplied by a stakeholder may be retained as secondary cont
 
 | Date | Change | Author |
 |---|---|---|
+| 2026-07-14 | Updated current accessibility assessment status from NOT ASSESSED to ASSESSMENT IN PROGRESS to match the real Lighthouse baseline evidence recorded in `docs/accessibility/baseline-audit-2026-07-14.md`; no conformance claim made; ownership fields remain UNASSIGNED | WorkJax documentation |
 | 2026-07-14 | Initial accessibility policy created for future operator adoption | WorkJax documentation |
