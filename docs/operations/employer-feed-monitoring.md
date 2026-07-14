@@ -19,7 +19,7 @@ A JSON file, separate from the browser-visible `live-opportunity-sources.js`. It
 | `sourceId` | Stable, unique identifier, e.g. `"lever:dnb"`, `"greenhouse:fanaticsinc"`. |
 | `employerId` | The matching `id` in the `employers` array in `data.js`. |
 | `employerName` | Human-readable label. |
-| `provider` | `"lever"` or `"greenhouse"`. |
+| `provider` | `"lever"`, `"greenhouse"`, or `"icims_public_portal"`. |
 | `status` | One of `live`, `watch`, `paused`, `manual_only`. |
 | `endpoint` | The exact public ATS URL to fetch. Always `https://`. |
 | `enabled` | Whether the checker fetches this source at all. |
@@ -29,6 +29,8 @@ A JSON file, separate from the browser-visible `live-opportunity-sources.js`. It
 | `notes` | Free-text context, including links to the relevant documentation. |
 
 Greenhouse entries also carry an informational `boardToken` field; the `endpoint` itself is always what the script fetches.
+
+`icims_public_portal` entries point `endpoint` at a public, unauthenticated iCIMS job-search results page — the same page any career-site visitor can load in a browser. This is **not** the authenticated iCIMS customer/integration API (`api.icims.com`), which this project does not use and has no credentials for.
 
 ### Status values
 
@@ -42,6 +44,7 @@ Greenhouse entries also carry an informational `boardToken` field; the `endpoint
 1. **Dun & Bradstreet** (`lever:dnb`, `status: live`) — rechecks the same public Lever board that already powers `api/dnb-lever-jobs.js`, independent of that endpoint.
 2. **Fanatics Corporate** (`greenhouse:fanaticsinc`, `status: watch`) — per `docs/integrations/fanatics-greenhouse-validation.md`, confirmed reachable; decision is `HOLD` because no current posting qualifies.
 3. **Fanatics Collectibles** (`greenhouse:fanaticscollectibles`, `status: watch`) — board token confirmed via `docs/integrations/ats-source-audit.md`; content not yet independently reviewed.
+4. **Miller Electric Company** (`miller-electric-icims`, `status: watch`) — the first source using the `icims_public_portal` provider. Miller's own official internship page (`mecojax.com`) links directly to a public EMCOR iCIMS job search (`careers-emcorgroup.icims.com/jobs/search?searchKeyword=%23miller&ss=1`); this entry monitors only that public, unauthenticated page.
 
 Fanatics Betting & Gaming was **not** added: no official Greenhouse board token for it is documented anywhere in this repository, and the task instructions are explicit that a token must never be guessed or invented.
 
@@ -59,6 +62,10 @@ From the repository's **Actions** tab, select **Employer Feed Watch** → **Run 
 - **Student relevance:** a whole-word match against the source's `studentKeywords` list, checked against title, department, and description text. A posting is never classified as student-relevant on the basis of a "college"/"university" mention alone — it must hit one of the explicit keywords (internship, intern, apprentice/apprenticeship, early talent, co-op/coop, graduate program).
 - **No high-school inference:** the checker never emits, infers, or claims high-school eligibility for any posting, for any source.
 - **Duplicate detection across boards:** because both Fanatics boards share the same `employerId`, a qualifying posting appearing on both boards with the same title and location is shown once in the "by employer" section, while each board's own job ID is still tracked individually for accurate new/removed detection.
+- **iCIMS public-portal qualification (Miller Electric):** a record must explicitly identify Miller Electric Company (never a generic EMCOR mention or an unrelated EMCOR subsidiary), and must satisfy both of the following — not just one:
+  - **Location evidence:** the visible listing explicitly includes Jacksonville, "Jacksonville, FL", or "US-FL-Jacksonville".
+  - **Strong student evidence:** position type is Intern, category is Internship, the title explicitly contains intern/internship/co-op/apprentice/apprenticeship, or the listing explicitly states it is for a currently enrolled college/university student or early-career program participant. An ordinary full-time or "entry-level" listing never qualifies on its own, and high-school eligibility is never inferred.
+  - Zero qualifying Miller records from an otherwise-healthy page is a normal, healthy result. Blocked, redirected off the iCIMS domain, or structurally unrecognizable portal HTML is reported as a source-health warning instead — never silently treated as zero jobs.
 
 ## Issue-report behavior
 
@@ -74,7 +81,7 @@ Pull requests that touch `monitoring/**`, `scripts/check-employer-feeds.mjs`, or
 
 ## Source-health behavior
 
-Each source is fetched independently, in sequence, with its own try/catch — one source's timeout, non-2xx response, or malformed body never prevents the others from being checked. A source is marked unhealthy for: a network error, a request that exceeds the 10-second timeout, a non-2xx HTTP status, a non-JSON response body, or a response whose top-level shape doesn't match what that provider is expected to return (a JSON array for Lever; an object with a `jobs` array for Greenhouse). Zero qualifying postings from an otherwise-healthy source is a normal, valid result — never a failure.
+Each source is fetched independently, in sequence, with its own try/catch — one source's timeout, non-2xx response, or malformed body never prevents the others from being checked. A source is marked unhealthy for: a network error, a request that exceeds the 10-second timeout, a non-2xx HTTP status, a non-JSON response body, or a response whose top-level shape doesn't match what that provider is expected to return (a JSON array for Lever; an object with a `jobs` array for Greenhouse). For an `icims_public_portal` source specifically, a source is also marked unhealthy if the final URL (after redirects) leaves the allowed iCIMS career-portal hostname, or if the fetched HTML no longer structurally resembles an iCIMS page — both are reported as a warning for manual review, never silently interpreted as zero jobs. Zero qualifying postings from an otherwise-healthy source is a normal, valid result — never a failure.
 
 The workflow itself only fails when: the registry file is missing, malformed, or fails schema validation; the script cannot run at all; or every enabled automated source fails in the same run.
 
@@ -87,6 +94,17 @@ The workflow itself only fails when: the registry file is missing, malformed, or
 ## How to add another Greenhouse source
 
 Same process as Lever, but with `provider: "greenhouse"`, `endpoint: "https://boards-api.greenhouse.io/v1/boards/<board-token>/jobs?content=true"`, and an optional informational `boardToken` field. Never guess a board token — only add one confirmed by an official, employer-named URL, the same evidentiary standard used in `docs/integrations/ats-source-audit.md`.
+
+## How to add another iCIMS public-portal source
+
+`icims_public_portal` is a **generic** adapter — it is driven entirely by the registry entry's `endpoint` and `locationKeywords`, not by any employer-specific code. To add another public iCIMS career-portal job search:
+
+1. Confirm, from an official source, that the employer's own careers/internship page links directly to a specific public iCIMS job-search results URL (as Miller Electric's `mecojax.com` internship page links to `careers-emcorgroup.icims.com`). Never guess an iCIMS tenant hostname.
+2. Add an entry with `provider: "icims_public_portal"` and `endpoint` set to that exact public search URL.
+3. Set `status: "watch"` and `lastManuallyVerifiedAt` once a human has confirmed the endpoint loads as expected.
+4. Open a pull request — the workflow will run the checker against the new entry and print the report in the logs before anything touches the monitoring issue.
+
+This adapter reads only public job-search result pages (following same-hostname pagination, capped at 5 pages) — it never reaches a login, candidate-profile, application-submission, or authenticated iCIMS API endpoint (`api.icims.com`), and it never submits a form or collects applicant information. Public iCIMS HTML is far less stable than Lever's or Greenhouse's structured JSON and can change layout without notice; a parsing failure or a redirect off the iCIMS domain is reported as a source-health warning, never interpreted as zero jobs.
 
 ## How to pause a source
 
@@ -116,3 +134,4 @@ Adding or watching a source in `monitoring/employer-feed-watch.json` has no effe
 | Date | Change | Author |
 |---|---|---|
 | 2026-07-14 | Created the employer feed monitoring registry, checker script, and GitHub Actions workflow: rechecks Dun & Bradstreet's Lever board and Fanatics' two Greenhouse boards weekly, maintains one GitHub issue, and does not connect any new feed to the WorkJax UI | Claude (implementation task) |
+| 2026-07-14 | Added a generic `icims_public_portal` provider adapter and the first source using it, Miller Electric Company (`miller-electric-icims`) — monitors only the public, unauthenticated EMCOR iCIMS job-search page Miller's own internship page links to; does not use the authenticated iCIMS API and does not add Miller to the WorkJax UI | Claude (implementation task) |

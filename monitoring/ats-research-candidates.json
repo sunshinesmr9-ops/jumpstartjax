@@ -128,13 +128,13 @@
       "employerId": 13,
       "employerName": "Miller Electric Company",
       "careersUrl": "https://mecojax.com/join-the-team/internships",
-      "expectedPlatform": null,
-      "confidence": "not_verified",
-      "researchStatus": "investigate",
-      "priority": "high",
+      "expectedPlatform": "iCIMS",
+      "confidence": "confirmed",
+      "researchStatus": "monitored",
+      "priority": "low",
       "enabled": true,
       "canonicalEmployerKey": "miller-electric-company",
-      "notes": "docs/integrations/ats-source-audit.md id 13: NOT VERIFIED — site describes a short inquiry-form process, no named ATS found. No platform is guessed here."
+      "notes": "docs/integrations/ats-source-audit.md id 13: confirmed on iCIMS — Miller Electric's own official internship page links directly to the public EMCOR iCIMS job search at careers-emcorgroup.icims.com/jobs/search?searchKeyword=%23miller&ss=1. Already status 'watch' in monitoring/employer-feed-watch.json (sourceId miller-electric-icims, provider icims_public_portal), rechecked weekly by scripts/check-employer-feeds.mjs. This is controlled monitoring of the public career-portal page only — no authenticated iCIMS customer/integration API (api.icims.com) has been established, and none is planned as part of this monitoring. The monthly check here exists only to catch a careers-page URL change, not to re-validate content — that is the weekly job."
     },
     {
       "employerId": 14,

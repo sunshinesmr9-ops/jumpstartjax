@@ -72,6 +72,29 @@
       ],
       "lastManuallyVerifiedAt": null,
       "notes": "Fanatics Collectibles board. Board token confirmed via docs/integrations/ats-source-audit.md; this board's live content has not yet been independently reviewed the way fanaticsinc was in docs/integrations/fanatics-greenhouse-validation.md. Watching alongside the Corporate board; not connected to the WorkJax UI."
+    },
+    {
+      "sourceId": "miller-electric-icims",
+      "employerId": 13,
+      "employerName": "Miller Electric Company",
+      "provider": "icims_public_portal",
+      "status": "watch",
+      "endpoint": "https://careers-emcorgroup.icims.com/jobs/search?searchKeyword=%23miller&ss=1",
+      "enabled": true,
+      "locationKeywords": ["Jacksonville", "Jacksonville, FL", "US-FL-Jacksonville"],
+      "studentKeywords": [
+        "intern",
+        "internship",
+        "college student",
+        "student",
+        "co-op",
+        "apprentice",
+        "apprenticeship",
+        "early career",
+        "entry-level"
+      ],
+      "lastManuallyVerifiedAt": "2026-07-14",
+      "notes": "Miller Electric's own official internship page (mecojax.com) links directly to this public EMCOR iCIMS job search. This is controlled monitoring of the public career-portal HTML that any visitor can see — not the authenticated iCIMS customer/integration API (api.icims.com), which this project does not use and has no credentials for. Public iCIMS HTML is less stable than Lever/Greenhouse JSON and may change layout without notice; a parsing failure is reported as a source-health warning, never silently treated as zero jobs. Monitoring here never publishes anything to the WorkJax UI — a qualifying posting still requires human review and a separate, later decision before any UI change."
     }
   ]
 }

@@ -42,7 +42,7 @@ One entry per current `data.js` employer record (38 total). Each entry has:
 ### `researchStatus` values
 
 - `live` — an existing, browser-facing WorkJax integration exists (currently only Dun & Bradstreet).
-- `monitored` — already `watch`-status in the weekly registry (currently Fanatics); the monthly check here only catches a careers-URL change, not content.
+- `monitored` — already `watch`-status in the weekly registry (currently Fanatics and Miller Electric Company); the monthly check here only catches a careers-URL change, not content.
 - `revalidate` — the audit identified a likely or unvalidated platform; the monthly check looks for confirming or contradicting evidence.
 - `investigate` — the audit marked this employer `NOT VERIFIED`; `expectedPlatform` is always `null` here, by design — the registry validator (`scripts/check-ats-sources.mjs`) refuses to load a registry that assigns a platform to an `investigate` entry.
 - `manual_only` — the audit confirmed no ATS exists (email, in-person, fax, or a university-run process). Defaults to `enabled: false`, but stays documented.
@@ -129,6 +129,15 @@ research candidate (this registry, researchStatus: investigate/revalidate)
 
 **No employer is automatically published at any point in this chain.** Each arrow above requires a separate, human-driven action; this monthly process only ever produces the first step (an "observed" note in an internal issue).
 
+## Miller Electric (iCIMS) is now monitored — what that changes here
+
+Miller Electric Company (employer id 13) moved from `investigate` to `monitored`/`confirmed`/`iCIMS` after its own official internship page was found to link directly to a public EMCOR iCIMS job search — see `docs/integrations/ats-source-audit.md` id 13 and `docs/operations/employer-feed-monitoring.md`. This monthly process's role for Miller is now the same as for Fanatics: catch a careers-page URL change, not re-validate content. It did not itself perform the weekly content check, connect any feed, or add anything to `live-opportunity-sources.js`.
+
+This also means a generic `icims_public_portal` weekly-checker adapter now exists (`scripts/check-employer-feeds.mjs`). It is not specific to Miller Electric:
+
+- **The Haskell Company (id 34)** is currently `investigate` — a `talentengagement.haskell.com` subdomain was found but not conclusively tied to a named ATS vendor. If a future monthly or manual check confirms Haskell's public careers site is genuinely iCIMS-hosted, the same generic adapter may be reused for it — after its own separate, documented validation (an official Haskell-named iCIMS URL, a manual review of real content, and a human-reviewed registry entry). Haskell was **not** changed to `monitored` as part of this task.
+- **FIS Global (id 39)** is currently `investigate` with only weak, indirect Workday evidence (an internal "Workday recruiting" role listing, not proof of the candidate-facing ATS). FIS requires its own separate Workday feasibility review — a Workday read-API access-model check, distinct from this iCIMS work — before any registry status change. FIS was **not** changed to `monitored` as part of this task.
+
 ## What this process is not
 
 - It is not a citywide ATS census and does not claim complete coverage of Jacksonville employer platforms — it reflects only the 38 employers currently curated in `data.js`.
@@ -141,3 +150,4 @@ research candidate (this registry, researchStatus: investigate/revalidate)
 | Date | Change | Author |
 |---|---|---|
 | 2026-07-14 | Created the monthly ATS discovery candidate registry, checker script, and GitHub Actions workflow: inspects all 38 current employers' official careers pages for ATS platform evidence, maintains one GitHub issue, and does not modify any monitored or live feed | Claude (implementation task) |
+| 2026-07-14 | Updated Miller Electric Company (id 13) to `monitored`/`confirmed`/`iCIMS` after `docs/operations/employer-feed-monitoring.md` began weekly monitoring of its public iCIMS career-portal page; Haskell (id 34) and FIS Global (id 39) remain `investigate` and were not changed | Claude (implementation task) |
