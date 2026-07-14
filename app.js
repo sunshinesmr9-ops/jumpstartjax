@@ -1055,9 +1055,6 @@ async function renderLiveOpportunitySection(employer, source) {
 /* ════════════════════════════════════
    MAP
 ═══════════════════════════════════ */
-let mapInitialized = false;
-let mapInstance = null;
-
 function initMap() {
   if (mapInitialized) return;
   mapInitialized = true;
