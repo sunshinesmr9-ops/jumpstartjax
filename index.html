@@ -22,16 +22,16 @@
 
 <!-- ── Navigation ── -->
 <nav>
-  <div class="nav-logo" onclick="showPage('home')">Jumpstart<span>Jax</span></div>
+  <div class="nav-logo" onclick="navigateToPage('home')">Jumpstart<span>Jax</span></div>
   <button class="nav-toggle" id="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle menu">
     <i class="fa-solid fa-bars"></i>
   </button>
   <div class="nav-links" id="nav-links">
-    <button class="nav-link active" id="nav-home" onclick="showPage('home')"><i class="fa-solid fa-house" style="margin-right:5px"></i>Home</button>
-    <button class="nav-link" id="nav-opportunities" onclick="showPage('opportunities')"><i class="fa-solid fa-magnifying-glass" style="margin-right:5px"></i>Find Opportunities</button>
-    <button class="nav-link" id="nav-map" onclick="showPage('map'); initMap()"><i class="fa-solid fa-map" style="margin-right:5px"></i>Employer Map</button>
-    <button class="nav-link" id="nav-experience" onclick="showPage('experience')"><i class="fa-solid fa-calendar-star" style="margin-right:5px"></i>Third Spaces</button>
-    <button class="nav-link" id="nav-connect" onclick="showPage('connect')"><i class="fa-solid fa-users" style="margin-right:5px"></i>Community Hub</button>
+    <button class="nav-link active" id="nav-home" onclick="navigateToPage('home')"><i class="fa-solid fa-house" style="margin-right:5px"></i>Home</button>
+    <button class="nav-link" id="nav-opportunities" onclick="navigateToPage('opportunities')"><i class="fa-solid fa-magnifying-glass" style="margin-right:5px"></i>Find Opportunities</button>
+    <button class="nav-link" id="nav-map" onclick="navigateToPage('map')"><i class="fa-solid fa-map" style="margin-right:5px"></i>Employer Map</button>
+    <button class="nav-link" id="nav-experience" onclick="navigateToPage('experience')"><i class="fa-solid fa-calendar-star" style="margin-right:5px"></i>Third Spaces</button>
+    <button class="nav-link" id="nav-connect" onclick="navigateToPage('connect')"><i class="fa-solid fa-users" style="margin-right:5px"></i>Community Hub</button>
   </div>
 </nav>
 
@@ -78,19 +78,19 @@
     <div class="section-title">Everything You Need, in One Place.</div>
     <div class="section-sub">Jumpstart Jax is your all-in-one hub for launching your career, building your network, and making the most of your time in Northeast Florida through internships, apprenticeships, volunteering, and other experiential learning opportunities.</div>
     <div class="how-grid">
-      <div class="how-card" onclick="showPage('opportunities')" style="cursor:pointer">
+      <div class="how-card" onclick="navigateToPage('opportunities')" style="cursor:pointer">
         <div class="how-num">1</div>
         <div class="how-icon"><i class="fa-solid fa-magnifying-glass" style="color:var(--teal)"></i></div>
         <h3>Find Experiential Learning</h3>
         <p>Browse hundreds of internships, apprenticeships, volunteer roles, and other opportunities from top Jacksonville employers and organizations, filtered by field, schedule, and student level to find the right fit.</p>
       </div>
-      <div class="how-card" onclick="showPage('connect')" style="cursor:pointer">
+      <div class="how-card" onclick="navigateToPage('connect')" style="cursor:pointer">
         <div class="how-num">2</div>
         <div class="how-icon"><i class="fa-solid fa-users" style="color:var(--teal)"></i></div>
         <h3>Connect with Fellow Students</h3>
         <p>Meet other students building their careers across Northeast Florida. Grow your network, share experiences, and connect with the next generation of Jacksonville professionals.</p>
       </div>
-      <div class="how-card" onclick="showPage('experience')" style="cursor:pointer">
+      <div class="how-card" onclick="navigateToPage('experience')" style="cursor:pointer">
         <div class="how-num">3</div>
         <div class="how-icon"><i class="fa-solid fa-map-pin" style="color:var(--teal)"></i></div>
         <h3>Explore Third Spaces</h3>
@@ -145,7 +145,7 @@
     <div class="section-title">Opportunities This Week</div>
     <div class="listings-grid" id="home-listings"></div>
     <div style="text-align:center; margin-top: 28px;">
-      <button class="btn-primary" onclick="showPage('opportunities')">View All Opportunities →</button>
+      <button class="btn-primary" onclick="navigateToPage('opportunities')">View All Opportunities →</button>
     </div>
   </div>
 
@@ -230,7 +230,7 @@
 ════════════════════════════════════════ -->
 <div id="page-detail" class="page">
   <div class="detail-back">
-    <button class="back-btn" onclick="showPage('opportunities')">← Back to Opportunities</button>
+    <button class="back-btn" id="detail-back-btn" onclick="goBackFromDetail()">← Back</button>
   </div>
   <div class="detail-layout">
     <div class="detail-main" id="detail-main"></div>

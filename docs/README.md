@@ -37,6 +37,7 @@ WorkJax is not intended to process opportunity applications or provide direct me
 - [Experience Jax](features/experience-jax.md)
 - [Community Event Platform](features/community-event-platform.md)
 - [Connect Jax](features/connect-jax.md)
+- [Browser Navigation](features/browser-navigation.md)
 
 ### Data
 
@@ -67,9 +68,11 @@ WorkJax is not intended to process opportunity applications or provide direct me
 - [Accessibility Policy](operations/accessibility.md)
 - [WCAG 2.2 AA Checklist](accessibility/wcag-2.2-aa-checklist.md)
 - [Accessibility Audit Log](accessibility/accessibility-audit-log.md)
+- [Baseline Accessibility Audit — 2026-07-14](accessibility/baseline-audit-2026-07-14.md) (static source-code review)
+- [Manual Accessibility Test Protocol](accessibility/manual-test-protocol.md) (not yet executed)
 - [Accessibility Statement Draft](accessibility/accessibility-statement-draft.md) (internal draft only — not published)
 
-WorkJax targets **WCAG 2.2 Level AA** as a proposed technical standard. The current accessibility status is **`NOT ASSESSED`**. WorkJax must not be described as ADA compliant, fully accessible, or WCAG certified until a documented evaluation has been completed for a defined scope.
+WorkJax targets **WCAG 2.2 Level AA** as a proposed technical standard. The current site-wide accessibility status is **`ASSESSMENT IN PROGRESS`**: a static source-code baseline review was completed 2026-07-14 (see the baseline audit above), but no manual, automated-tool, screen-reader, contrast, zoom/reflow, or mobile touch-target testing has been performed yet. WorkJax must not be described as ADA compliant, fully accessible, or WCAG certified until a documented evaluation has been completed for a defined scope. Some individual pages/policy documents in this repository may still show `NOT ASSESSED` pending a follow-up pass to keep all accessibility documents fully in sync.
 
 ### Roadmap and Decisions
 

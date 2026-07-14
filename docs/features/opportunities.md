@@ -29,10 +29,11 @@ Help high school and college students discover relevant experiential learning op
 | Compensation filter | Paid or unpaid/credit |
 | Sort | Featured, deadline, alphabetical. Featured sort uses each record's `isFeatured` boolean (`LIVE`): featured records are placed first, and original array order is preserved within both the featured and non-featured groups. |
 | Opportunity cards | Built from employer records |
-| Detail page | Shows description, requirements, program details, location, and application link |
+| Detail page | Shows description, requirements, program details, location, and application link. Reached via `navigateToEmployer(id)` (`app.js`), which pushes a `?view=detail&employer=<id>` browser-history entry so Back/Forward and direct reloads work — see `docs/features/browser-navigation.md`. |
 | Save | Stored only in browser `localStorage`. A "Prototype note" disclosure is shown above the results list on the Opportunities board (`LIVE`), visible before any opportunity is saved, stating that saved opportunities are stored only in that browser on that device. |
 | Active-record filtering | `LIVE`. `isOpportunityActive(record)` in `app.js` gates homepage featured opportunities and opportunity search results. It only excludes a record when `dateVerificationStatus === "verified"` **and** `applicationCloseAt` is a past date. Every current record has `dateVerificationStatus: "unverified"` (see `docs/data/date-normalization-audit.md`), so the helper currently returns `true` for all 38 records and nothing is hidden. |
 | Employer live-opportunity feed | `LIVE`, registry-driven, scoped to employers with an enabled entry in `live-opportunity-sources.js`. Currently the Dun & Bradstreet detail page (`data.js` `id: 41`) fetches `GET /api/dnb-lever-jobs`, and the Miller Electric Company detail page (`data.js` `id: 13`) fetches `GET /api/miller-internship-program` — each only when its own detail page is opened. See "Live Employer Opportunity Feed" below and `docs/integrations/employer-feed-registry.md`. |
+| Browser Back/Forward | `LIVE`, added 2026-07-14. Opening a detail page (from a card, search suggestion, or map) pushes one browser-history entry; Back returns to the originating page with its search, filters, sort, and (where practical) scroll position intact, without calling `clearAllFilters()`. Forward reopens the same employer. See `docs/features/browser-navigation.md`. |
 
 ## Structured Date Fields (`LIVE`, values currently `null`/unverified)
 
