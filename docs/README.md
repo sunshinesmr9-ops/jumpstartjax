@@ -62,6 +62,15 @@ WorkJax is not intended to process opportunity applications or provide direct me
 - [Privacy and Safety](governance/privacy-and-safety.md)
 - [Open Governance Questions](governance/open-questions.md)
 
+### Accessibility
+
+- [Accessibility Policy](operations/accessibility.md)
+- [WCAG 2.2 AA Checklist](accessibility/wcag-2.2-aa-checklist.md)
+- [Accessibility Audit Log](accessibility/accessibility-audit-log.md)
+- [Accessibility Statement Draft](accessibility/accessibility-statement-draft.md) (internal draft only — not published)
+
+WorkJax targets **WCAG 2.2 Level AA** as a proposed technical standard. The current accessibility status is **`NOT ASSESSED`**. WorkJax must not be described as ADA compliant, fully accessible, or WCAG certified until a documented evaluation has been completed for a defined scope.
+
 ### Roadmap and Decisions
 
 - [Implementation Roadmap](roadmap/implementation-roadmap.md)
@@ -87,11 +96,29 @@ Use these labels consistently:
 
 ## Documentation Ownership
 
-| Area | Current Owner | Long-Term Owner |
-|---|---|---|
-| Product documentation | Civic Collaboration team | TBD ecosystem operator |
-| Source code | Serena Ray / current repository owner | TBD |
-| Opportunity content | No formal owner | TBD |
-| Event content | No formal owner | TBD |
-| Student profile moderation | No formal owner | TBD |
-| Infrastructure and deployment | Current repository/Vercel owner | TBD |
+Technical custody does not establish legal or organizational operation of the WorkJax service. The table below separates who currently maintains the prototype and its documentation (technical custody) from who is formally responsible for operating WorkJax (formal operational ownership). Historical contributor information is retained for accuracy; it does not assign legal, accessibility, or operational responsibility to those contributors.
+
+### Technical Custody
+
+| Area | Current Technical Custodian |
+|---|---|
+| Product documentation | Civic Collaboration team |
+| Source code and repository | Serena Ray / current repository owner |
+| Opportunity content | No formal owner |
+| Event content | No formal owner |
+| Student profile moderation | No formal owner |
+| Infrastructure and deployment | Current repository/Vercel owner |
+
+Serena Ray's and the current repository owner's technical custody reflects code and repository maintenance only. It does not make Serena Ray, the Civic Collaboration team, Jacksonville Civic Council, or any current contributor the legal operator of WorkJax, and none of them are assigned formal accessibility, remediation, or complaint-handling responsibility unless the repository documents that they have formally and explicitly accepted that role in writing.
+
+### Formal Operational Ownership
+
+| Role | Status |
+|---|---|
+| WorkJax operator | UNASSIGNED |
+| Product owner | UNASSIGNED |
+| Accessibility owner | UNASSIGNED |
+| Accessibility remediation owner | UNASSIGNED |
+| Long-term content owner | UNASSIGNED |
+
+Jacksonville Civic Council must not be described as the WorkJax operator unless it formally accepts that role in writing. See `docs/operations/accessibility.md` and `docs/governance/open-questions.md` for the accessibility- and operator-related governance questions this raises.
