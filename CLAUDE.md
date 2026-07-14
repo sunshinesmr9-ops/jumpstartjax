@@ -107,3 +107,14 @@ Update documentation whenever a change affects:
 * Deployment
 
 The documentation and code must not contradict one another.
+
+## Accessibility Rules
+
+* WorkJax targets WCAG 2.2 Level AA as its proposed technical design and engineering standard. See `docs/operations/accessibility.md`, `docs/accessibility/wcag-2.2-aa-checklist.md`, `docs/accessibility/accessibility-audit-log.md`, and `docs/accessibility/accessibility-statement-draft.md`.
+* WCAG is a technical accessibility standard. The ADA is a civil-rights legal framework, not a website testing checklist. Do not conflate the two.
+* The current WorkJax accessibility status is `NOT ASSESSED`. Do not describe WorkJax as ADA compliant, fully accessible, or WCAG certified.
+* A new or materially changed feature must not be described as accessibility verified merely because it passes an automated test. Accessibility-verified status requires the full test record described in `docs/operations/accessibility.md` (automated test results, keyboard test, focus-order/focus-visibility test, zoom and reflow test, color-contrast test, accessibility-tree or screen-reader review, mobile/touch-target review, known limitations, reviewer, review date).
+* Do not mark a WCAG checklist item as passed or failed without documented testing evidence.
+* Formal WorkJax operator, product owner, accessibility owner, and accessibility remediation owner are `UNASSIGNED`. Repository technical custody does not establish legal or organizational ownership of the WorkJax service, and must not be treated as such in code, commits, or documentation.
+* Do not add an accessibility overlay or floating accessibility toolbar as a substitute for genuine remediation.
+* Do not publish the accessibility statement draft. It is an internal template only until a formal operator, feedback contact, response process, assessment method, reviewed scope, and accurate conformance status are established.
