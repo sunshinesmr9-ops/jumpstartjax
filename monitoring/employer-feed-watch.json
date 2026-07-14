@@ -1,0 +1,77 @@
+{
+  "$schemaNotes": "Server/CI-only monitoring registry. Never loaded by index.html or app.js. See docs/operations/employer-feed-monitoring.md.",
+  "allowedStatusValues": ["live", "watch", "paused", "manual_only"],
+  "sources": [
+    {
+      "sourceId": "lever:dnb",
+      "employerId": 41,
+      "employerName": "Dun & Bradstreet",
+      "provider": "lever",
+      "status": "live",
+      "endpoint": "https://api.lever.co/v0/postings/dnb?mode=json",
+      "enabled": true,
+      "locationKeywords": ["Jacksonville", "Florida"],
+      "studentKeywords": [
+        "internship",
+        "intern",
+        "interns",
+        "apprentice",
+        "apprenticeship",
+        "early talent",
+        "co-op",
+        "coop",
+        "graduate program"
+      ],
+      "lastManuallyVerifiedAt": "2026-07-14",
+      "notes": "Existing LIVE Lever integration (api/dnb-lever-jobs.js, unmodified by this monitoring process). This entry independently rechecks source availability and searches for new qualifying Jacksonville student/early-talent postings; it does not affect the browser-facing endpoint or its registry (live-opportunity-sources.js)."
+    },
+    {
+      "sourceId": "greenhouse:fanaticsinc",
+      "employerId": 19,
+      "employerName": "Fanatics",
+      "provider": "greenhouse",
+      "status": "watch",
+      "boardToken": "fanaticsinc",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/fanaticsinc/jobs?content=true",
+      "enabled": true,
+      "locationKeywords": ["Jacksonville", "Florida"],
+      "studentKeywords": [
+        "internship",
+        "intern",
+        "interns",
+        "apprentice",
+        "apprenticeship",
+        "early talent",
+        "co-op",
+        "coop",
+        "graduate program"
+      ],
+      "lastManuallyVerifiedAt": "2026-07-14",
+      "notes": "Fanatics Corporate board. Platform and reachability confirmed per docs/integrations/fanatics-greenhouse-validation.md (decision: HOLD, 2026-07-14 review found 25 jobs, 2 Jacksonville-located, neither student-relevant). Watching for a qualifying Jacksonville student/early-talent posting; not connected to the WorkJax UI."
+    },
+    {
+      "sourceId": "greenhouse:fanaticscollectibles",
+      "employerId": 19,
+      "employerName": "Fanatics",
+      "provider": "greenhouse",
+      "status": "watch",
+      "boardToken": "fanaticscollectibles",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/fanaticscollectibles/jobs?content=true",
+      "enabled": true,
+      "locationKeywords": ["Jacksonville", "Florida"],
+      "studentKeywords": [
+        "internship",
+        "intern",
+        "interns",
+        "apprentice",
+        "apprenticeship",
+        "early talent",
+        "co-op",
+        "coop",
+        "graduate program"
+      ],
+      "lastManuallyVerifiedAt": null,
+      "notes": "Fanatics Collectibles board. Board token confirmed via docs/integrations/ats-source-audit.md; this board's live content has not yet been independently reviewed the way fanaticsinc was in docs/integrations/fanatics-greenhouse-validation.md. Watching alongside the Corporate board; not connected to the WorkJax UI."
+    }
+  ]
+}
