@@ -101,6 +101,16 @@ window.COMMUNITY_EVENT_PLATFORM_DATA = {
 
 This dataset is **never merged into `data.js`'s `events` array**. It is read only by `community-event-platform.js`.
 
+## 7a. Typography
+
+**As of 2026-07-14, Community Event Platform uses Jumpstart Jax's existing site-wide typography tokens instead of its own font choices.** Previously, this section loaded and applied two source-specific display fonts (Playfair Display and Big Shoulders Display) adapted from the original `espil77/3rd-Space` prototype. Those two font families have been removed from every Community Event Platform selector and from the site's Google Fonts request (neither family is used anywhere else in Jumpstart Jax):
+
+- **`var(--font-heading)` (Urbanist)** is now used for: the hero headline, section eyebrows and labels (including the theme-preview label), the "This Week" schedule title, day labels, tradition names, the Today/Anchor badges, the "I'll Be There" button, and the future-concept label — matching how Urbanist is used for headings everywhere else on the site.
+- **`var(--font-body)` (Lora)** is now used for: `.cep-shell`'s base font (previously a hard-coded `'Lora', Georgia, serif` declaration), the verification notice, the theme-preview controls and status text, descriptions and explainer copy, location/time details, prototype and demo notes, the future-concept explanation, and the closing footer line — matching how Lora is used for body copy everywhere else on the site.
+- The three daypart color themes (Morning, Afternoon/`midday`, Evening) are unchanged and remain visually distinct — only the font-family declarations changed, not colors, layout, spacing, or theme-switching behavior.
+- This is a typography-consistency change, not a redesign: existing font sizes, weights (with one exception below), italics, line heights, letter spacing, and capitalization were preserved.
+- One weight adjustment: the hero headline (`.cep-hero-line`) previously used `font-weight: 900`, a weight only available in the now-removed Playfair Display. Since the site's Urbanist request loads weights 700 and 800, this element now uses `font-weight: 800` — the heaviest Urbanist weight actually loaded — rather than declare a weight that doesn't exist in the loaded font.
+
 ## 8. Daypart Behavior and Theme-Preview Controls
 
 Three time-of-day themes — Morning (5:00–10:59), Afternoon (11:00–16:59), Evening (all other hours) — are computed from the visitor's local device clock (`new Date().getHours()`), re-checked every 60 seconds. The `data-daypart` attribute is applied **only to `#cep-shell`**, never to `document.body`; every corresponding CSS custom property and rule is scoped under `.cep-shell[data-daypart="…"]`. No other page or component changes appearance when the daypart changes. The visible label for this theme is "Afternoon"; internally, the value, the CSS attribute, and the existing image filename all remain `midday` (no image was renamed).
@@ -129,7 +139,7 @@ The "I'll Be There" control on today's tradition is explicitly a prototype:
 ## 10. Verification Limitations
 
 - `overallVerificationStatus` and every individual tradition's `verificationStatus` are `"unverified"`. The source project's own schedule file marks its "Schedule verified" column as `TBD` for all seven traditions, so WorkJax carries the same status forward rather than inventing confirmation.
-- A visible, non-alarming notice appears at the top of the panel: "Community platform prototype. Recurring traditions and times have not yet been independently verified by WorkJax. Confirm details with the venue before attending."
+- A visible, non-alarming notice appears at the top of the panel: "Community platform prototype. Recurring traditions and times have not yet been independently verified by Jumpstart Jax. Confirm details with the venue before attending."
 - No tradition is labeled "Verified," "Live," or equivalent, and none is described as officially hosted or run by WorkJax — each is presented as an already-existing, independently-run local event that this prototype merely lists.
 
 ## 11. SMS Concept as `PROPOSED`

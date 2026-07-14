@@ -6,7 +6,7 @@
    public espil77/3rd-Space repository — see
    docs/features/community-event-platform.md for full attribution.
 
-   Everything here is isolated from the existing WorkJax `events` array and
+   Everything here is isolated from the existing Jumpstart Jax `events` array and
    `renderEvents()` in app.js — this module never reads or writes those.
 
    Initialization requires only the #cep-shell root container and the data
