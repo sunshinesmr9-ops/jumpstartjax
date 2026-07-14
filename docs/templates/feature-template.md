@@ -74,7 +74,28 @@ flowchart TD
 - Public information:
 - Minor considerations:
 - Moderation:
-- Accessibility:
+
+## Accessibility
+
+- **Accessibility status:** NOT ASSESSED
+- **Applicable WCAG 2.2 criteria:**
+- **Semantic structure:**
+- **Keyboard behavior:**
+- **Focus behavior:**
+- **Screen-reader / accessibility-tree considerations:**
+- **Color and contrast:**
+- **Zoom and reflow:**
+- **Touch targets:**
+- **Motion:**
+- **Status announcements:**
+- **Known limitations:**
+- **Automated tests:**
+- **Manual tests:**
+- **Reviewer:** UNASSIGNED
+- **Review date:**
+- **Remediation owner:** UNASSIGNED
+
+A feature must not be described as accessibility verified merely because it passes an automated test. See `docs/operations/accessibility.md` for the full release rule and required test record.
 
 ## Metrics
 
