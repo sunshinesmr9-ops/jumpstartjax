@@ -84,15 +84,20 @@ Each item lists: requirement, related WCAG success criterion, applicability to W
 | Escape closes the modal | 2.1.1 | Any modal/dialog | Manual keyboard test | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
 | Focus returns to the triggering control on close | 2.4.3 | Any modal/dialog | Manual keyboard test | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
 
-## Tabs and Accordions
+## Theme Controls and Expandable Content
+
+*(Renamed 2026-07-14 from "Tabs and Accordions." The nested `role="tablist"`/`tab`/`tabpanel` pattern this section previously tracked was removed from Third Spaces on 2026-07-14 — see `docs/features/community-event-platform.md` §2 and §6. Third Spaces is now one continuous page; the rows below track its current native-button theme-preview controls instead.)*
 
 | Requirement | WCAG SC | Applicability | Test Method | Evidence | Status | Review Date | Reviewer | Remediation Owner |
 |---|---|---|---|---|---|---|---|---|
-| Correct tab/tablist/tabpanel roles and states | 4.1.2 | Third Spaces nested subtabs (Explore Jacksonville / Community Event Platform) | Manual code review, screen reader | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
-| Keyboard operability (arrow keys, Enter/Space) and roving tabindex | 2.1.1 | Third Spaces nested subtabs | Manual keyboard test | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
-| Visible focus on tabs | 2.4.7 | Third Spaces nested subtabs | Manual keyboard test | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
+| Morning/Afternoon/Evening theme-preview buttons operable via native `<button>` keyboard activation (Enter/Space) | 2.1.1 | Third Spaces — Community Event Platform theme-preview controls | Manual keyboard test | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
+| Selected theme-preview button correctly exposes `aria-pressed` state | 4.1.2 | Third Spaces — Community Event Platform theme-preview controls | Manual code review, screen reader | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
+| Visible keyboard focus on theme-preview and "Use my current time" buttons | 2.4.7 | Third Spaces — Community Event Platform theme-preview controls | Manual keyboard test | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
+| Device-time theme status announced to assistive technology (`role="status"`) | 4.1.3 | Third Spaces — Community Event Platform theme-status text | Screen-reader test | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
+| "Use my current time" control restores automatic theme selection and is keyboard operable | 2.1.1, 4.1.2 | Third Spaces — Community Event Platform | Manual keyboard test | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
+| Expandable content using native `<details>`/`<summary>` is keyboard operable and exposes correct expanded/collapsed state | 4.1.2 | Employer detail — live-opportunity "Explore internship areas" sections | Manual keyboard test, screen reader | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
 
-*Note: `docs/features/community-event-platform.md` describes an implemented ARIA tabs pattern with keyboard support for this component. That description is a code-level implementation note, not a completed WCAG evaluation. This checklist item remains `NOT ASSESSED` until a documented test is performed.*
+*Note: `docs/features/community-event-platform.md` §8 and §13 describe the current theme-preview implementation (native buttons, `aria-pressed`, visible focus, `role="status"`) as a code-level implementation note, not a completed WCAG evaluation. Every row above remains `NOT ASSESSED` until a documented test is performed.*
 
 ## Tables and Lists
 
@@ -138,5 +143,6 @@ Summarized from: W3C WCAG 2.2 Recommendation, W3C Understanding Conformance, W3C
 
 | Date | Change | Author |
 |---|---|---|
+| 2026-07-14 | Renamed "Tabs and Accordions" to "Theme Controls and Expandable Content" and replaced its outdated nested-tab/tablist/tabpanel/roving-tabindex rows (removed from Third Spaces 2026-07-14) with NOT ASSESSED rows for the current Morning/Afternoon/Evening theme-preview buttons, aria-pressed state, visible focus, role="status" announcement, "Use my current time" control, and native details/summary expandable content | WorkJax documentation |
 | 2026-07-14 | Updated contrast, heading-structure, landmark, and automated-scan rows with preliminary Lighthouse Home-page evidence (A11Y-001, A11Y-002, A11Y-003); overall checklist status changed from NOT ASSESSED to ASSESSMENT IN PROGRESS; all other rows remain NOT ASSESSED | WorkJax documentation |
 | 2026-07-14 | Initial checklist structure created; all items NOT ASSESSED | WorkJax documentation |
