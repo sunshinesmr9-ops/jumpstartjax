@@ -40,6 +40,25 @@ These questions should remain visible until the long-term operator is selected.
 - Is there a partner willing to provide a periodic approved export?
 - Can regional organizations agree on shared data standards?
 
+## Accessibility
+
+- Who will formally operate WorkJax?
+- What entity will own the WorkJax name and public service?
+- Is WorkJax provided by, for, or under contract with a state or local government?
+- Who will formally accept accessibility ownership?
+- Who will own accessibility remediation?
+- Who will receive public accessibility feedback?
+- What response and remediation timelines will apply?
+- Who can make commitments in a public accessibility statement?
+- Who will perform periodic independent testing?
+- How will users with disabilities be included in testing?
+- How will accessibility requirements be included in future procurement?
+- How will third-party employer, event, map, and application services be evaluated for accessibility?
+- What happens when an external destination is inaccessible?
+- Who will maintain the accessibility audit records after the current project team transitions out?
+
+See `docs/operations/accessibility.md` for the proposed accessibility policy and `docs/accessibility/` for the checklist, audit log, and internal statement draft that this governance question set supports.
+
 ## Success and Evaluation
 
 - What is the geographic boundary?
