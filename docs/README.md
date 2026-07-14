@@ -48,6 +48,7 @@ WorkJax is not intended to process opportunity applications or provide direct me
 
 - [API Evaluation](integrations/api-evaluation.md)
 - [ATS Source Audit](integrations/ats-source-audit.md)
+- [Fanatics Greenhouse Validation](integrations/fanatics-greenhouse-validation.md)
 - [Employer Live-Opportunity Feed Registry](integrations/employer-feed-registry.md)
 - [Dun & Bradstreet Lever Postings Proof of Concept](integrations/dnb-lever-poc.md)
 
