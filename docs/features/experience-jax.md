@@ -92,3 +92,14 @@ Per `docs/data/date-normalization-audit.md`, every `events` record in `data.js` 
 - `dateVerificationStatus` — `"unverified"` on every current record
 
 `isEventActive(record)` in `app.js` gates the Experience Jax grid: it only excludes a record when `dateVerificationStatus === "verified"` **and** `endsAt` is a past date. Since every current record is unverified, the helper returns `true` for all 15 records today and nothing is hidden. The original `date` text field remains the display source of truth; no event record was split as part of adding these fields.
+
+## Nested Subtabs: Explore Jacksonville vs. Community Event Platform
+
+**Current status:** `LIVE` nested-tab shell; `DEMO ONLY` content in the second tab
+
+The Third Spaces page now contains two nested subtabs:
+
+- **Explore Jacksonville** (default) — everything described above in this document. Unchanged.
+- **Community Event Platform** — a separate, `DEMO ONLY` prototype adapted from a different public project (`espil77/3rd-Space`). It uses its own isolated data (`community-event-data.js`) and its own script (`community-event-platform.js`); it does not read or write the `events` array, `renderEvents()`, or the RSVP data described above. See [Community Event Platform](community-event-platform.md) for full detail.
+
+These two must not be conflated in future documentation or code: this page's existing event-discovery content is WorkJax's own curated data; the Community Event Platform tab is an adapted external concept; and a possible future SMS-based version of that concept remains `PROPOSED` and unbuilt.

@@ -59,6 +59,14 @@ flowchart LR
 9. **Current and target behavior remain explicitly separated in documentation.**
 10. **The platform must have a named operator before public launch.**
 
+## Community Event Platform: Current Prototype vs. Proposed Future
+
+`docs/features/community-event-platform.md` documents a `DEMO ONLY` nested subtab adapted from a separate public project. To keep documentation and code from contradicting each other as this evolves:
+
+- **`LIVE` today:** the nested-tab shell on the Third Spaces page, and the prototype's isolated, unverified schedule data and device-local demo attendance.
+- **`PROPOSED`, not built:** an opt-in SMS text-message loop (a possible future "tell me what's happening tonight" concept). No phone number, SMS provider, or backend exists for this today, and none should be implied by any future copy changes without an explicit product/legal decision.
+- **`TBD`:** whether this prototype's content is ever merged into WorkJax's own event data model, who owns verifying its schedule, and what privacy/moderation review would be required before any shared (non-device-local) version of attendance data is introduced. Per this document's Architecture Principles above (minimized personal information, stronger minor protections, named operator before public launch), any future version of this feature must clear the same bar as the rest of the target-state platform — it does not get a lighter review path just because it started as an adapted prototype.
+
 ## Suggested Technical Direction
 
 A practical path is to retain Vercel hosting and add:

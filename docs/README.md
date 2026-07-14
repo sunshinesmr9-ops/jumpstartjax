@@ -35,6 +35,7 @@ WorkJax is not intended to process opportunity applications or provide direct me
 - [Find Opportunities](features/opportunities.md)
 - [Employer Map](features/employer-map.md)
 - [Experience Jax](features/experience-jax.md)
+- [Community Event Platform](features/community-event-platform.md)
 - [Connect Jax](features/connect-jax.md)
 
 ### Data

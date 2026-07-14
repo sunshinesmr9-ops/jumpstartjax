@@ -8,7 +8,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@700;800&amp;family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@700;800&amp;family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Playfair+Display:ital,wght@0,700;0,900;1,600&amp;family=Big+Shoulders+Display:wght@700;800&amp;display=swap" />
 
   <!-- External libraries -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
@@ -270,6 +270,16 @@
     </div>
   </div>
 
+  <!-- Nested subtabs: existing Third Spaces experience (default) vs. the new
+       Community Event Platform prototype. See community-event-platform.js
+       and docs/features/community-event-platform.md. -->
+  <div class="exp-subtabs" role="tablist" aria-label="Third Spaces views">
+    <button type="button" role="tab" id="exp-tab-explore" aria-selected="true" aria-controls="exp-panel-explore" tabindex="0" class="exp-subtab active">Explore Jacksonville</button>
+    <button type="button" role="tab" id="exp-tab-cep" aria-selected="false" aria-controls="exp-panel-cep" tabindex="-1" class="exp-subtab">Community Event Platform</button>
+  </div>
+
+  <div id="exp-panel-explore" role="tabpanel" aria-labelledby="exp-tab-explore" tabindex="0" class="exp-subpanel">
+
   <div class="third-spaces">
     <div class="third-spaces-inner">
       <div class="third-spaces-head">
@@ -358,7 +368,67 @@
     <p id="exp-count" style="font-size:0.92rem;color:var(--gray);"></p>
   </div>
   <div class="exp-grid" id="exp-grid"></div>
-</div>
+
+  </div><!-- /exp-panel-explore -->
+
+  <!-- Community Event Platform: adapted from the public espil77/3rd-Space
+       front-porch prototype. Concept, copy, and daypart images originate
+       from that repository; see docs/features/community-event-platform.md
+       for full source attribution. This panel is a self-contained
+       prototype: its schedule data (community-event-data.js) is never
+       merged into the `events` array above, and its "I'll Be There"
+       control is device-local only (community-event-platform.js). -->
+  <div id="exp-panel-cep" role="tabpanel" aria-labelledby="exp-tab-cep" tabindex="0" class="exp-subpanel" hidden>
+    <div class="cep-shell" id="cep-shell" data-daypart="midday">
+
+      <p class="cep-verification-notice" role="note">
+        <i class="fa-solid fa-circle-info"></i>
+        Community platform prototype. Recurring traditions and times have not yet been independently verified by WorkJax. Confirm details with the venue before attending.
+      </p>
+
+      <section class="cep-hero">
+        <div class="cep-hero-media">
+          <img id="cep-hero-img" class="cep-hero-img" src="assets/community-event-platform/daypart-midday.png" alt="" />
+        </div>
+        <div class="cep-hero-panel">
+          <p class="cep-eyebrow">Community Event Platform</p>
+          <h2 class="cep-hero-line" id="cep-hero-line"></h2>
+        </div>
+      </section>
+
+      <section class="cep-explainer">
+        <p class="cep-explainer-eyebrow">The idea</p>
+        <p class="cep-explainer-line" id="cep-explainer-line"></p>
+      </section>
+
+      <section class="cep-schedule">
+        <h3 class="cep-section-title">This Week</h3>
+        <ol class="cep-setlist" id="cep-setlist"></ol>
+        <p class="cep-week-note">Sunday runs latest and longest, it's the one this whole idea started from.</p>
+      </section>
+
+      <section class="cep-preview">
+        <p class="cep-preview-eyebrow">A peek at what's next</p>
+        <div class="cep-preview-card" id="cep-preview-card"></div>
+        <p class="cep-demo-note">
+          <i class="fa-solid fa-circle-info"></i>
+          Prototype note: This response is stored only on this device. It does not notify the venue, organizer, or other users.
+        </p>
+      </section>
+
+      <section class="cep-future-concept">
+        <p class="cep-future-label">PROPOSED &middot; Future concept</p>
+        <p class="cep-future-line">An opt-in text-message loop that lets you know what's happening tonight is being explored for the future. It is not active today: no phone numbers are collected, no messages are sent, and no backend exists yet.</p>
+      </section>
+
+      <footer class="cep-footer">
+        <p id="cep-footer-line"></p>
+      </footer>
+
+    </div><!-- /cep-shell -->
+  </div><!-- /exp-panel-cep -->
+
+</div><!-- /experience -->
 
 
 <!-- ═══════════════════════════════════════
@@ -418,7 +488,9 @@
 
 <!-- Jumpstart Jax scripts, data first, then app logic -->
 <script src="data.js"></script>
+<script src="community-event-data.js"></script>
 <script src="live-opportunity-sources.js"></script>
+<script src="community-event-platform.js"></script>
 <script src="app.js"></script>
 
 </body>

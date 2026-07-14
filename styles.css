@@ -1137,6 +1137,204 @@
       .modal-box { padding: 22px; margin: 16px; }
     }
 
+    /* ═══════════════════════════════
+       COMMUNITY EVENT PLATFORM
+       Nested subtab on the Third Spaces page. Adapted from the public
+       espil77/3rd-Space front-porch prototype — see
+       docs/features/community-event-platform.md for attribution. Every
+       selector here is scoped under .cep-shell; every custom property is
+       --cep-prefixed. Nothing here redefines a WorkJax root variable
+       (--navy, --teal, etc.) or targets an unscoped selector like body,
+       .hero, or .section-title. data-daypart is read only from
+       .cep-shell, never from document.body, so no other WorkJax page is
+       affected by the time-of-day theme.
+    ═══════════════════════════════ */
+    .exp-subtabs {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      justify-content: center; max-width: 900px; margin: 24px auto 0;
+      padding: 0 32px;
+    }
+    .exp-subtab {
+      padding: 9px 20px; border-radius: 20px; border: 1.5px solid var(--border);
+      background: var(--white); color: var(--gray); font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; transition: all 0.15s; font-family: var(--font-heading);
+    }
+    .exp-subtab:hover { border-color: var(--teal); color: var(--navy); }
+    .exp-subtab.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .exp-subtab:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .exp-subpanel { padding-top: 8px; }
+
+    .cep-shell {
+      max-width: 720px; margin: 32px auto 56px; padding: 0 24px;
+      font-family: 'Lora', Georgia, serif;
+      background: var(--cep-page-bg, var(--light));
+      color: var(--cep-ink, var(--text));
+      border-radius: var(--radius);
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    /* ---------- Daypart tokens (the only place cep daypart colors live) ---------- */
+    .cep-shell[data-daypart="morning"] {
+      --cep-page-bg: #f8ece0; --cep-ink: #04302e;
+      --cep-ink-soft: rgba(4,48,46,0.65); --cep-ink-faint: rgba(4,48,46,0.45);
+      --cep-border-faint: rgba(4,48,46,0.25); --cep-card-bg: #fffdf9;
+      --cep-accent: #e0924a; --cep-panel-from: #eba25f; --cep-panel-to: #6b3f57;
+    }
+    .cep-shell[data-daypart="midday"] {
+      --cep-page-bg: #e9f6f4; --cep-ink: #04302e;
+      --cep-ink-soft: rgba(4,48,46,0.65); --cep-ink-faint: rgba(4,48,46,0.45);
+      --cep-border-faint: rgba(4,48,46,0.25); --cep-card-bg: #ffffff;
+      --cep-accent: #e0507e; --cep-panel-from: #01696f; --cep-panel-to: #12a37d;
+    }
+    .cep-shell[data-daypart="evening"] {
+      --cep-page-bg: #04302e; --cep-ink: #eafaf5;
+      --cep-ink-soft: rgba(234,250,245,0.65); --cep-ink-faint: rgba(234,250,245,0.45);
+      --cep-border-faint: rgba(234,250,245,0.25); --cep-card-bg: #0b3d3a;
+      --cep-accent: #c1503c; --cep-panel-from: #7d2438; --cep-panel-to: #241019;
+    }
+
+    .cep-verification-notice {
+      display: flex; align-items: flex-start; gap: 8px;
+      background: var(--cep-card-bg, var(--white)); border: 1px solid var(--cep-border-faint, var(--border));
+      border-radius: 8px; padding: 12px 16px; margin: 20px 0 0;
+      font-size: 0.82rem; line-height: 1.5; color: var(--cep-ink-soft, var(--gray));
+      font-family: 'Lora', Georgia, serif;
+    }
+    .cep-verification-notice i { color: var(--cep-accent, var(--teal)); margin-top: 2px; flex-shrink: 0; }
+
+    .cep-hero {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-radius: 10px; overflow: hidden; margin: 20px 0 0;
+      box-shadow: 0 10px 34px rgba(4,48,46,0.16);
+    }
+    .cep-hero-media { position: relative; overflow: hidden; background: var(--cep-card-bg, var(--white)); }
+    .cep-hero-img { width: 100%; height: 100%; min-height: 260px; object-fit: cover; display: block; }
+    .cep-hero-panel {
+      padding: 28px 26px; display: flex; flex-direction: column; justify-content: center;
+      background: linear-gradient(160deg, var(--cep-panel-from, var(--navy)) 0%, var(--cep-panel-to, var(--teal)) 100%);
+      transition: background 0.4s ease;
+    }
+    .cep-eyebrow {
+      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-weight: 700; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.75); margin: 0 0 8px;
+    }
+    .cep-hero-line {
+      font-family: 'Playfair Display', var(--font-heading), Georgia, serif;
+      font-weight: 900; font-size: 1.5rem; line-height: 1.2; margin: 0;
+      color: #ffffff; text-shadow: 0 1px 8px rgba(0,0,0,0.25);
+    }
+
+    .cep-explainer { padding: 22px 0 4px; }
+    .cep-explainer-eyebrow {
+      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-weight: 700; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--cep-ink-faint, var(--gray)); margin: 0 0 10px;
+    }
+    .cep-explainer-line { font-size: 0.92rem; line-height: 1.6; color: var(--cep-ink-soft, var(--gray)); margin: 0; }
+
+    .cep-schedule { padding: 26px 0 4px; }
+    .cep-section-title {
+      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-weight: 700; font-size: 1.2rem; letter-spacing: 0.03em; text-transform: uppercase;
+      margin: 0 0 16px; color: var(--navy); display: inline-block;
+      border-bottom: 3px solid var(--cep-accent, var(--orange)); padding-bottom: 4px;
+    }
+    .cep-setlist { list-style: none; margin: 0; padding: 0; }
+    .cep-tradition {
+      display: flex; align-items: baseline; gap: 14px; padding: 12px 14px;
+      margin-bottom: 6px; background: var(--cep-card-bg, var(--white));
+      border-radius: 6px; border-left: 3px solid transparent;
+    }
+    .cep-tradition--anchor { border-left-color: var(--cep-accent, var(--teal)); }
+    .cep-tradition--today { background: rgba(1,105,111,0.08); }
+    .cep-tradition-day {
+      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--navy); width: 2.6em; flex: none;
+    }
+    .cep-tradition-body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+    .cep-tradition-what {
+      font-family: 'Playfair Display', var(--font-heading), Georgia, serif;
+      font-weight: 700; font-size: 1rem; color: var(--cep-ink, var(--text));
+    }
+    .cep-tradition-meta { font-size: 0.8rem; color: var(--cep-ink-soft, var(--gray)); }
+    .cep-anchor-tag, .cep-today-badge {
+      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-weight: 700; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 10px; flex-shrink: 0; align-self: center;
+    }
+    .cep-anchor-tag { color: var(--navy); border: 1px solid var(--navy); background: transparent; }
+    .cep-today-badge { color: #fff; background: var(--cep-accent, var(--orange)); }
+    .cep-week-note { font-size: 0.8rem; color: var(--cep-ink-faint, var(--gray)); margin: 14px 0 0; }
+
+    .cep-preview { margin: 32px 0 0; border-top: 2px dotted var(--cep-border-faint, var(--border)); padding-top: 22px; }
+    .cep-preview-eyebrow {
+      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--cep-ink-faint, var(--gray)); text-align: center; margin: 0 0 16px;
+    }
+    .cep-preview-card {
+      border: 2px solid var(--navy); border-radius: 10px; padding: 22px; text-align: center;
+      background: var(--cep-card-bg, var(--white)); max-width: 400px; margin: 0 auto;
+    }
+    .cep-ticket-what { font-size: 0.78rem; color: var(--cep-ink-soft, var(--gray)); margin: 0 0 4px; }
+    .cep-ticket-where {
+      font-size: 0.9rem; color: var(--cep-ink, var(--text)); margin: 0 0 16px;
+      font-family: 'Playfair Display', var(--font-heading), Georgia, serif;
+    }
+    .cep-ticket-unavailable { font-size: 0.88rem; color: var(--cep-ink-soft, var(--gray)); margin: 0; }
+    .cep-ticket-btn {
+      background: var(--navy); color: #fff; border: none; border-radius: 6px;
+      padding: 12px 26px; font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-weight: 700; font-size: 0.98rem; letter-spacing: 0.02em; cursor: pointer;
+    }
+    .cep-ticket-btn:hover { background: #014E53; }
+    .cep-ticket-btn[hidden] { display: none; }
+    .cep-ticket-confirmed {
+      font-family: 'Playfair Display', var(--font-heading), Georgia, serif;
+      font-style: italic; color: var(--navy); margin: 0 0 10px;
+    }
+    .cep-ticket-undo {
+      background: transparent; border: 1.5px solid var(--cep-border-faint, var(--border));
+      color: var(--cep-ink-soft, var(--gray)); border-radius: 6px; padding: 7px 16px;
+      font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    }
+    .cep-ticket-undo:hover { border-color: var(--navy); color: var(--navy); }
+    .cep-ticket-undo[hidden], .cep-ticket-confirmed[hidden] { display: none; }
+    .cep-demo-note {
+      display: flex; align-items: flex-start; gap: 8px; max-width: 420px; margin: 14px auto 0;
+      font-size: 0.76rem; line-height: 1.5; color: var(--cep-ink-faint, var(--gray));
+    }
+    .cep-demo-note i { color: var(--cep-accent, var(--teal)); margin-top: 2px; flex-shrink: 0; }
+
+    .cep-future-concept {
+      margin: 28px 0 0; padding: 16px 18px; border-radius: 8px;
+      background: var(--cep-card-bg, var(--white)); border: 1.5px dashed var(--cep-border-faint, var(--border));
+    }
+    .cep-future-label {
+      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--cep-ink-faint, var(--gray)); margin: 0 0 6px;
+    }
+    .cep-future-line { font-size: 0.82rem; line-height: 1.55; color: var(--cep-ink-soft, var(--gray)); margin: 0; }
+
+    .cep-footer { text-align: center; padding: 32px 0 8px; opacity: 0.65; }
+    .cep-footer p {
+      margin: 0; font-size: 0.82rem; font-style: italic;
+      font-family: 'Playfair Display', var(--font-heading), Georgia, serif;
+      color: var(--cep-ink, var(--text));
+    }
+
+    @media (max-width: 640px) {
+      .cep-hero { grid-template-columns: 1fr; }
+      .cep-hero-img { min-height: 200px; }
+    }
+    @media (max-width: 520px) {
+      .cep-shell { padding: 0 16px; }
+      .exp-subtabs { padding: 0 16px; }
+    }
+
     @media (max-width: 520px) {
       .hero-badge { font-size: 0.72rem; padding: 5px 12px; }
       .hero h1 { font-size: 1.6rem; }

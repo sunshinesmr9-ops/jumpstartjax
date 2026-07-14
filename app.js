@@ -31,7 +31,7 @@ function showPage(pageId) {
   if (pageId === 'opportunities') renderOpportunities();
   if (pageId === 'home') renderHomeFeatured();
 
-  if (pageId === 'experience') renderEvents();
+  if (pageId === 'experience') { renderEvents(); if (window.CommunityEventPlatform) window.CommunityEventPlatform.initialize(); }
   if (pageId === 'connect') { renderConnectJax(); updateProfileButton(); }
 }
 
