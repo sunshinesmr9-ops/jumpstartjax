@@ -462,6 +462,23 @@
       text-decoration: none;
     }
 
+    /* Official-program status and areas (generic; driven by postingKind === "official_program") */
+    .live-opp-program-status {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.82rem; font-weight: 700; margin: 6px 0;
+    }
+    .live-opp-program-status-open { color: #2E7D32; }
+    .live-opp-program-status-closed { color: var(--gray); }
+    .live-opp-program-status-unknown { color: var(--orange); }
+    .live-opp-areas-details { margin-top: 10px; font-size: 0.85rem; color: var(--text); }
+    .live-opp-areas-details summary { cursor: pointer; font-weight: 700; color: var(--teal); }
+    .live-opp-areas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .live-opp-area-pill {
+      display: inline-flex; align-items: center;
+      background: var(--light); color: var(--navy); font-size: 0.78rem; font-weight: 600;
+      padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border);
+    }
+
     /* Supplemental questions */
     .supplemental-card {
       background: #FFFBF5; border: 1.5px solid #FDDCB5;

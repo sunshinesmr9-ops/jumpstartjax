@@ -13,5 +13,14 @@ window.LIVE_OPPORTUNITY_SOURCES = Object.freeze([
     endpoint: "/api/dnb-lever-jobs",
     sourceLabel: "Live from employer",
     enabled: true
+  }),
+  Object.freeze({
+    employerId: 13,
+    employerName: "Miller Electric Company",
+    provider: "official_program_page",
+    endpoint: "/api/miller-internship-program",
+    sourceLabel: "Verified on employer site",
+    sectionTitle: "Miller Electric Internship Program",
+    enabled: true
   })
 ]);

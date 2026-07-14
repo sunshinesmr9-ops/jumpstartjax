@@ -5,7 +5,7 @@
 
 ## Summary
 
-WorkJax is currently a static, browser-based prototype. It does not use a frontend framework, application server, database, user authentication system, or shared content-management system. One narrow exception exists: `api/dnb-lever-jobs.js`, a Vercel Function described below, is now called from the browser — but only from the existing Dun & Bradstreet employer detail page, for that one employer, and does not change this overall picture.
+WorkJax is currently a static, browser-based prototype. It does not use a frontend framework, application server, database, user authentication system, or shared content-management system. Two narrow exceptions exist: `api/dnb-lever-jobs.js` and `api/miller-internship-program.js`, both Vercel Functions described below, are now called from the browser — but only from their own respective employer detail pages (Dun & Bradstreet and Miller Electric Company), and do not change this overall picture.
 
 ## Current Technology
 
@@ -14,12 +14,13 @@ WorkJax is currently a static, browser-based prototype. It does not use a fronte
 | `index.html` | Page structure, navigation, forms, filters, and feature containers |
 | `styles.css` | Visual design and responsive styling |
 | `data.js` | Hard-coded employers, opportunities, events, sample student profiles, and map coordinates |
-| `live-opportunity-sources.js` | Browser-visible, frozen registry (`window.LIVE_OPPORTUNITY_SOURCES`) mapping a stable employer ID to a live-opportunity-feed endpoint, provider, and display label. Loaded after `data.js` and before `app.js`. Currently contains one enabled entry, for Dun & Bradstreet. See `docs/integrations/employer-feed-registry.md`. |
-| `app.js` | Page switching, rendering, filtering, saving, RSVP behavior, profiles, map behavior, and the generic `liveOpportunity*` functions that read the registry and render a live-feed section on a matching employer's detail page |
+| `live-opportunity-sources.js` | Browser-visible, frozen registry (`window.LIVE_OPPORTUNITY_SOURCES`) mapping a stable employer ID to a live-opportunity-feed endpoint, provider, and display label. Loaded after `data.js` and before `app.js`. Currently contains two enabled entries, for Dun & Bradstreet and Miller Electric Company. See `docs/integrations/employer-feed-registry.md`. |
+| `app.js` | Page switching, rendering, filtering, saving, RSVP behavior, profiles, map behavior, and the generic `liveOpportunity*` functions that read the registry and render a live-feed section (including the generic `postingKind: "official_program"` card) on a matching employer's detail page |
 | Vercel | Static deployment and hosting |
 | Leaflet / map tiles | Interactive employer map |
 | Browser `localStorage` | Device-specific saved opportunities and prototype profile data |
 | `api/dnb-lever-jobs.js` | Vercel Function. Fetches Dun & Bradstreet's public Lever postings board, filters to Jacksonville student/early-talent postings, and returns normalized JSON. Called from `app.js` only when the existing Dun & Bradstreet employer detail page is opened, via the employer-feed registry. See `docs/integrations/dnb-lever-poc.md` and `docs/integrations/employer-feed-registry.md`. |
+| `api/miller-internship-program.js` | Vercel Function. Fetches Miller Electric Company's own official internship-program webpage (`mecojax.com`, not a structured jobs API), conservatively parses application status and internship areas, and returns one normalized program-level record as JSON. Called from `app.js` only when the existing Miller Electric Company employer detail page is opened, via the employer-feed registry. Independent of the separate weekly iCIMS public-portal monitor. See `docs/integrations/miller-internship-program.md` and `docs/integrations/employer-feed-registry.md`. |
 
 ## Current Application Flow
 
@@ -63,8 +64,9 @@ flowchart LR
 | Shared accounts | None | `TBD` |
 | Database | None | `TBD` |
 | Administrative dashboard | None | `TBD` |
-| Employer live-opportunity feed registry | `live-opportunity-sources.js` defines a frozen, browser-visible list of employers eligible for a live opportunity feed, matched by stable employer ID. `app.js` only fetches and renders a live feed for an employer with a matching, `enabled: true` registry entry, and only when that employer's existing detail page is opened. Currently one entry is enabled, for Dun & Bradstreet — see `docs/integrations/employer-feed-registry.md` | `LIVE` (registry mechanism; one enabled entry) |
+| Employer live-opportunity feed registry | `live-opportunity-sources.js` defines a frozen, browser-visible list of employers eligible for a live opportunity feed, matched by stable employer ID. `app.js` only fetches and renders a live feed for an employer with a matching, `enabled: true` registry entry, and only when that employer's existing detail page is opened. Currently two entries are enabled, for Dun & Bradstreet and Miller Electric Company — see `docs/integrations/employer-feed-registry.md` | `LIVE` (registry mechanism; two enabled entries) |
 | Dun & Bradstreet Lever job feed | `api/dnb-lever-jobs.js` returns normalized, Jacksonville-filtered student/early-talent postings from Dun & Bradstreet's public Lever board. Called only from the existing Dun & Bradstreet detail page (`app.js`, `renderLiveOpportunitySection()`, via the employer-feed registry), cached in memory for the browser page session. Not merged into `data.js`, not a citywide job aggregator, and no other employer's page calls it — see `docs/integrations/dnb-lever-poc.md` | `LIVE` (scoped to one employer's detail page) |
+| Miller Electric official internship-program page | `api/miller-internship-program.js` returns one normalized program-level record — application status (`open`/`closed`/`unknown` with supporting evidence), internship areas, paid/eligibility signals only when explicitly stated, and approved official links — read directly from Miller's own internship-program webpage (`mecojax.com`), never from an iCIMS job feed and never individual job requisitions. Called only from the existing Miller Electric Company detail page (`app.js`, `renderLiveOpportunitySection()`, via the employer-feed registry), cached in memory for the browser page session. Independent of the separate weekly iCIMS public-portal monitor — see `docs/integrations/miller-internship-program.md` | `LIVE` (scoped to one employer's detail page) |
 
 ## Important Current Limitations
 

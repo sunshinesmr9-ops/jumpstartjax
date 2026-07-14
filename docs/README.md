@@ -51,6 +51,7 @@ WorkJax is not intended to process opportunity applications or provide direct me
 - [Fanatics Greenhouse Validation](integrations/fanatics-greenhouse-validation.md)
 - [Employer Live-Opportunity Feed Registry](integrations/employer-feed-registry.md)
 - [Dun & Bradstreet Lever Postings Proof of Concept](integrations/dnb-lever-poc.md)
+- [Miller Electric Official Internship-Program Page](integrations/miller-internship-program.md)
 
 ### Operations and Governance
 

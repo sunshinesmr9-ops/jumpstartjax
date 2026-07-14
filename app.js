@@ -696,6 +696,65 @@ function liveOpportunityEmptyHTML(employer, source) {
   </div>`;
 }
 
+function programStatusLabel(status) {
+  if (status === 'open') return 'Applications open';
+  if (status === 'closed') return 'Applications closed';
+  return 'Status not currently confirmed';
+}
+
+function programStatusClass(status) {
+  if (status === 'open') return 'live-opp-program-status-open';
+  if (status === 'closed') return 'live-opp-program-status-closed';
+  return 'live-opp-program-status-unknown';
+}
+
+// Generic renderer for any postingKind: "official_program" record — driven
+// entirely by the registry entry and the fields the endpoint returns, not by
+// any employer-specific logic. See docs/integrations/employer-feed-registry.md.
+function liveOpportunityProgramCardHTML(job, employer, source) {
+  const lastVerified = job.lastVerifiedAt ? new Date(job.lastVerifiedAt).toLocaleDateString() : null;
+  const applicationHref = typeof job.applicationUrl === 'string' && /^https?:\/\//i.test(job.applicationUrl)
+    ? job.applicationUrl
+    : null;
+  const externalHref = typeof job.externalUrl === 'string' && /^https?:\/\//i.test(job.externalUrl)
+    ? job.externalUrl
+    : null;
+  const canApplyOfficially = job.programStatus === 'open' && applicationHref;
+  const actionHref = applicationHref || externalHref;
+  const actionLabel = canApplyOfficially ? 'Apply on Official Site' : 'View Official Program';
+
+  const metaItems = [
+    job.opportunityType ? `<span><i class="fa-solid fa-tag"></i>${escapeHtml(job.opportunityType)}</span>` : '',
+    job.studentLevel ? `<span><i class="fa-solid fa-graduation-cap"></i>${escapeHtml(job.studentLevel)}</span>` : '',
+    job.paid === true ? `<span><i class="fa-solid fa-sack-dollar"></i>Paid</span>` : '',
+    job.location ? `<span><i class="fa-solid fa-location-dot"></i>${escapeHtml(job.location)}</span>` : '',
+  ].filter(Boolean).join('');
+
+  const areas = Array.isArray(job.programAreas) ? job.programAreas.filter(a => typeof a === 'string' && a.trim()) : [];
+  const areasHTML = areas.length ? `
+    <details class="live-opp-areas-details">
+      <summary>Explore internship areas</summary>
+      <div class="live-opp-areas">${areas.map(a => `<span class="live-opp-area-pill">${escapeHtml(a)}</span>`).join('')}</div>
+    </details>` : '';
+
+  return `
+  <div class="live-opp-card">
+    <div class="live-opp-card-top">
+      <span class="live-opp-badge"><i class="fa-solid fa-satellite-dish"></i> ${escapeHtml(source.sourceLabel)}</span>
+    </div>
+    <div class="live-opp-title">${escapeHtml(job.title) || 'Official internship program'}</div>
+    <div class="live-opp-program-status ${programStatusClass(job.programStatus)}">
+      <i class="fa-solid fa-circle-info"></i> ${escapeHtml(programStatusLabel(job.programStatus))}
+    </div>
+    ${metaItems ? `<div class="live-opp-meta">${metaItems}</div>` : ''}
+    ${lastVerified ? `<div class="live-opp-verified">Last verified ${escapeHtml(lastVerified)}</div>` : ''}
+    ${areasHTML}
+    ${actionHref ? `<a href="${actionHref}" target="_blank" rel="noopener" class="live-opp-apply">
+      ${escapeHtml(actionLabel)} <i class="fa-solid fa-arrow-up-right-from-square"></i>
+    </a>` : ''}
+  </div>`;
+}
+
 function liveOpportunityCardHTML(job, employer, source) {
   const isNetwork = job.postingKind === 'talent_network';
   const lastVerified = job.lastVerifiedAt ? new Date(job.lastVerifiedAt).toLocaleDateString() : null;
@@ -732,12 +791,16 @@ function liveOpportunityResultsHTML(payload, employer, source) {
   const jobs = Array.isArray(payload && payload.jobs) ? payload.jobs : [];
   if (!jobs.length) return liveOpportunityEmptyHTML(employer, source);
 
+  const programRecords = jobs.filter(j => j.postingKind === 'official_program');
   const openJobs = jobs.filter(j => j.postingKind === 'open_opportunity');
   const networkJobs = jobs.filter(j => j.postingKind === 'talent_network');
 
-  if (!openJobs.length && !networkJobs.length) return liveOpportunityEmptyHTML(employer, source);
+  if (!programRecords.length && !openJobs.length && !networkJobs.length) return liveOpportunityEmptyHTML(employer, source);
 
   let html = '';
+  if (programRecords.length) {
+    html += `<div class="live-opp-group">${programRecords.map(job => liveOpportunityProgramCardHTML(job, employer, source)).join('')}</div>`;
+  }
   if (openJobs.length) {
     html += `<div class="live-opp-group">${openJobs.map(job => liveOpportunityCardHTML(job, employer, source)).join('')}</div>`;
   }
@@ -753,9 +816,12 @@ function liveOpportunityResultsHTML(payload, employer, source) {
 }
 
 function liveOpportunitySectionHTML(employer, source) {
+  const heading = source.sectionTitle
+    ? escapeHtml(source.sectionTitle)
+    : `Current opportunities from ${escapeHtml(employer.name)}`;
   return `
   <div class="detail-section live-opp-section">
-    <h3>Current opportunities from ${escapeHtml(employer.name)}</h3>
+    <h3>${heading}</h3>
     <div id="live-opportunities-${employer.id}">${liveOpportunityLoadingHTML(employer, source)}</div>
   </div>`;
 }
