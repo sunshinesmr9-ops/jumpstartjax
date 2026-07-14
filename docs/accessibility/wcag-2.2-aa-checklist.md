@@ -1,6 +1,6 @@
 # WCAG 2.2 AA Checklist
 
-**Status:** `NOT ASSESSED` — no item below has been tested. This checklist is a tracking structure prepared for a future evaluation, not a completed audit.
+**Status:** `ASSESSMENT IN PROGRESS` — three items below (marked with real evidence and linked to `docs/accessibility/baseline-audit-2026-07-14.md`) have preliminary automated Lighthouse evidence, limited to the Home page only. Every other item remains `NOT ASSESSED`. This checklist is still a tracking structure, not a completed audit.
 
 **Standard:** WCAG 2.2, Level AA (proposed WorkJax technical target — see `docs/operations/accessibility.md`)
 **Formal operator:** `UNASSIGNED`
@@ -14,8 +14,8 @@ Each item lists: requirement, related WCAG success criterion, applicability to W
 
 | Requirement | WCAG SC | Applicability | Test Method | Evidence | Status | Review Date | Reviewer | Remediation Owner |
 |---|---|---|---|---|---|---|---|---|
-| Semantic HTML and meaningful landmarks (header, nav, main, footer) | 1.3.1 | Site-wide | Manual code review, accessibility-tree inspection | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
-| Logical heading structure (no skipped levels, one H1 per page) | 1.3.1, 2.4.6 | Site-wide | Manual review, heading-outline tool | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
+| Semantic HTML and meaningful landmarks (header, nav, main, footer) | 1.3.1 | Site-wide | Manual code review, accessibility-tree inspection | Lighthouse mobile audit found no main landmark on Home (A11Y-003, preliminary) — see `docs/accessibility/baseline-audit-2026-07-14.md` | ASSESSMENT IN PROGRESS — MANUAL VERIFICATION REQUIRED | 2026-07-14 | UNASSIGNED | UNASSIGNED |
+| Logical heading structure (no skipped levels, one H1 per page) | 1.3.1, 2.4.6 | Site-wide | Manual review, heading-outline tool | Lighthouse desktop + mobile audits found headings not in sequential order on Home (A11Y-002, preliminary) — see `docs/accessibility/baseline-audit-2026-07-14.md` | ASSESSMENT IN PROGRESS — MANUAL VERIFICATION REQUIRED | 2026-07-14 | UNASSIGNED | UNASSIGNED |
 | Descriptive page titles | 2.4.2 | Every page/view | Manual review | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
 | Document and content language attributes | 3.1.1 | Site-wide | Manual code review | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
 
@@ -51,7 +51,7 @@ Each item lists: requirement, related WCAG success criterion, applicability to W
 
 | Requirement | WCAG SC | Applicability | Test Method | Evidence | Status | Review Date | Reviewer | Remediation Owner |
 |---|---|---|---|---|---|---|---|---|
-| Text color contrast (4.5:1 normal, 3:1 large text) | 1.4.3 | Site-wide | Automated contrast tool, manual spot check | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
+| Text color contrast (4.5:1 normal, 3:1 large text) | 1.4.3 | Site-wide | Automated contrast tool, manual spot check | Lighthouse desktop + mobile audits found insufficient contrast on Home (A11Y-001, preliminary); affected elements and exact ratios not yet recorded — see `docs/accessibility/baseline-audit-2026-07-14.md` | ASSESSMENT IN PROGRESS — MANUAL VERIFICATION REQUIRED | 2026-07-14 | UNASSIGNED | UNASSIGNED |
 | Non-text contrast (UI components, graphics) | 1.4.11 | Site-wide controls | Automated + manual contrast check | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
 | Information not conveyed by color alone | 1.4.1 | Filters, status indicators, daypart theming | Manual review | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
 | Text resize to 200% without loss of content/function | 1.4.4 | Site-wide | Manual browser zoom test | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
@@ -125,7 +125,7 @@ Each item lists: requirement, related WCAG success criterion, applicability to W
 
 | Requirement | WCAG SC | Applicability | Test Method | Evidence | Status | Review Date | Reviewer | Remediation Owner |
 |---|---|---|---|---|---|---|---|---|
-| Automated scan performed and recorded | Supports multiple SCs, not a substitute for manual testing | Site-wide | Automated tool (tool TBD) | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
+| Automated scan performed and recorded | Supports multiple SCs, not a substitute for manual testing | Home page only (not site-wide) | Chrome Lighthouse (Navigation audit) | Two runs recorded 2026-07-14: Home desktop (score 94), Home mobile (score 92) — see `docs/accessibility/baseline-audit-2026-07-14.md` | ASSESSMENT IN PROGRESS — Home page only, other pages/states not yet scanned | 2026-07-14 | UNASSIGNED | UNASSIGNED |
 | Manual keyboard-only walkthrough performed and recorded | 2.1.1, 2.4.3, 2.4.7 | Site-wide | Manual | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
 | Screen-reader/accessibility-tree review performed and recorded | 4.1.2, 4.1.3 | Site-wide | Manual, screen reader (NVDA/VoiceOver/JAWS TBD) | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
 | Testing with people with disabilities (if feasible) | Best practice, not a single SC | Site-wide | Usability testing | — | NOT ASSESSED | — | UNASSIGNED | UNASSIGNED |
@@ -138,4 +138,5 @@ Summarized from: W3C WCAG 2.2 Recommendation, W3C Understanding Conformance, W3C
 
 | Date | Change | Author |
 |---|---|---|
+| 2026-07-14 | Updated contrast, heading-structure, landmark, and automated-scan rows with preliminary Lighthouse Home-page evidence (A11Y-001, A11Y-002, A11Y-003); overall checklist status changed from NOT ASSESSED to ASSESSMENT IN PROGRESS; all other rows remain NOT ASSESSED | WorkJax documentation |
 | 2026-07-14 | Initial checklist structure created; all items NOT ASSESSED | WorkJax documentation |
