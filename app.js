@@ -685,7 +685,7 @@ function liveOpportunityLoadingHTML(employer, source) {
 function liveOpportunityErrorHTML(employer, source) {
   return `<div class="prototype-note live-opp-status live-opp-status-error">
     <i class="fa-solid fa-triangle-exclamation"></i>
-    <span>Live opportunities from ${escapeHtml(employer.name)} are temporarily unavailable. The program details above reflect WorkJax's curated information.</span>
+    <span>Live opportunities from ${escapeHtml(employer.name)} are temporarily unavailable. The program details above reflect Jumpstart Jax's curated information.</span>
   </div>`;
 }
 

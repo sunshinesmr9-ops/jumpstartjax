@@ -5,7 +5,7 @@
    docs/features/community-event-platform.md for full attribution).
    This is a separate, isolated dataset — it is never merged into the
    existing `events` array in data.js, and nothing here is treated as
-   WorkJax-verified. Every tradition's verificationStatus is "unverified"
+   Jumpstart Jax-verified. Every tradition's verificationStatus is "unverified"
    because the source schedule itself has never been independently
    checked (see that file's "Schedule verified" column, all TBD).
 ═══════════════════════════════════ */
@@ -20,7 +20,7 @@
       time: "12:00pm–2:00pm",
       isAnchor: false,
       verificationStatus: "unverified",
-      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by WorkJax."
+      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by Jumpstart Jax."
     },
     {
       id: "trivia-night",
@@ -31,7 +31,7 @@
       time: "6:30pm–8:00pm",
       isAnchor: false,
       verificationStatus: "unverified",
-      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by WorkJax."
+      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by Jumpstart Jax."
     },
     {
       id: "volunteer-hour",
@@ -42,7 +42,7 @@
       time: "5:30pm–6:30pm",
       isAnchor: false,
       verificationStatus: "unverified",
-      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by WorkJax."
+      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by Jumpstart Jax."
     },
     {
       id: "three-dollar-thursdays",
@@ -53,7 +53,7 @@
       time: "7:00am–8:30am",
       isAnchor: false,
       verificationStatus: "unverified",
-      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by WorkJax."
+      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by Jumpstart Jax."
     },
     {
       id: "intern-mixer",
@@ -64,7 +64,7 @@
       time: "5:00pm–7:00pm",
       isAnchor: false,
       verificationStatus: "unverified",
-      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by WorkJax."
+      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by Jumpstart Jax."
     },
     {
       id: "meetup-clothes-exchange",
@@ -75,7 +75,7 @@
       time: "9:00am–12:00pm",
       isAnchor: false,
       verificationStatus: "unverified",
-      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by WorkJax."
+      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space). Day, time, and place have not been independently verified by Jumpstart Jax."
     },
     {
       id: "sunday-jazz",
@@ -86,7 +86,7 @@
       time: "starts 9:00pm",
       isAnchor: true,
       verificationStatus: "unverified",
-      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space), described there as the anchor night. Day, time, and place have not been independently verified by WorkJax."
+      sourceNote: "Adapted from content/traditions/weekly_schedule.md (espil77/3rd-Space), described there as the anchor night. Day, time, and place have not been independently verified by Jumpstart Jax."
     }
   ];
 

@@ -150,10 +150,6 @@
       transition: all 0.15s;
     }
     .hero-tag:hover { background: rgba(255,255,255,0.2); color: var(--white); }
-    .hero-heritage-note {
-      margin-top: 22px; font-size: 0.8rem; color: rgba(255,255,255,0.55);
-      font-style: italic;
-    }
 
     /* Stats bar */
     .stats-bar {
@@ -1144,16 +1140,16 @@
        Adapted from the public espil77/3rd-Space front-porch prototype — see
        docs/features/community-event-platform.md for attribution. Every
        selector here is scoped under .cep-shell; every custom property is
-       --cep-prefixed. Nothing here redefines a WorkJax root variable
+       --cep-prefixed. Nothing here redefines a Jumpstart Jax root variable
        (--navy, --teal, etc.) or targets an unscoped selector like body,
        .hero, or .section-title. data-daypart is read only from
-       .cep-shell, never from document.body, so no other WorkJax page is
-       affected by the time-of-day theme.
+       .cep-shell, never from document.body, so no other Jumpstart Jax page
+       is affected by the time-of-day theme.
     ═══════════════════════════════ */
 
     .cep-shell {
       max-width: 720px; margin: 32px auto 56px; padding: 0 24px;
-      font-family: 'Lora', Georgia, serif;
+      font-family: var(--font-body);
       background: var(--cep-page-bg, var(--light));
       color: var(--cep-ink, var(--text));
       border-radius: var(--radius);
@@ -1185,7 +1181,6 @@
       background: var(--cep-card-bg, var(--white)); border: 1px solid var(--cep-border-faint, var(--border));
       border-radius: 8px; padding: 12px 16px; margin: 20px 0 0;
       font-size: 0.82rem; line-height: 1.5; color: var(--cep-ink-soft, var(--gray));
-      font-family: 'Lora', Georgia, serif;
     }
     .cep-verification-notice i { color: var(--cep-accent, var(--teal)); margin-top: 2px; flex-shrink: 0; }
 
@@ -1196,7 +1191,7 @@
       border: 1px solid var(--cep-border-faint, var(--border));
     }
     .cep-theme-label {
-      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-family: var(--font-heading);
       font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--cep-ink-faint, var(--gray)); margin: 0 0 10px;
     }
@@ -1237,19 +1232,19 @@
       transition: background 0.4s ease;
     }
     .cep-eyebrow {
-      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-family: var(--font-heading);
       font-weight: 700; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
       color: rgba(255,255,255,0.75); margin: 0 0 8px;
     }
     .cep-hero-line {
-      font-family: 'Playfair Display', var(--font-heading), Georgia, serif;
-      font-weight: 900; font-size: 1.5rem; line-height: 1.2; margin: 0;
+      font-family: var(--font-heading);
+      font-weight: 800; font-size: 1.5rem; line-height: 1.2; margin: 0;
       color: #ffffff; text-shadow: 0 1px 8px rgba(0,0,0,0.25);
     }
 
     .cep-explainer { padding: 22px 0 4px; }
     .cep-explainer-eyebrow {
-      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-family: var(--font-heading);
       font-weight: 700; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--cep-ink-faint, var(--gray)); margin: 0 0 10px;
     }
@@ -1257,7 +1252,7 @@
 
     .cep-schedule { padding: 26px 0 4px; }
     .cep-section-title {
-      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-family: var(--font-heading);
       font-weight: 700; font-size: 1.2rem; letter-spacing: 0.03em; text-transform: uppercase;
       margin: 0 0 16px; color: var(--navy); display: inline-block;
       border-bottom: 3px solid var(--cep-accent, var(--orange)); padding-bottom: 4px;
@@ -1271,18 +1266,18 @@
     .cep-tradition--anchor { border-left-color: var(--cep-accent, var(--teal)); }
     .cep-tradition--today { background: rgba(1,105,111,0.08); }
     .cep-tradition-day {
-      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-family: var(--font-heading);
       font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--navy); width: 2.6em; flex: none;
     }
     .cep-tradition-body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
     .cep-tradition-what {
-      font-family: 'Playfair Display', var(--font-heading), Georgia, serif;
+      font-family: var(--font-heading);
       font-weight: 700; font-size: 1rem; color: var(--cep-ink, var(--text));
     }
     .cep-tradition-meta { font-size: 0.8rem; color: var(--cep-ink-soft, var(--gray)); }
     .cep-anchor-tag, .cep-today-badge {
-      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-family: var(--font-heading);
       font-weight: 700; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase;
       padding: 3px 8px; border-radius: 10px; flex-shrink: 0; align-self: center;
     }
@@ -1292,7 +1287,7 @@
 
     .cep-preview { margin: 32px 0 0; border-top: 2px dotted var(--cep-border-faint, var(--border)); padding-top: 22px; }
     .cep-preview-eyebrow {
-      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-family: var(--font-heading);
       font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--cep-ink-faint, var(--gray)); text-align: center; margin: 0 0 16px;
     }
@@ -1303,18 +1298,18 @@
     .cep-ticket-what { font-size: 0.78rem; color: var(--cep-ink-soft, var(--gray)); margin: 0 0 4px; }
     .cep-ticket-where {
       font-size: 0.9rem; color: var(--cep-ink, var(--text)); margin: 0 0 16px;
-      font-family: 'Playfair Display', var(--font-heading), Georgia, serif;
+      font-family: var(--font-body);
     }
     .cep-ticket-unavailable { font-size: 0.88rem; color: var(--cep-ink-soft, var(--gray)); margin: 0; }
     .cep-ticket-btn {
       background: var(--navy); color: #fff; border: none; border-radius: 6px;
-      padding: 12px 26px; font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      padding: 12px 26px; font-family: var(--font-heading);
       font-weight: 700; font-size: 0.98rem; letter-spacing: 0.02em; cursor: pointer;
     }
     .cep-ticket-btn:hover { background: #014E53; }
     .cep-ticket-btn[hidden] { display: none; }
     .cep-ticket-confirmed {
-      font-family: 'Playfair Display', var(--font-heading), Georgia, serif;
+      font-family: var(--font-body);
       font-style: italic; color: var(--navy); margin: 0 0 10px;
     }
     .cep-ticket-undo {
@@ -1335,7 +1330,7 @@
       background: var(--cep-card-bg, var(--white)); border: 1.5px dashed var(--cep-border-faint, var(--border));
     }
     .cep-future-label {
-      font-family: 'Big Shoulders Display', var(--font-heading), sans-serif;
+      font-family: var(--font-heading);
       font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--cep-ink-faint, var(--gray)); margin: 0 0 6px;
     }
@@ -1344,7 +1339,7 @@
     .cep-footer { text-align: center; padding: 32px 0 8px; opacity: 0.65; }
     .cep-footer p {
       margin: 0; font-size: 0.82rem; font-style: italic;
-      font-family: 'Playfair Display', var(--font-heading), Georgia, serif;
+      font-family: var(--font-body);
       color: var(--cep-ink, var(--text));
     }
     .cep-footer-link { margin: 10px 0 0 !important; font-style: normal !important; }
