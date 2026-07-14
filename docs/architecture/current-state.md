@@ -16,6 +16,8 @@ WorkJax is currently a static, browser-based prototype. It does not use a fronte
 | `data.js` | Hard-coded employers, opportunities, events, sample student profiles, and map coordinates |
 | `live-opportunity-sources.js` | Browser-visible, frozen registry (`window.LIVE_OPPORTUNITY_SOURCES`) mapping a stable employer ID to a live-opportunity-feed endpoint, provider, and display label. Loaded after `data.js` and before `app.js`. Currently contains two enabled entries, for Dun & Bradstreet and Miller Electric Company. See `docs/integrations/employer-feed-registry.md`. |
 | `app.js` | Page switching, rendering, filtering, saving, RSVP behavior, profiles, map behavior, and the generic `liveOpportunity*` functions that read the registry and render a live-feed section (including the generic `postingKind: "official_program"` card) on a matching employer's detail page |
+| `community-event-data.js` | Frozen, browser-visible dataset (`window.COMMUNITY_EVENT_PLATFORM_DATA`) for the Community Event Platform prototype nested subtab on the Third Spaces page. Adapted from the public `espil77/3rd-Space` repository. Entirely separate from the `events`/`employers` data above — never merged. See `docs/features/community-event-platform.md`. |
+| `community-event-platform.js` | Isolated module exposing `window.CommunityEventPlatform` (`initialize`, `activateSubtab`, `resetToDefaultSubtab`). Renders the Community Event Platform panel, drives its own accessible nested-tab control, its client-clock daypart theming (scoped to that panel only), and its device-local, demo-only "I'll Be There" interaction. Does not call or duplicate `renderEvents()`. |
 | Vercel | Static deployment and hosting |
 | Leaflet / map tiles | Interactive employer map |
 | Browser `localStorage` | Device-specific saved opportunities and prototype profile data |
@@ -29,21 +31,27 @@ flowchart LR
     A[Visitor's browser] --> B[index.html]
     B --> C[styles.css]
     B --> D[data.js]
+    B --> CD[community-event-data.js]
     B --> DR[live-opportunity-sources.js]
+    B --> CP[community-event-platform.js]
     B --> E[app.js]
 
     D --> F[Employer and opportunity records]
     D --> G[Event records]
     D --> H[Sample student profiles]
+    CD --> CT[Community Event Platform traditions, isolated dataset]
     DR --> R[Employer-feed registry, matched by employer ID]
 
     E --> I[Search and filters]
     E --> J[Employer map]
-    E --> K[Experience Jax rendering]
+    E --> K[Experience Jax rendering, Explore Jacksonville tab]
     E --> L[Connect Jax rendering]
     E --> M[Browser localStorage]
     E --> N[Live opportunity feed section, on a matching employer's detail page only]
     N --> R
+    E --> CP
+    CP --> CT
+    CP --> O[Community Event Platform tab: nested tabs, daypart theming, demo attendance]
 ```
 
 ## Current Data Behavior
@@ -67,6 +75,7 @@ flowchart LR
 | Employer live-opportunity feed registry | `live-opportunity-sources.js` defines a frozen, browser-visible list of employers eligible for a live opportunity feed, matched by stable employer ID. `app.js` only fetches and renders a live feed for an employer with a matching, `enabled: true` registry entry, and only when that employer's existing detail page is opened. Currently two entries are enabled, for Dun & Bradstreet and Miller Electric Company — see `docs/integrations/employer-feed-registry.md` | `LIVE` (registry mechanism; two enabled entries) |
 | Dun & Bradstreet Lever job feed | `api/dnb-lever-jobs.js` returns normalized, Jacksonville-filtered student/early-talent postings from Dun & Bradstreet's public Lever board. Called only from the existing Dun & Bradstreet detail page (`app.js`, `renderLiveOpportunitySection()`, via the employer-feed registry), cached in memory for the browser page session. Not merged into `data.js`, not a citywide job aggregator, and no other employer's page calls it — see `docs/integrations/dnb-lever-poc.md` | `LIVE` (scoped to one employer's detail page) |
 | Miller Electric official internship-program page | `api/miller-internship-program.js` returns one normalized program-level record — application status (`open`/`closed`/`unknown` with supporting evidence), internship areas, paid/eligibility signals only when explicitly stated, and approved official links — read directly from Miller's own internship-program webpage (`mecojax.com`), never from an iCIMS job feed and never individual job requisitions. Called only from the existing Miller Electric Company detail page (`app.js`, `renderLiveOpportunitySection()`, via the employer-feed registry), cached in memory for the browser page session. Independent of the separate weekly iCIMS public-portal monitor — see `docs/integrations/miller-internship-program.md` | `LIVE` (scoped to one employer's detail page) |
+| Community Event Platform prototype | A nested subtab on the Third Spaces page, adapted from the public `espil77/3rd-Space` repository. Its own frozen dataset (`community-event-data.js`), own render/tab/daypart module (`community-event-platform.js`), and a device-local, demo-only "I'll Be There" interaction stored under a WorkJax-prefixed `localStorage` key. All seven schedule records are `verificationStatus: "unverified"`. Never merged into `events`/`employers`. See `docs/features/community-event-platform.md` | `DEMO ONLY` |
 
 ## Important Current Limitations
 
